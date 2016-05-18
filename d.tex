@@ -69,6 +69,17 @@
 }
 \def\refobr#1{(viz.~obr.~\ref{#1})}
 \def\d{\mathrm{d}}
+%-----------------------------------------
+\def\pngfigwithinfig#1#2#3{%
+	\centerline{%
+		\scalebox{#1}{%
+			\includegraphics{picture/png/#2.png}%  	
+			%   \includegraphics{picture/png/#2.png.eps}%
+			%   \pdfimage{picture/png/#2.png}%
+		}%
+	}%
+	\caption{#3}\label{#2}%
+}
 
 \begin{document}
 
