@@ -1,0 +1,17 @@
+\def\stra{
+\vbox{\hbox{podvzorkované}
+\hbox{$\Delta x>\frac{1}{2W_u}$}
+\hbox{$\Delta y>\frac{1}{2W_v}$}
+}}
+\def\strb{
+\vbox{\hbox{ideální vzorkování}
+\hbox{$\Delta x=\frac{1}{2W_u}$}
+\hbox{$\Delta y=\frac{1}{2W_v}$}
+}
+}
+\def\strc{
+\vbox{\hbox{pøevzorkované}
+\hbox{$\Delta x<\frac{1}{2W_u}$}
+\hbox{$\Delta y<\frac{1}{2W_v}$}
+}
+}

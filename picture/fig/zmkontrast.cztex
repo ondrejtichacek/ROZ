@@ -1,0 +1,3 @@
+\def\stra{lineární rozta¾ení (zmìna kontrastu)}
+\def\strb{binarizace obrázku na hodnoty 0 a 255}
+\def\strc{pro znázornìní skrytých struktur v obrázku}

@@ -1,0 +1,781 @@
+\section{Rozpoznávání dat (pattern recognition)}
+\ods{Úloha rozpoznávání}
+Máme $n$ tøíd, máme rozhodnout o objektu $\mathcal{O}$ do jaké tøídy patøí.
+
+Existují 2 pøístupy: strukturární (syntaktické) a  pøíznakové (statistické)
+\begin{enumerate}
+\item strukturární
+\begin{itemize}
+\item zalo¾eno na teorii jazykù, rozhodování, zda patøí slovo do jazyka
+\item pøíklad: dùm, støecha, zdi, dveøe, okna
+\end{itemize}
+\item pøíznakové
+\begin{itemize}
+\item pøíklad: ¾okejové $\times$ basketbalisté $\rightarrow$ pøíznaky: vý¹ka, váha
+\item pro ka¾dý objekt máme pøíznakový vektor (obecnì tvoøen èísly, vektory, maticemi, funkcemi atd.)
+\item nutné definovat metriku na prostoru pøíznakù (nìkdy problém)
+\end{itemize}
+\end{enumerate}
+
+\ods{Rozdìlení na tøídy}
+
+Nabízí se napøíklad klasifikátor beroucí minimální vzdálenost od tì¾i¹» jednotlivých tøíd.
+\vecobr{0.4}{svestky}{Rozdìlení na tøídy}
+
+\begin{itemize}
+\item Vìt¹inou máme k dispozici tzv. {\em trénovací mno¾inu} s daty.
+\item Otázka je podle jakého pravidla rozhodovat.
+\end{itemize}
+Pøíznakový prostor rozdìlíme na oblasti (nadplochy), pak rozhodneme do které oblasti objekt padne.
+\vecobr{0.8}{oblasti}{Rozdìlení do oblastí}
+
+Nejhor¹í pøípad je situace, kdy neznáme tøídy (resp. poèet), ani trénovací mno¾inu. Pak v pøíznakovém prostoru
+provádíme tzv. {\em shlukování}.
+
+\ods{Jak konstruhovat nadplochy?}
+
+Pouhé zji¹»ování tì¾i¹tì, nedává dobré výsledky. Lze také poèítat rozptyly a podìlit vzdáleností od tì¾i¹».
+
+
+Dal¹í algoritmus: vezmu dva body (o,x) a udìlám dìlicí pøímku, pak testuji dal¹í body z trénovací mno¾iny
+a v pøípadì ¹patné klasifikace posouvám, resp. natáèím pøímku. (evidetnì to lze udìlat pouze pro lineárnì separabilní
+mno¾inu).
+
+Pøíklady klasifikátoru: minimální vzdálenost, minimální vzdálenost od tì¾i¹», nejbli¹¾í soused (NN- nearest neighbour,
+nebezpeèné, citlivý na atypické prvky, není lineární klasifikátor)
+
+\ods{NN -- Nearest neighbour}
+\begin{itemize}
+\item modifikace: k-NN klasifikátor (pøiøadíme do tøídy, kde je $k$-nejbli¾¹ích bodù)  $\rightarrow$ $NN\equiv$ 1-$NN$
+\item k je tøeba volit nízké oproti èetnosti skupiny
+\end{itemize}
+
+Stále nerespektujeme rozlo¾ení èetností $\rightarrow$ konstrukce statistických klasifikátorù.
+
+\begin{tabular}{ccc}
+$\omega_1,\dots,\omega_n$ &\dots& individua\\
+$g_i(x)$ &\dots& rozhodovací funkce
+\end{tabular}
+
+Hledáme $\mathcal{G}=\max\limits_i g_i(x)$ (maximální ve smyslu nejlep¹í).
+
+\subsection{Statistické klasifikace}
+
+Náhodná velièina (NV) $\xi$, $E\xi$, $D\xi=E\left(\xi-E\xi\right)^2$.
+
+\begin{eqnarray}
+Cov(\xi,\nu)&=&E(\xi-E\xi)(\nu-E\nu)\\
+Cor(\xi,\nu)&=&\frac{Cov(\xi,\nu)}{\sqrt{D\xi D\nu}}
+\end{eqnarray}
+
+\ods{Bayesùv klasifikátor}
+
+\begin{equation}
+p(\omega_i|x)=\frac{p(x|\omega_i)p(\omega_i)}{\sum\limits_j p(x|\omega_j)p(\omega_j)}
+\end{equation}
+
+\begin{description}
+\item[$p(\omega_i|x)$] \dots  pravdìpodobnost, ¾e individum bude patøit do $i$-té tøídy, pøièem¾ 
+jsme na nìm namìøili pøíznakový vektor $x$
+\item[$p(\omega_i)$] \dots pravdìpodobnost $i$-té tøídy v $\Omega$
+\item[$p(x|\omega_i)$] \dots  pravdìpodobnost, ¾e na prvku ze tøídy $i$ mù¾eme namìøit vektor  $x$
+\end{description}
+
+Pravdìpodobnosti $p(\omega_i)$ urèíme buï z relativních èetností trénovací mno¾iny, v tom pøípadì je nutné
+zajistit, aby èetnosti odpovídaly skuteènosti, nebo pøedpokládáme pro v¹echny tøídy {\em stejnou} pravdìpodobnost
+tj. $p(\omega_i)=\frac{1}{n},\ \forall i\in \hat{n}$, kde $n$ je poèet tøíd.
+
+Nyní je tøeba urèit $p(x|\omega_i)$ pro ka¾dou tøídu. Pøedpokládejme rozlo¾ení $x$ ve tøídì jako normální. Pomocí
+trénovací mno¾iny odhadneme parametry tohoto rozlo¾ení. Pro jednorozmìrný pøíznakový vektor máme
+
+\def\x{\mathbf{x}}
+\def\m{\mathbf{m}}
+\def\bSigma{\mathbf{\Sigma}}
+
+\begin{eqnarray}
+p(x)&=&\frac{1}{\sigma \sqrt{2\pi}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\\
+\noalign{\hbox{Pro vícerozmìrný pøíznakový vektor pak}\nonumber}\\
+p_N(\x)&=&\frac{1}{(2\pi)^\frac{N}{2}\sqrt{|\bSigma|}}e^{-\frac{1}{2}(\x-\m)^T\bSigma^{-1}(\x-\m)}
+\end{eqnarray}
+
+kde $\bSigma_{ij}=Cov(\xi_i,\nu_j)$ tj. kovariance $i$-tého a $j$-tého pøíznaku.
+
+\ods{Pøíklad:}
+Pro $N=2$ bude
+$$
+\Sigma=\left(\begin{array}{cc}\sigma_1^2 & Cov\\ Cov & \sigma_2^2\end{array}\right)
+$$
+
+Je-li $Cov=0$ vytvoøí pøípad $\sigma_1=\sigma_2$ kru¾nici, $\sigma_1\neq\sigma_2$ elipsu v základní poloze.
+Kovariance nenulová pak vede na elipsu v obecné poloze.
+
+Ka¾dá tøída má tedy vlastní Gaussovu funkci s vlastní kovarianèní maticí $\Sigma$.
+Pokud budou pouze dvì tøídy a $\Sigma_1=\Sigma_2$, pøípad odpovídá Euklidovskému urèování vzdáleností.
+
+\ods{Pozn.} Výraz $(\x-\m)^T\Sigma(\x-\m)$ definuje tzv. Mahalanobisovu vzdálenost.\\
+Rovnost kovarianèních matic je ekvivalentní skuteènosti, ¾e je Bayesùv klasifikátor {\em lineární}.\\
+Pokud jsou tedy kovarianèních matic stejné a zmìní se apriorní rozdìlení 
+pravdìpodobností $(p(\omega_i))$, posunuje se rozdìlovací pøímka od mno¾iny s vìt¹í pravdìpodobností.
+
+\vecobr{0.5}{bayes}{Posun rozdìlovací pøímky lineárního Bayesova klasifikátoru pøi zmìnách $p(\omega_i)$. Vpravo
+extrémní pøípad nulové èetnosti.}
+
+Testování klasifikátoru, provádíme tak, ¾e mno¾inu pøedem klasifikovaných dat rozdìlíme jednak na trénovací a
+testovací. Parametry urèíme z trénovací mno¾iny.
+
+\ods{Mo¾né chyby}
+\begin{itemize}
+\item chyba modelu (není to napø. normální rozlo¾ení)
+\item rozlo¾ení (by» normální) nemusí mít stejné parametry, nìkdy lep¹í 3 tøídy klasifikovat jako dvì a pak tu
+jednu následnì rozdìlit
+\item chyby v odhadech kovarianèní matice (celkem $\approx\frac{n^2}{2}$ prvkù), pokud máme málo dat, 
+pou¾ijeme pøedpoklad o stejných kovarianèních maticích, pak na odhady lze pou¾ít data v¹ech tøíd.
+\item chyba pøedpokladu diagonální matice (pøíznaky jsou vìt¹inou silnì korelované)
+\item curse of dimensionality (prokletí dimenze) -- moc pøíznaku $\Rightarrow$ stejná testovací data $\Rightarrow$ 
+více parametrù $\Rightarrow$ chyby $\Rightarrow$ Je potøeba aspon $10\times$ více prvkù ne¾ pøíznakù.
+\end{itemize}
+
+\ods{Odhady parametrù}
+
+Maximum likelihood test:
+\begin{equation}
+\max\limits_q\prod\limits_{k=1}^N p(x_k|q)
+\end{equation}
+
+$k$ $\dots$ index v trénovací mno¾inì. Udìláme logaritmus a vy¹etøíme extrém funkce tj. ($\frac{\partial}{\partial q}=0$).
+Co¾ vede na lineární rovnice a odhady parametrù
+
+\begin{eqnarray}
+e&=&\frac{\sum x_i}{N}\\
+\sigma^2&=&\frac{1}{N}\sum(x_i-e)^2
+\end{eqnarray}
+
+V pøedchozím jsme pøedpokládali parametrické odhady.
+
+\ods{Neparametrické odhady} pou¾íváme a¾ sel¾ou parametrické odhady.
+
+\begin{itemize}
+\item hustotu pravdìpodobnosti  na intervalech odhadneme pomocí relativních èetností realizací
+\item vylep¹ení -- odhad po bodech (posouváme interval po bodech)
+\item nejlep¹í urèení spojité hustoty pravdìpodobnosti -- metoda Parzenova okna
+\end{itemize}
+
+Provádíme prùmìrování relativních èetností nìjakou váhovou funkcí, aby centrální bod mìl vìt¹í váhu, 
+mo¾né pou¾ít Gaussovu funkci. Dost zále¾í na tom, jak zvolíme ¹íøku okna (support funkce)  $w$. Extrémem 
+jsou:
+\begin{itemize}
+\item $w=1$ $\dots$ Dirackova $\delta$-funkce, dostáváme jednotlivé realizace s pravdìpodobností $\frac{1}{n}$
+\item $w=\max$ $\dots$ dostaneme konstatní hustotu po celém intervalu. 
+\end{itemize}
+
+Malá okna vedou na pøetrénování neboli {\em overtraining} -- na trénovací mno¾inì to funguje bezchybnì, ale na ostatních
+datech nespolehlivì.
+
+\vecobr{0.8}{cetnosti}{Urèování èetností}
+
+Pokud klasifikace stále selhává a v¹e je ji¾ optimalizované, nezbývá ne¾ zkusit zmìnit trénovací mno¾inu nebo
+brát jiné pøíznaky. Èasto se pou¾ívájí kombinace více klasifikátorù $\mathcal{K}_1,\dots,\mathcal{K}_L$, proto¾e 
+nìkteré fungují jen na urèité pøíznaky. Pokud $k$-klasifikátor urèí $p_k(\omega_i|x)$ bereme jako kombinovaný
+klasifikátor $\mathcal{K}$ jednu z tìchto mo¾ností:
+
+\begin{eqnarray}
+p(\omega_i|x)&=&\max\limits_i\prod\limits_{k=1}^L p_k(\omega_i|x)\\
+p(\omega_i|x)&=&\max\limits_i \sum\limits_{k=1}^L p_k(\omega_i|x)\\
+p(\omega_i|x)&=&\max\limits_i \max\limits_{k\in\hat{L}} p_k(\omega_i|x)
+\end{eqnarray}
+
+\subsection{Klasifikace bez uèení (shluková analýza)}
+
+Shlukovou analýzu neboli {\em clustering} pou¾íváme, kdy¾ pøedem  neznáme poèet tøíd. Shluk není pøesnì definován,
+ale znamená zhruba to, ¾e rozptyly parametrù ve shluku jsou \uv{malé}, naproti tomu vzdálenosti jednotlivých shlukù
+\uv{velké}. 
+
+V obecné definici mù¾eme shluk pova¾ovat za libovolnou podmno¾inu dat, a tedy proces shlukování pak lze pøirovnat k pokrytí
+celé mno¾iny disjunktními podmno¾inami.
+
+Míru kvality shlukù lze urèit jako
+
+\begin{equation}
+Q=\sum\limits_{i=1}^N\sum\limits_{x\in C_i}\|x-m_{C_i}\|^2
+\end{equation}
+
+Pokud známe poèet shlukù, metoda funguje dobøe, pokud ne, sna¾í se udìlat z ka¾dého prvku samostatný shluk.
+
+\ods{$N$-means clustering algoritmus}
+\begin{enumerate}
+\item vyberem $N$ støedních hodnot ($\times$)
+\item klasifikujeme v¹echny objekty minimální vzdáleností $\rightarrow$ dostáváme shluky
+\item pøepoèítáme tì¾i¹tì
+\item opakujeme postup pokud tì¾i¹tì mìní své polohy 
+\end{enumerate}
+
+Èasto dává dobré výsledky, ov¹em je zde silná závislost na poèáteèních podmínkách.
+\vecobr{0.6}{clustering}{Ukázka shlukování a závislost procesu na poèáteèních podmínkách.}
+
+\ods{Jiné pøístupy}
+
+\begin{itemize}
+\item Data bereme jako jeden poèáteèní shluk a pro pevný bod zkoumáme, jak se zmìní kritérium kdybychom
+objekt pøesunuli k tomuto shluku. Pokud se zmen¹í, pøepoèítáme tì¾i¹tì a postup opakujeme.
+\item {\em Algoritmus ISODATA} Nejdøíve máme tolik shlukù jako je objektù a shluky spojujeme. Nebo máme poèáteèní shluk,
+který postupnì rozdìlujeme. Pøi tom se vyu¾ívá konstrukce tzv. {\em dendrogramu}.
+\item Podmínky pro zastavení jsou napø. poèet shlukù nebo rozptyl nejvìt¹ího shluku.
+\end{itemize}
+
+\ods{Kriteria pro spojení shlukù}
+
+\begin{eqnarray}
+f&=&\min\limits_{a,b}\rho(a,b)\\
+f&=&\max\limits_{a,b}\rho(a,b)\\
+f&=&\rho(\mu_i,\mu_j)\\
+\noalign{\hbox{{\em Hausdorfova metrika: }}}\nonumber\\ 
+f&=&\max(\max\limits_a\rho(a,B),\max\limits_b\rho(b,A))
+\end{eqnarray}
+
+Hausdorfova metrika je dosti nároèná na výpoèet. Je jasné, ¾e shlukovací proces na zvolené metrice silnì závisí.
+
+Pokud nemáme poèet shlukù, je úloha obtí¾ná, potom rozdìlujeme jeden shluk na malé shluky a poèítáme hodnotu
+kritéria $J_i$. Pak vyná¹íme graf $J_i$ pro $i$ rovno $1,2,\dots,N$ shlukù a optimální poèet shlukù je pak $N_0$
+takové, kde derivace køivky zaène rùst o poznání pomaleji \refobr{shluky}.
+
+\vecobr{0.6}{shluky}{Ukázka vyná¹ení globálního kritéria pro spoèítané shluky a pøedpokládané optimální shlukování.}
+
+{\def\mez{\hskip0em}
+\def\scal{0.35}
+\def\mezv{\vskip12pt}
+\begin{figure}[htbp]%
+  \centerline{%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys000_.ppm}}\\$iter= 0$\end{tabular}\mez%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys001_.ppm}}\\$iter= 1$\end{tabular}\mez%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys002_.ppm}}\\$iter= 2$\end{tabular}\mez%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys003_.ppm}}\\$iter= 3$\end{tabular}\mez%
+  }
+   \mezv
+  \centerline{%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys004_.ppm}}\\$iter= 4$\end{tabular}\mez%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys005_.ppm}}\\$iter= 5$\end{tabular}\mez%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys006_.ppm}}\\$iter= 6$\end{tabular}\mez%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys007_.ppm}}\\$iter= 7$\end{tabular}\mez%
+   }\mezv%
+  \centerline{%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys008_.ppm}}\\$iter= 8$\end{tabular}\mez%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys009_.ppm}}\\$iter= 9$\end{tabular}\mez%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys010_.ppm}}\\$iter= 10$\end{tabular}\mez%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys011_.ppm}}\\$iter= 11$\end{tabular}\mez%
+   }%
+   \caption{Ukázka shlukovaní ve 2D metodou matematické morfologie.}
+  \label{shlukpic}%
+\end{figure}%
+}
+
+\vecobr{0.6}{shlukygraf}{Graf závislosti poètu shlukù na poètu iterací. Za optimální by se dala pova¾ovat druhá iterace
+s dvanácti shluky.}
+
+
+\subsection{Redukce dimenzionality (pøíznakového prostoru)}
+Z namìøených dat máme vìt¹inou obrovské mno¾ství pøíznakù, ty jsou v¹ak silnì korelované, proto se prostor 
+sna¾íme redukovat.
+
+\begin{itemize}
+\item {\em One-class problem} -- cílem je vybrat optimální reprezentaci (tj. $x$ pøíznakù), které charakterizují 
+v¹echny objekty celé mno¾iny
+\item {\em Two-class problem} -- cílem je najít $y<x$ pøíznakù, aby se jen velmi málo ztratila informace
+\end{itemize}
+
+\ods{Pøístupy:}
+\begin{enumerate}
+\item Feature selection -- vybíráme nìjaké pøíznaky (pou¾ívá se pro Two-class)
+\item Feature extraction -- hledáme zobrazení do ménì rozmìrného prostoru (pou¾ívá se pro One-class)
+\end{enumerate}
+
+\ods{One-class}
+
+Hlavní my¹lenka vychází z toho, ¾e korelované pøíznaky vytváøí v pøíznakovém prostoru (PP) více èi ménì protáhlou
+elipsu v ní¾ mù¾eme krat¹í poloosu pova¾ovat za ¹um a za pøíznaky brát souøadnice prùmìtù bodù z PP do hlavní poloosy
+této elipsy.
+\refobr{oneclass}.
+\vecobr{0.8}{oneclass}{Ukázka redukce dimenzionality korelovaných pøíznakù}
+
+\ods{Principle component transformation -- PCT (Karhunen, Loeve)}
+Tato transformace pou¾ívá rotaci a hledá nejlep¹í úhel pro nekorelovanost. 
+Je zalo¾ena  na transformaci SVD. Nekorelovaná matice (tedy ta, kterou hledáme) bude diagonální. Mù¾eme pou¾ít postup:
+
+\begin{enumerate}
+\item $K_x$ $\dots$ matice korelace, pokud je diagonální, konèím.
+\item Provedeme SVD tj. $K_y=GK_xG^T$. Získáme $K_y$, která je diagonální. Pøíznaky jsou pak $y=Gx$.
+\end{enumerate}
+
+Proto¾e $K_x$ je pùvodnì symetrická, lze diagonalizaci provést a matici transformace dokonce volit ortonormálnì.
+Nalezená vlastní èísla pak jsou zároveò rozptyly; matici $G$ sestavíme z pøidru¾ených vlastních vektorù.
+
+Pøedchozí my¹lenka, ¾e malé rozptyly znamenají ¹um ale nefunguje pro {\em two-class}. Právì na základì jich
+jsme schopni tøídy rozli¹it \refobr{twoclass}.
+\vecobr{0.8}{twoclass}{Two-class problém a nemo¾nost zanedbat pøíznaky s malým rozptylem, nebo» hrozí ztráta rozli¹ovací
+schopnosti}
+
+\ods{Two-class a feature selection}
+
+Dobøe rozdìlené tøídy, uva¾ujeme-li jeden pøíznak, budou mít vysokou hodnotu funkce $\Phi$
+\begin{equation}
+\Phi=\frac{(\mu_1-\mu_2)^2}{(\sigma_1^2+\sigma_2^2)}
+\end{equation}
+
+\def\bmu{\mathbf{\mu}}
+Výraz $(\mu_1-\mu_2)^2$ se nazývá {\em interclass deviation}. Je vidìt, ¾e èím je vìt¹í, tím lépe jsou tøídy oddìleny.
+Ve vektorovém pojetí $(\sum((\bmu_1-\bmu_2)_i)^2)$ tato funkce funguje dobøe  za pøedpokladu, ¾e jsou pøíznaky nekorelované (to bohu¾el v praxi 
+není pøíli¹ èasto). 
+
+Pøedchozí operace byly provedeny na trénovacích mno¾inách, tím vznikly parametry pro tøídy $\m_1, \dots, \m_K,
+\Sigma_1,\dots,\Sigma_K$, kde $K$ je poèet tøíd. Mezi dvìma tøídami tak mù¾eme definovat známou {\em Mahalanobisovu 
+vzdálenost} pro tøídy v pøíznakovém prostoru:
+
+\begin{eqnarray}
+d_M=(\m_1-\m_2)(\Sigma_1+\Sigma_2)^{-1}(\m_1-\m_2)^T\\
+\noalign{\hbox{Reps. vylep¹ení od {\em Bhattacharge}}}\\
+d_B=\frac{1}{4}d_M+\frac{1}{2}\ln\frac{|\frac{1}{2}(\Sigma_1+\Sigma_2)|}{\sqrt{|\Sigma_1||\Sigma_2|}}
+\end{eqnarray}
+ 
+Pokud chceme pouze vybrat pøíznaky (tj. $D$ pøíznakù a chceme z nich vybrat $d$, tak aby $d<<D$), vyèíslujeme
+$d_M$ (resp. $d_B$) a hledáme $d$-tici, kdy $d_M$ (resp.$d_B$) bude maximální.
+
+\ods{Algoritmus Branch \& Bound}
+My¹lenkou algoritmu je efektivní procházení celého stromu pøíznakù (viz obr. \ref{branchandbound}). Strom má ve 
+svých uzlech $k$-tice pøíznakù. Strom se odvíjí od koøene, kde je celká $D$-tice pøíznakù, k listùm, ve kterých u¾ je jen
+ $d$-tice pøíznakù. V ka¾dém následujícím patøe stromu ubyde jeden pøíznak. Strom procházíme od koøene k listùm
+ a v ka¾dém uzlu spoèteme kritérium ($K=d_M(\langle k$-tice$\rangle)$. Hodnota $K$ se zanoøováním hloubìji do stromu bude zmen¹ovat, a¾
+ dojdeme k prvnímu listu. Zde si ulo¾íme $V=K$ a jdeme k dal¹ím uzlùm. Nyní po výpoètu $K$ testujeme zda $K>V$. Pokud
+ to neplatí (tj. $K\leq V$), mù¾eme zahodit celý podstrom, proto¾e hodnota $K$ se bude dál jen sni¾ovat a my se 
+ pøece sna¾íme najít $d$-tici pro které je $K$ maximální. Pokud se dostaneme opìt do listu a je $K>V$, 
+ aktualizujeme hodnotu $V$ na $K$ a zapamatujeme si tento list. Tak postupujeme dále a¾ projdeme celý strom.
+ 
+ 
+\vecobr{0.6}{branchandbound}{Algoritmus Branch \& Bound pøi výbìru 2 ze ¹esti pøíznakù.}
+
+
+\subsection{Suboptimální metody}
+Proto¾e {\em fullsearch} pøíznakù je znaènì pomalý, provádí se místo nìj následující heuristické algoritmy.
+
+\ods{Algoritmus Sequentional forward selection (SFS)}
+\begin{enumerate}
+\item vyberu nejlep¹í pøíznak
+\item pøidám pøíznak, který vyváøí nejlep¹í dvojici s pøedchozím
+\item[$\vdots$]
+\item v $k$-tém kroku pøidám pøíznak, který s pøedchozí $(k-1)$-ticí vytváøí nejlep¹í $k$-tici vzhledem ke kritériu.
+\end{enumerate}
+
+V základním provedení má vady, proto¾e nelze vyhodit pøíznak a pøidáváme pouze po jednom. Tak¾e vylep¹ení:
+pøidávat $j$-tice (v rámci $j$-tice to je {\em fullsearch}). Algoritmus lze samozøejmì modifikovat 
+místo procesu {\em forward} na odebírání tj. {\em backward}.
+
+\ods{Algoritmus Plus $l$ minus $s$}
+Tento je opìt roz¹íøením originálního SFS algoritmu. V daném kroku lze pøidat $l$-tici a odebrat $s$-tici pøíznakù.
+V roz¹íøené verzi navíc $l$ a $s$ jsou dynamické. Algoritmus údajnì velice dobøe funguje. 
+
+\section{Rozpoznávání v obraze}
+\subsection{Segmentace}
+Patøí sem:
+\begin{itemize}
+\item hledání objektù v obraze
+\item oddìlení objektù od pozadí
+\item je tøeba uchovat informace, kde se objekt nachází
+\end{itemize}
+
+Základní tøi metody pro segmentaci obrazu:
+\begin{enumerate}
+\item Prahování
+\item Hrany
+\item Rùst oblasti (Region growing)
+\end{enumerate}
+
+\ods{ad 1) Prahování}
+V podstatì se jedná o rozdìlení na pozadí a objekt. Ideální je pou¾ití na (skoro) binárních obrázcích \refobr{hist}. 
+\vecobr{0.8}{hist}{Histogram obrázku a zvolený práh pro segmentaci typu popøedí/pozadí}
+
+\ods{ad 2) Hrany}
+
+{\em Hrana} je informace v obrazové oblasti. {\em Hranice} pak je informace vy¹¹í úrovnì, mìla by být souvislá, 
+jednobodová.
+
+Urèení hranic se vìt¹inou provádí následujícím postupem.
+
+\begin{enumerate}
+\item hranový detektor
+\item binarizace
+\item zbavení se {\em izolovaných bodù}
+\item zmen¹ení tlou¹»ky na jeden pixel
+\item napojování èástí
+\end{enumerate}
+
+Pøi napojování èástí se prohledává okolí $A$ koncového bodu jedné hranice a podle urèitého kritéria se
+rozhoduje, zda sousední hranice v $A$ napojit nebo ne. Dal¹í mo¾ností je  pou¾ít
+hranové detektory zalo¾ené na funkcionálech, ty èasto vytváøejí automaticky uzavøené køivky.
+
+\vecobr{0.8}{napojeni}{Prohledávání okolí a napojování hranice}
+
+\ods{ad 3) Rùst oblastí}
+Je potøeba specifikovat tzv. semínka ({\em seed-points}), od nich se pak provádí buï numerická simulace roztahování
+køivky v závislosti na gradientu obrázku a køivosti nebo jisté prohledávání okolí a následný rùst køivky do nìj.
+Semínka buï urèuje u¾ivatel nebo se provede hrubá hranová detekce s velkým prahem a semínko se zvolí mimo hranu.
+\vecobr{0.8}{growing}{Region growing s poèáteèními body (semínky)}
+
+Nìkdy je výhodné objekt reprezentovat pomocí kvadraturového stromu, proto¾e ten vytváøí
+homogenní oblasti. Ty se pak mù¾eme sna¾it spojovat.
+\vecobr{0.6}{kvadtree}{Vytvoøení kvadraturového stromu a spojení oblastí do hranice}
+
+\ods{Popis hranice}
+Uva¾ujeme-li nyní binární obrázek a v nìm køivku, mù¾eme k její reprezentaci vyu¾ít tzv. {\em chain codes} tedy
+øetìzce èísel, kde následující èíslo popisuje smìr bodu oproti stávajícímu. Pokud definujeme 4 (absolutní) smìry
+(0 -- nahoru, 1 -- doleva, 2 -- doprava, 3 -- dolù), lze køivku zapsat jako napø. 020233231110. Pøi pou¾ití 
+relativního vyjádøení staèí 3 hodnoty (0 -- rovnì, 1 -- doleva, 2 -- doprava). Procházíme køivku a zapisujeme
+0 pokud nemìníme smìr, 1 resp. 2 kdy¾ køivka zatáèí. Svislé a vodorovné èásti se pak vyobrazí jako sekvence nul.
+
+\ods{Problém hranice}
+V diskrétním rastru vzniká problém, zda za hranièní pixely pova¾ovat ty, které sdílí stìnu nebo zda staèí, sdílí-li 
+spoleèný bod. Následkem toho mù¾eme definovat ètyøokolí a osmiokolí bodu a tím i ètyø-spojitost (resp. osmi-spojitost).
+
+\vecobr{0.6}{okoli}{Ukázka nejednoznaènosti hranice. Definice 4-okolí, 8-okolí}
+\vecobr{0.8}{diler}{Dilatace a eroze objektu s kruhovým objektem}
+
+\subsection{Matematická morfologie}
+Máme-li v obraze objekty s velmi èlenitou hranicí jde jistými operacemi tyto \uv{záhyby} zahladit.
+
+\ods{Morfologické operace}
+Pøedpokládejme v obraze dva objekty $A,B$ reprezentované nìjakým zpùsobem v obraze. Definujeme operace:
+\begin{description}
+\item[Dilatace $\oplus$ (expanze):] $A\oplus B=\{x|B_x\cap A\neq \emptyset\}$
+\item[Eroze $\ominus$:] $A\ominus B=\{x|B_x\subset A\}$
+\end{description}
+
+Za objekt $B$ volíme vet¹inou malý kruh, tak¾e dilatace odpovídá objí¾dìní $B$  po hranici $A$ a zahlazování zálivù.
+Objekt se mírnì roz¹iøuje. Eroze odpovídá objí¾dìní hranice $A$ z vnitøní strany a zahlazování výbì¾kù. Výsledný objekt
+se zmen¹uje \refobr{diler}.
+Bude-li objekt $B$ symetrický, pak z mno¾inových operací vyjde vztah
+
+\begin{equation}
+(A\ominus B)^C=A^C\oplus B\quad\hbox{kde operace $(\cdot)^C$ znaèí doplnìk mno¾iny}
+\end{equation}
+
+Tak mù¾eme definovat operace {\em otevøení} a {\em uzavøení} objektu:
+\begin{description}
+\item[Otevøení:] $A\circ B=(A\ominus B)\oplus B$\quad$\rightarrow$ vyèistí výbì¾ky
+\item[Uzavøení:] $A\bullet B=(A\oplus B)\ominus B$\quad$\rightarrow$ vyèistí zálivy
+\end{description}
+
+\ods{Po¾adavky na pøíznaky:}
+\begin{description}
+\item[1. Invariance] -- Objekty uvnitø tøídy musí mít podobné vlastnosti.
+\item[2. Diskriminabilita] -- Pøíznaky musí být s to rozli¹it pøíslu¹nost k dané tøídì.
+\item[3. Stabilita (robustnost)] -- Je potøeba, aby pøíznaky rozumnì reagovaly na pøípadný ¹um. Stejnì tak malá odli¹nost
+objektu by se mìla odrazit v malé zmìnì hodnoty pøíznaku.
+\item[4. Efektivita] -- Nenároènost na výpoèet pøíznaku, pokud mo¾no men¹í poèet pøíznakù.
+\end{description}
+
+\def\R{\mathbf{R}}
+Pøedpokládejme pøíznakový prostor $\mathcal{P}$ a metriku $\rho$, dále $G$ souvislou, omezenou oblast v $\R^2$
+
+Pøíznaky mù¾eme rozdìlit na:
+\begin{description}
+\item[1. Intuitivní (visual features)] -- barva, plocha, obvod, \dots
+\item[2. Transformaèní] -- jako pøíznaky se berou koeficienty potøebné k dané transformaci
+\item[3. Momenty ] -- pøevod objektu do polynomiální báze $\mathcal{X}=\{x^py^q\}$
+\item[4. Diferenciální] -- napøíklad èásti hranice aproximované hladkou køivkou
+\end{description}
+
+\subsection{Intuitivní pøíznaky}
+\begin{itemize}
+\item obsah (P), obvod (o) -- Tyto pøíznaky nejsou invariantní na zmìnu mìøítka,
+navíc spousta úplnì odli¹ných objektù mù¾e mít stejný obsah resp. obvod.
+\item minimální opsaný obdélník (pomìr jeho stran)
+\item Kompaktnost -- $C:=\frac{4\pi P}{o^2}$, pro jednotkový kruh vyjde 1
+\item Míra konvexnosti -- tj. pomìr obsahu objektu $P$ a obsahu jeho konvexního obalu $P^\prime$. ($\frac{P}{P^\prime}$)
+\item Eulerovo èíslo -- tj. poèet kompoment $C$ minus poèet dìr $H$. ($C-H$)
+\end{itemize}
+Vý¹e uvedené pøíznaky se pou¾ívají k pøedtøídìní pøi velkém mno¾ství tøíd. Obecnou nevýhodou je slabá diskriminabilita,
+výhodou naopak rychlé napoèítání
+
+\ods{Jak zajistit invarianty vzhledem k translaci?} -- staèí funkce pøepoèítávat s ohledem na tì¾i¹tì.
+
+\subsection{Transformaèní pøíznaky}
+Chceme-li charakterizovat nìjakým zpùsobem objekt, lze pou¾ít tzv. {\em shape-vector},  co¾ je posloupnost vzdáleností
+od tì¾i¹tì objektu k jeho okraji po jistých úhlových pøírustcích. 
+
+Slo¾ky Shape-vectoru $(a_k)$ nejsou primárnì invariantní na rotaci objektu ani na zmìnu mìøítka. Pokud chceme 
+zajistit invarianci na zmìnu mìøítka, vybereme maximální vzdálenost, od ní zaèneme a slo¾ky podìlíme touto maximální
+vzdáleností. Problém vzniká, pokud je takových slo¾ek více, resp. kdy¾ je spousta slo¾ek blízkých této vzdálenosti.
+
+\vecobr{0.8}{shapevec}{Konstrukce Shape-vectoru}
+Invarianci na rotaci pøímo nezajistíme, museli bychom rotovat posloupnost. To ov¹em mù¾eme nahradit operací
+korelace. Která nám nalezení shody zajistí.
+
+Druhý zpùsob je obejít v¹echny mo¾né rotace trikem.
+Pokud provedeme $FFT$, dostaneme komplexní vektor  $(A_k)$. Z FFT shift-teorému plyne, ¾e  mù¾eme porovnávat 
+absolutní hodnoty slo¾ek tohoto vektoru. Ty toti¾ budou invariantem, nebo» poèáteèní posun (v tomto pøípadì poèáteèní úhel,
+od kterého tvoøíme shape-vector) se po $FFT$ pøevede na komplexní jednotku, která násobí pùvodní funkci, tak¾e v absolutní
+hodnotì se vektor nezmìní. Dva Shape-vectory  budou po slo¾kách splòovat vztah
+
+\begin{eqnarray}
+{A'}_k&=&e^{-i\pi\phi}A_k\\
+\noalign{\hbox{tedy}\nonumber}\\
+|{A'}_k|&=&|e^{-i\pi\phi}||A_k|=|A_k|=\sqrt{\Re^2A_k+\Im^2A_k}
+\end{eqnarray}
+
+Shape-vektory dobøe fungují jen na tzv. {\em hvìzdicovité objekty}. Objekty ale bývají slo¾itìj¹í. Proto vezmeme
+kru¾nicovitou sí», zaèneme opìt od maximálního bodu a pokud objekt pøekrývá více ne¾ polovinu segmentu, zapisujeme
+do tzv. {\em tvarové matice} 1 jinak 0 \refobr{krsit}. 
+\begin{itemize}
+\item[$+$] ka¾dý objekt má stejnì velkou matici, stejným poètem mezikru¾í zajistíme i invarianci na zmìnu mìøítka
+\item[$-$] velké pamì»ové nároky
+\item[$-$] stejná míra váhy pro velké i malé segmenty $\rightarrow$ polomìry se volí, aby segmenty mìly stejnou plochu
+\end{itemize}
+Metoda údajnì velmi dobøe funguje.
+\vecobr{0.8}{krsit}{Pøíznaky tvoøené mezikruhovými segmenty}
+
+\ods{Rozpoznávání polozakrytých objektù}
+Vý¹e uvedené pøíklady nefungují, proto¾e zakrytí zmìní celý vektor. Tvarová matice také nelze pou¾ít, proto¾e se
+podstatnì zmìnilo tì¾i¹tì. U binárních objektù lze vzít lokální vlastnosti hranice -- diferenciální invariance.
+
+Definuje se metrika jako¾to délka shody s hranicí v databázi. To je sice dobré, ale je potøeba hranici zapsat i s 
+derivacemi vy¹¹ích øádù, tím je to zase náchylné na ¹um, co¾ opìt vede na malou pou¾itelnost v praxi.
+
+Dal¹ím nápadem je tøeba rozsekat objekt na men¹í objekty a poèítat klasické pøíznaky a ty pak v rámci objektu globálnì 
+slouèit. Tato metoda funguje dobøe na polygonech, tak¾e nejdøíve je potøeba objekt {\em aproximovat polygonem}, co¾
+nìkdy bývá obtí¾né. Pøi porovnání dvou objektù musíme toti¾ udìlat i stejné dìlení.
+
+Pro hladkou køivku mù¾eme za pøíznaky brát {\em inflexní body (IB)} tj. øe¹ení rovnice $\ddot{x}\dot{y}-\ddot{y}\dot{x}=0$.
+Tyto invarianty se chovají dobøe pøi afinní transformaci. Pro pøedstavu staèí vzít poèet inflexních bodù.
+Problém vzniká pøi napoèítávání. Hodnoty bývají blízké nule, tak¾e je tøeba vhodnì volit práh. Objekt rozdìlíme podle 
+inflexních bodù, ty následnì spojíme a bereme \uv{odøezky} pro opakování postupu. Hledání IB je nestabilní.
+
+Lep¹í a spolehlivìj¹í metody zatím nebyly objeveny.
+
+\ods{Jak pou¾ít morfologie k popisu objektu?} Definujeme tzv. {\em Morfologické spektrum (MS)}. S rùznými objekty (napøíklad
+kruhy promìnného polomìru) provádíme nad objektem operaci {\em otevøení} a zaznamenáváme do grafu pøíslu¹nou plochu \refobr{morfs}.
+Tato charakteristika bývá celkem spolehlivá, i kdy¾ lze najít objekty, které mají stejné MS a pøitom vypadají rùznì. 
+
+\vecobr{0.7}{morfs}{Pøíklad morfologického spektra objektu}
+
+\subsection{Momentové invarianty}
+Pøedpokládejme, ¾e máme obraz zadán jako funkci $f:\R^2\rightarrow \R $.
+Dále nech» $\mathcal{X}=\{x^py^q\}$ je báze polynomù na $\R^2$. Prùmìty funkce $f(x,y)$ do báze $\mathcal{X}$ nazýváme
+{\em Momenty}.
+
+\def\d{{\rm d}}
+{\em Základní (tzv. geometrické)} momenty definujeme vztahem
+\begin{equation}
+m_{pq}=\int x^py^qf(x,y)\d x\d y\qquad \hbox{pro $p,q=0,1,\dots$}
+\end{equation}
+
+Lze ukázat, ¾e funkce, která je poèástech spojitá a s omezeným supportem je jednoznaènì svými momenty urèena
+a naopak.
+
+Pro souøadnice tì¾i¹tì objektu pak vyjdou vztahy:
+\begin{eqnarray}
+x_t&=&\frac{m_{10}}{m_{00}}\nonumber\\
+y_t&=&\frac{m_{01}}{m_{00}}
+\end{eqnarray}
+
+Pak definujeme takzvané {\em Centrální momenty}  jako:
+
+\begin{equation}
+\mu_{pq}=\int (x-x_t)^p(y-y_t)^qf(x,y)\d x\d y\qquad \hbox{pro $p,q=0,1,\dots$}
+\end{equation}
+
+®e lze centrální momenty vyjádøit jako funkci geometrických momentù je zøejmé, vzhledem k tomu, ¾e se jedná o dvì 
+báze stejného prostoru.
+
+\ods{Invarianty vùèi geometrickým transformacím.}
+Hledejme nyní funkce momentù tak, aby se pøi zadaných geometrických transformacích zachovávaly. 
+
+Aplikace je pak zøejmá napøíklad pøi rozpoznávání znakù (OCR), rozpoznávání fotografií, apod.
+
+\subsubsection{Zmìna mìøítka}
+Transformace zmìny mìøítka je definována jako
+\begin{eqnarray}
+x'&=&ax\nonumber\\
+y'&=&ay
+\end{eqnarray}
+
+Je pak ale
+\begin{eqnarray}
+{m'}_{pq}&=&\int {x'}^p{y'}^q{f'}(x',y')\d x'\d y'=\int (ax)^p(ay)^qf(x,y)a^2\d x\d y=\nonumber\\
+&=&a^{p+q+2}\int x^py^qf(x,y)\d x\d y=a^{p+q+2} m_{pq}\\
+\noalign{\hbox{proto¾e absolutní hodnota z Jakobiánu transformace je $|\mathcal{J}|=a^2$}}\nonumber
+\end{eqnarray}
+
+Chceme-li tedy zkonstruhovat invariant na zmìnu mìøítka staèí ho pøedpokládat ve tvaru
+\begin{eqnarray}
+\nu_{pq}&=&\frac{\mu_{pq}}{\mu^\omega_{00}}\\
+\noalign{\hbox{Pak bude}\nonumber}\\
+{\nu'}_{pq}&=&\frac{{\mu'}_{pq}} {{\mu'}^\omega_{00}}=\frac{a^{p+q+2}\mu_{pq}}{a^{2\omega}\mu^\omega_{00}}=
+\frac{a^{p+q+2}}{a^{2\omega}}\nu_{pq}\nonumber\\
+\noalign{\hbox{proto¾e má být ${\nu'}_{pq}=\nu_{pq}$}\nonumber}\\
+\noalign{\hbox{Je potøeba, aby $a^{p+q+2-2\omega}=1$, èeho¾ docílíme volbou}\nonumber}\\
+\omega&=&\frac{p+q}{2}+1
+\end{eqnarray}
+
+
+\subsubsection{Rotace soustavy}
+Transformace rotace o úhel $\phi$ je pøedepsána rovnicemi
+\begin{eqnarray}
+x'&=&x\cos\phi-y\sin\phi\nonumber\\
+y'&=&x\sin\phi+y\cos\phi
+\end{eqnarray}
+
+Spoèteme-li napøíklad momenty do øádu dva bude
+\begin{eqnarray}
+{m'}_{20}&=&\int(x\cos\phi-y\sin\phi)^2f(x,y)\d x\d y\\
+\noalign{\hbox{a po výpoètu}\nonumber}\\
+{m'}_{20}&=& m_{20}\cos^2\phi-2m_{11}\cos\phi\sin\phi +m_{02}\sin^2\phi \\
+\noalign{\hbox{podobnì}\nonumber}\\
+{m'}_{02}&=& m_{20}\sin^2\phi+2m_{11}\cos\phi\sin\phi +m_{02}\cos^2\phi 
+\end{eqnarray}
+
+\noindent Seètením obou rovnic dostaneme
+\begin{equation}
+{m'}_{20}+{m'}_{02}=m_{20}+m_{02}
+\end{equation}
+\noindent co¾ je invariant na otáèení. Dal¹ím takovým invariantem je výraz
+\begin{equation}
+(m_{20}-m_{02})^2+4m^2_{11}
+\end{equation}
+Lze ukázat, ¾e dal¹í invarianty pro otáèení u¾ nenajdu.
+
+Momenty do 2. øádu urèují tzv. {\em objektovou elipsu}. Je-li $\mu_{11}=0$ bude objekt symetrický.
+Støedovì symetrické objekty mají dokonce v¹echny centrální momenty lichého øádu rovny nule.
+
+\ods{Classical moments invariants}
+\begin{eqnarray}
+\Phi_1&=&\mu_{20}+\mu_{02}\\
+\Phi_2&=&(\mu_{20}-\mu_{02})^2+4\mu^2_{11}\\
+\Phi_3&=&(\mu_{30}-3\mu_{12})^2+(3\mu_{21}-\mu_{03})^2\\
+\Phi_4&=&(\mu_{30}+\mu_{12})^2+(\mu_{21}+\mu_{03})^2\\
+\Phi_5&=&(\mu_{30}-3\mu_{12})(\mu_{30}+\mu_{12}((\mu_{30}+\mu_{12})^2-3(\mu_{21}+\mu_{03})^2)+\nonumber\\
+&&+(3\mu_{21}-\mu_{03})(\mu_{21}+\mu_{03})(3(\mu_{30}+\mu_{12})^2-(\mu_{21}+\mu_{03})^2)\\
+\Phi_6&=&(\mu_{20}-\mu_{02})((\mu_{30}+\mu_{12})^2-(\mu_{21}+\mu_{03})^2)+\nonumber\\
+&&+4\mu_{11}(\mu_{30}+\mu_{12})(\mu_{21}+\mu_{03})\\
+\Phi_7&=&(3\mu_{21}-\mu_{03})(\mu_{30}+\mu_{12})((\mu_{30}+\mu_{12})^2-3(\mu_{21}+\mu_{03})^2)+\nonumber\\
+&&-(\mu_{30}-3\mu_{12})(\mu_{21}+\mu_{03})(3(\mu_{30}+\mu_{12})^2-(\mu_{21}+\mu_{03})^2)
+\end{eqnarray}
+
+Hledání invariantù je velmi obtí¾né. Jde v¹ak pou¾ít trik, který toto hledání ulehèí.
+Definujeme-li si komplexní momenty podle vztahu
+\begin{eqnarray}
+C_{pq}&=&\int\limits_{-\infty}^\infty\int\limits_{-\infty}^\infty(x+iy)^p(x-iy)^q f(x,y)\d x\d y\\
+\noalign{\hbox{po pøevodu do polárních souøadnic bude}\nonumber}\\
+C_{pq}&=&\int\limits_0^\infty\int\limits_0^{2\phi}r^{p+q}e^{i(p-q)\theta}\tilde{f}(r,\theta)\d r\d \theta
+\end{eqnarray}
+\noindent Pokud nyní provedeme rotaci soustavy o úhel $\phi$ dostaneme vztah
+\begin{equation}
+{C'}_{pq}=C_{pq}\cdot e^{-i(p-q)\phi}
+\end{equation}
+\noindent Z èeho¾ plyne, ¾e $|C_{pq}|$ bude invariant proto¾e $e^{-i(p-q)\phi}$ je komplexní jednotka.
+Invarianty jde ale hledat i ve tvaru $C_{pq}\cdot C_{kl}$ tak, aby se komplexní jednotka vykrátila.
+Napøíklad $C_{pq}C_{qp}$ bude invariant. Obecnì
+
+\begin{eqnarray}
+I&=&\prod\limits_{j=1}^nC_{p_jq_j}^{k_j}\\
+\noalign{\hbox{za podmínky}\nonumber}\\
+\sum\limits_{j=1}^nk_j(p_j-q_j)&=&0
+\end{eqnarray}
+\noindent bude invariantem. Tímto zpùsobem lze najít v¹echny invarianty $\Phi_1,\dots,\Phi_7$.
+®ádný dal¹í s pøedchozími nezávislý u¾ neexistuje. Je napøíklad
+\begin{eqnarray}
+C_{00}&=&m_{00}\\
+C_{10}&=&m_{10}+im_{01}\\
+C_{20}&=&m_{20}-m_{02}+2im_{11}\\
+C_{11}&=&m_{20}+m_{02}
+\end{eqnarray}
+
+Stabilita pøedchozích invariantù na ¹um se ukazuje jako dobrá. 
+\ods{Jak poèítat momenty?}
+Klasická diskretizace typu 
+\begin{equation}
+m_{pq}=\sum\limits_{ij}i^pj^qf_{ij}
+\end{equation}
+\noindent se sice pou¾ívá, nicménì je
+matematicky ¹patnì nebo spí¹ málo pøesná.
+
+Pro pøípad jednorozmìrného momentu poèástech konstantní funkce $f(x)$ bude
+\begin{eqnarray}
+m_p&=&\int x^p f(x)\d x=\sum\limits_{i}f_i\int\limits_{A_i}x^p\d x\quad\hbox{kde $A_i\equiv<i,i+1>$}\\
+&=&\sum\limits_{i}f_i\left[\frac{x^{p+1}}{p+1}\right]^{i+1}_i=\sum\limits_{i}f_i
+\left[\frac{(i+1)^{p+1}}{p+1}-\frac{i^{p+1}}{p+1}\right]
+\end{eqnarray}
+
+Bylo dokázáno, ¾e pøi klasickém výpoètu momentu øádu $b$ je chyba úmìrná momentùm øádu $(b-2)$. 
+
+Výpoèty momentù mohou být dosti nároèné, pro binární obrázky, lze výpoèty urychlovat a to buï
+\begin{itemize}
+\item dekomponovat na obdélníky, øádky, sloupce, \dots
+\item pou¾ít Greenovu formuli a integrovat pøes hranici objektu
+\end{itemize}
+
+\subsection{Problém rekonstrukce}
+
+Uva¾ujme funkci
+\begin{eqnarray}
+F(u)&=&\int e^{-iux}f(x)\d x=\int\sum\frac{(-iux)^n}{n!}f(x)\d x=\nonumber\\
+&=&\sum\frac{(-i)^n}{n!}u^n\int x^nf(x)=\sum\frac{(-i)^n}{n!}u^n m_n\label{rada}
+\end{eqnarray}
+\noindent Tak¾e pokud máme momenty, mù¾eme sestavit øadu (\ref{rada}), pak provést inverzní Fourierovu 
+transformaci a následnou rekonstrukci obrazu.
+
+Pro rekonstrukci jsou optimální ortogonální báze funkcí (nevznikají zbyteèné redundance).
+Báze $\mathcal{X}=\{x^py^q\}$ v¹ak ortogonální není, proto se hledalo vyjádøení momentù
+v bázích OG polynomù (Èeby¹ev, Lagrange). Tyto pochopitelnì vedou na lep¹í výsledky pøi rekonstrukci.
+Z hlediska momentových invariantù ale nepøiná¹í nic nového.
+
+\subsubsection{Invariant vùèi konvoluci}
+Pøi aplikacích získáváme obèas rozmazaná nebo jinak ponièená data. Bylo by proto výhodné, kdyby
+existovaly invarianty na nìjaký druh konvoluce $g=f\star h$. Ukazuje se, ¾e ve speciálních pøípadech
+existují. 
+
+Nech» $h$ je konvoluèní jádro takové, ¾e $\int h=1$ a $h$ je støedovì symetrická, pak po Fourierovì 
+transformaci mù¾eme psát:
+
+\begin{eqnarray}
+G&=&F\cdot H\\
+|G|&=&|F||H|\\
+ph(G)&=&ph(F)+ph(H)\\
+\noalign{\hbox{A proto¾e $H$ je nyní reálná funkce ($h$ symetrické), je}\nonumber}\\
+ph(H)&=&\left\{\begin{array}{ll}0\\\pi\end{array}\right.\\
+\noalign{\hbox{A tedy napøíklad}\nonumber}\\
+\tan ph(G)&=&\tan ph(F)
+\end{eqnarray}
+\noindent Tak¾e tangenta fáze je invariantem vùèi konvoluci. Je nutné ov¹em poznamenat, ¾e 
+nejsme schopni provést zpìtnou rekonstrukci, proto¾e fázová zmìna $+\pi$ je pro obraz podstatná.
+
+Má-li jádro $h$ napøíklad rotaèní symetrii bude invariantem i výraz $\mu_{20}-\mu_{02}$ 
+\begin{eqnarray}
+\mu_{20}^g&=&\mu_{20}^f\mu_{00}^h+\mu_{20}^h\mu_{00}^f\\
+\mu_{02}^g&=&\mu_{02}^f\mu_{00}^h+\mu_{02}^h\mu_{00}^f\\
+\noalign{\hbox{a po odeètení}\nonumber}\\
+\mu_{20}^g-\mu_{02}^g&=&(\mu_{20}^f-\mu_{02}^f)\mu_{00}^h+(\mu_{20}^h-\mu_{02}^h)\mu_{00}^f\\
+\noalign{\hbox{proto¾e je ale $\mu_{00}^h=1$ a $\mu_{20}^h=\mu_{02}^h$ máme}\nonumber}\\
+\mu_{20}^g-\mu_{02}^g&=&\mu_{20}^f-\mu_{02}^f
+\end{eqnarray}
+
+\section*{Disclaimer}
+{
+\sc
+Vzhledem k~bezplatnému poskytnutí produktu se na produkt
+nevztahuje ¾ádná záruka, a to v~míøe povolené zákonem. Pokud není
+písemnì stanoveno jinak, poskytují dr¾itelé autorských práv popøípadì
+jiné strany produkt \uv{tak, jak je}, bez záruky jakéhokoliv druhu, a»
+výslovnì nebo vyplývající, vèetnì, ale nikoli jen, záruk prodejnosti
+a vhodnosti pro urèitý úèel. Pokud jde o~kvalitu a výkonnost produktu,
+le¾í ve¹keré riziko na vás. Pokud by se u~produktu projevily závady,
+padají náklady za v¹echnu potøebnou údr¾bu, opravy èi nápravu na vá¹
+vrub.
+
+V~¾ádném pøípadì, s~výjimkou toho, kdy¾ to vy¾aduje platný zákon, anebo
+kdy¾ to bylo písemnì odsouhlaseno, vám nebude ¾ádný z~dr¾itelù
+autorských práv odpovìdný za ¹kody,
+vèetnì v¹ech obecných, speciálních, nahodilých nebo následných ¹kod
+vyplývajících z~u¾ívání anebo neschopnosti u¾ívat produktu (vèetnì ale
+nikoli jen, ztráty nebo zkreslení dat, nebo trvalých ¹kod zpùsobených
+vám nebo tøetím stranám, nebo selhání funkce produktu v~souèinnosti
+s~jinými produkty), a to i v~pøípadì, ¾e takový dr¾itel autorských práv
+nebo jiná strana byli upozornìni na mo¾nost takových ¹kod.
+}
+

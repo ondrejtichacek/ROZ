@@ -1,0 +1,12 @@
+#!/bin/bash
+
+rm *_il2.tex
+rm *.dvi
+rm *.aux
+rm *.log
+rm *.toc
+rm *.ps
+rm *.pdf
+rm Makefile
+rm MakefilePDF
+

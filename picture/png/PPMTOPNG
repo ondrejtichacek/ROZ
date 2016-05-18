@@ -1,0 +1,10 @@
+#!/bin/bash
+
+>tempzxc123.png
+for x in `ls *.ppm`
+do
+convert $x tempzxc123.png
+mv tempzxc123.png $x.png
+rm $x
+done
+rm tempzxc123.png

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for x in `ls *.png`
+do
+convert $x $x.eps
+done
+

@@ -1,0 +1,118 @@
+#!/usr/bin/perl
+# fig2eps - Converts xfigs to eps format.
+#
+# This program accepts an xfig file as input (give its name on the command
+# line)# and produces an eps file, suitable for insertion into a LaTeX
+# document.  It is more sophisticated than ordinary fig2dev in that it typesets
+# text labels as LaTeX.  There is no need to set the "special" flag in text
+# fields in the figure.  However, if the figure contains the string "nolatex",
+# than an ordinary conversion is done.  The figure comments would be a good
+# place for this.
+#
+# You know, it really should be easier than this...
+#
+# Revision History:
+#   12/13/02 - Initial release (Jason O'Kane)
+#
+#
+# This software is provided without warranty of any kind.  You may distribute
+# it freely for non-commercial purposes.
+#
+# Copyright 2002, Jason O'Kane
+
+$fig = shift;
+$fig || die "specify fig to convert\n";
+print "Converting $fig to EPS\n";
+
+($base)  = ($fig =~ /(.*)\.fig/);
+$fig2    = $base.".fig2";
+$pstex   = $base.".pstex"; 
+$pstex_t = $base.".pstex_t"; 
+$pstex_tcz = $base.".cztex"; 
+$pstex_tczil2 = $base.".cztex_il2.tex"; 
+$driver  = $base.".driver";
+$dvi     = $base.".dvi";
+$ps     = $base.".ps";
+$eps    = $base.".eps";
+$log    = $base.".log";  # These last two are created by LaTeX,
+$aux    = $base.".aux";  # we never use them, but clean them up anyway.
+
+# Check for the string "nolatex" in the original fig.
+if (0 == system("grep nolatex $fig > /dev/null")) {
+	print "Found nolatex flag - straigt conversion.\n";
+	system "fig2dev -Leps   $fig $eps";
+	exit(0);
+}
+
+# Preprocess the fig - set the special flag for all text labels
+#   Note: It might be a good idea to be smarter about this, i.e.
+#   only setting the special flag for text labels that contain math,
+#   etc.
+#
+# Also escapes # characters, which have special meaning in LaTeX.  Of course,
+# this assumes that we never want to define a LaTeX macro in a text label of a
+# figure, but I think I'm safe in this one.
+open FI,"<$fig";
+open FO,">$fig2";
+$q = 0;
+$ln = 0;
+while ($line = <FI>) {
+	$ln++;
+	if($line =~ /4(( [0-9.-]*){7}) 4 (.*)/) {
+		$line = "4$1 6 $3\n";
+	}
+	if(!($line =~ /^#/)) {
+		$line =~ s/#/\\\\#/g;
+	}
+	print FO "$line";
+}
+
+close FI;
+close FO;
+
+# Convert from fig format to combined PS/LaTeX
+system "fig2dev -Lpstex   $fig2 $pstex  ";
+system "fig2dev -Lpstex_t -p $pstex $fig2 $pstex_t";
+
+$width  = "100cm";
+$height = "100cm";
+
+# Create driver to merge PS part with LaTeX part
+open DR,">$driver";
+print DR "\\documentclass[10pt]{article}\n";
+print DR "\\usepackage{color}\n";
+print DR "\\usepackage{epsfig}\n";
+print DR "\\usepackage{czech}\n";
+print DR "\\setlength{\\textwidth}{$width}\n";
+print DR "\\setlength{\\textheight}{$height}\n";
+print DR "\\begin{document}\n";
+print DR "\\pagestyle{empty}\n";
+#print DR "\\input{$pstex_tczil2}\n";
+print DR "\\input{$pstex_tcz}\n";
+print DR "\\input{$pstex_t}\n";
+print DR "\\end{document}\n";
+close DR;
+
+# Use the driver to create an EPS from the exported fig
+#system "iconv -f UTF-8 -t LATIN2 $pstex_tcz >$pstex_tczil2";
+system "cslatex $driver";
+system "dvips -E $dvi -o $ps";
+
+# Finally, convert (full-page) postscript file we got into
+# nicer, smaller EPS file.
+
+# At some point, this became nessescary - In the past dvips did the job
+# correctly.  I don't really understand what changed, but this works.
+system "ps2epsi $ps $eps";
+
+# Delete the gaggle of useless files.
+unlink $fig2;
+unlink $pstex;   
+unlink $pstex_t; 
+unlink $pstex_tczil2; 
+unlink $driver; 
+unlink $dvi; 
+unlink $ps; 
+unlink $log; 
+unlink $aux; 
+

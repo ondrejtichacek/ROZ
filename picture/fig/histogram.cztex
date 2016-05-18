@@ -1,0 +1,6 @@
+\def\stra{$p$ \dots poèet bodù dané intenzity (èetnost)}
+\def\strb{$I$ \dots intenzita (0--255)}
+\def\strc{obrázek s nízkým jasem}
+\def\strd{obrázek se slabým kontrastem}
+\def\stre{$S_x$ \dots ¹íøka obrázku}
+\def\strf{$S_y$ \dots vý¹ka obrázku}

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+
+for x in `ls *.tex`
+do
+ iconv -f LATIN2 -t UTF-8 $x >$x_utf8.tex
+ mv  $x_utf8.tex $x
+done
+

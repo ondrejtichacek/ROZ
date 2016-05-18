@@ -1,0 +1,77 @@
+\documentclass[10pt, a4paper]{article}
+\usepackage[czech]{babel}
+\usepackage{graphics}
+\usepackage{latexsym}
+\usepackage{amsmath}
+%-----------------------------------------
+\def\vecobr#1#2#3{%
+  \begin{figure}[htbp]%
+  \centerline{%
+  \scalebox{#1}{%
+   \includegraphics{picture/#2.eps}%pro vysledne PS
+%   \pdfimage{picture/#2.pdf}%pro vysledne PDF:  pdfcslatex
+   }%
+   }%
+   \caption{#3}\label{#2}%
+  \end{figure}%
+}
+%-----------------------------------------
+\def\pngfig#1#2#3{%
+  \begin{figure}[htbp]%
+  \centerline{%
+  \scalebox{#1}{%
+   \includegraphics{picture/png/#2.png.eps}%
+%   \pdfimage{picture/png/#2.png}%
+   }%
+   }%
+   \caption{#3}\label{#2}%
+  \end{figure}%
+}
+\def\includepng#1{%
+\includegraphics{picture/png/#1.png.eps}%
+%\pdfimage{picture/png/#1.png}%
+}
+%-----------------------------------------
+\def\jpgfig#1#2#3{%
+  \begin{figure}[htbp]%
+  \centerline{%
+  \scalebox{#1}{%
+   \pdfimage{#2}%
+   }%
+   }%
+   \caption{#3}\label{#2}%
+  \end{figure}%
+}
+
+%-----------------------------------------
+\def\pdffig#1#2#3{%
+  \begin{figure}[htbp]%
+  \centerline{%
+  \scalebox{#1}{%
+   \pdfimage{#2}%
+   }%
+   }%
+   \caption{#3}\label{#2}%
+  \end{figure}%
+}
+%-----------------------------------------
+\def\emptyfig#1#2{%
+  \begin{figure}[h]%
+    \vspace{0in}
+   \caption{#2}\label{#1}%
+  \end{figure}%
+}
+\def\refobr#1{(viz.~obr.~\ref{#1})}
+\def\Input#1{\input{#1}}
+\def\ods#1{\paragraph{#1}}
+\def\phi{\varphi}
+\def\d{\mathrm{d}}
+\begin{document}
+\Input{title.tex}
+\maketitle
+\tableofcontents
+\Input{roz1.tex}
+\Input{roz2.tex}
+\end{document}
+
+

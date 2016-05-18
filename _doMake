@@ -1,0 +1,25 @@
+#!/bin/bash
+
+>Makefile
+>MakefilePDF
+printf "d.ps: d.dvi\n\tdvips -o d.ps d.dvi\n" >>Makefile	
+printf "\trm d.dvi\n" >>Makefile	
+printf "d.dvi: " >>Makefile	
+for x in `ls *.tex`
+do
+printf "%s " $x >>Makefile
+done
+printf "\n\tcslatex d\n" >>Makefile	
+printf "\tbibtex d\n" >>Makefile	
+printf "clean:\n\trm -f *.dvi\n" >>Makefile	
+
+
+
+printf "r.pdf: " >>MakefilePDF	
+for x in `ls *.tex`
+do
+printf "%s " $x >>MakefilePDF
+done
+printf "\n\tpdfcslatex r\n" >>MakefilePDF	
+printf "\tbibtex r" >>MakefilePDF	
+printf "\n\trm r.pdf\n" >>MakefilePDF	

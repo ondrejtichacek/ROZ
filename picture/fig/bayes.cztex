@@ -1,0 +1,6 @@
+\def\stra{$p_1=0.5$}
+\def\strb{$p_2=0.5$}
+\def\strc{$p_1=0.7$}
+\def\strd{$p_2=0.3$}
+\def\stre{$p_1=1.0$}
+\def\strf{$p_2=0.0$}
