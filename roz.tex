@@ -1,0 +1,1008 @@
+\def\R{\mathbf{R}}
+\def\N{\mathbf{N}}
+\def\L{\mathbf{L}}
+\def\Z{\mathbf{Z}}
+
+\def\bcirc{\mathbin{\mathpalette\makebcirc{\circ}}} 
+\def\bast{\mathbin{\mathpalette\makebcirc{\ast}}}
+\def\msurr{\mathsurround=0pt}
+\def\makebcirc#1#2{% #1 je <style primitive> a #2 \circ nebo \bullet
+   \ooalign{$#1\bigcirc\msurr$\cr \hfil$#1#2\msurr$\hfil}}
+
+\def\corr{\bast}
+\def\conv{\ast}
+
+
+
+
+
+\ods{Digitalizace}
+
+
+ \begin{itemize}
+ \end{itemize}
+
+ 
+ 
+ \begin{itemize}
+ \end{itemize}
+
+
+
+\ods{Konvoluce}
+
+\begin{equation}
+(f\conv g)(x)=\int f(t)g(x-t)\d t
+\end{equation}
+
+
+\vecobr{0.6}{konvoluce}{K definici konvoluce v 1D.}
+ve 2D.}
+
+\ods{Korelace}
+
+
+\begin{equation}
+(f\corr g)(x)=\int f(t)g(t-x)\d t
+\end{equation}
+
+
+\begin{equation}
+F(u)=\int f(x)e^{-2\pi i u x}\d x
+\end{equation}
+
+
+\begin{equation}
+\mathcal{B}=\{\sin mx,\cos nx,1\}
+\end{equation}
+ 
+\begin{equation}
+F(u,v)=\int f(x,y)e^{-2\pi i (ux+vy)}\d x\d y
+\end{equation}
+
+\begin{equation}
+f(x)=\int F(u)e^{2\pi i u x}\d u
+\end{equation}
+
+\begin{equation}
+f(x,y)=\int F(u)e^{2\pi i (u x+vy)}\d u\d v
+\end{equation}
+ 
+\begin{eqnarray}
+f_1+f_2\stackrel{CFT}{\rightarrow} F_1+F_2\\
+\alpha f \stackrel{CFT}{\rightarrow} \alpha F
+\end{eqnarray}
+
+
+$\int \delta(x)=1$.
+
+\begin{eqnarray}
+\delta(x)&=&\left\{\begin{array}{ll}0\quad x\neq0\\.\quad x=0\end{array}\right.\\
+\int\limits_{-\infty}^\infty\delta(x)\d x&=&1
+\end{eqnarray}
+
+
+\begin{eqnarray}
+f\conv\delta&=&f\quad\forall f\\
+FT(\delta)&=&1\\
+FT(1)&=&\delta
+\end{eqnarray}
+
+
+\begin{eqnarray}
+FT(f\conv g)&=&F\cdot G\\
+FT(f\cdot g)&=&F\conv G
+\end{eqnarray}
+
+
+
+
+\begin{eqnarray}
+f(x)&=&\left\{\begin{array}{ll}c\quad\forall x\in\langle-\lambda,\lambda\rangle,c\in \R\\
+0\quad\hbox{jinde}\end{array}\right.\\
+\noalign{\hbox{pak}\nonumber}\\
+F(u)&=&\int\limits_{-\infty}^{\infty}f(x)e^{-2\pi iux}\d x=c\int\limits_{-\lambda}^\lambda e^{-2\pi i u x}\d x=\nonumber\\
+&=&\frac{c}{-2\pi i u}\left[e^{-2\pi uix}\right]_{-\lambda}^\lambda=c\frac{e^{-2\pi iu\lambda}-e^{2\pi iu\lambda}}{-2\pi i u}=\nonumber\\
+&=&\frac{c}{\pi u}\sin(2\pi\lambda u)\\
+\noalign{\hbox{Pro $c=2$ a $\lambda=\frac{1}{2}$ bude\nonumber}}\\
+F(u)&=&\frac{\sin(\pi u)}{\pi u}=\mathrm{sinc}(u)
+\end{eqnarray}
+
+
+
+
+
+
+\begin{equation}
+f(x-a)\stackrel{CFT}{\rightarrow} e^{-2\pi i a u} F(u)
+\end{equation}
+\begin{eqnarray}
+f(x-a)&=&g(x)\stackrel{CFT}{\rightarrow}\int g(x)e^{-2\pi i u (x-a+a)}\d x=\nonumber\\
+&=&\int f(x-a)e^{-2\pi i u (x-a)-2\pi i u a}\d x=\nonumber\\
+&=&e^{-2\pi i u a}\int f(x-a)e^{-2\pi i u (x-a)}\d x=\bigg\{\hbox{subst. $y=x-a$}\bigg\}=\nonumber\\
+&=&e^{-2\pi i u a}\int f(y)e^{-2\pi i u y}\d y=e^{-2\pi i u a}F(u)
+\end{eqnarray}
+
+
+
+\subsection{Digitalizace}
+
+\begin{equation}
+\end{equation}
+
+
+
+\begin{eqnarray}
+s(x,y)&=&\sum\limits_{i=-\infty}^\infty\sum\limits_{j=-\infty}^\infty\delta(x-i\Delta x,y-j\Delta y)\\
+d(x,y)&=&f(x,y)\cdot s(x,y)
+\end{eqnarray}
+
+\begin{eqnarray}
+S(U,V)&=&\frac{1}{\Delta x}\frac{1}{\Delta y}\sum\limits_{i=-\infty}^\infty\sum\limits_{j=-\infty}^\infty
+\delta(\frac{u-i}{\Delta x},\frac{u-j}{\Delta y})\\
+D(u,v)&=&F(u,v)\conv S(u,v)\label{shannon}
+\end{eqnarray}
+
+
+\begin{itemize}
+\end{itemize}
+
+ 
+\begin{equation}
+\mathrm{sinc}(x,y)=\frac{\sin(\pi x)\sin(\pi y)}{\pi x \pi y}
+\end{equation}
+
+
+\begin{enumerate}
+\end{enumerate}
+
+
+
+\begin{itemize}
+\end{itemize}
+
+
+
+\medskip
+
+\begin{tabular}{ll}
+\end{tabular}
+
+\medskip
+
+\subsection{Operace s Histogramem}
+
+\begin{description}
+\end{description} 
+
+
+
+\begin{enumerate}
+\end{enumerate}
+
+\subsection{Image enhancement methods} 
+\ods{Jas a kontrast}
+
+
+
+
+
+\begin{equation}
+f=f_{\mathrm{org}}+n
+\end{equation}
+
+
+
+
+ 
+\begin{eqnarray}
+n\corr n&=&\sigma^2\cdot \delta\stackrel{CFT}{\rightarrow}\sigma^2\label{korel}\\
+N\cdot N^\star&=&|N|^2
+\end{eqnarray}
+
+
+
+
+\begin{enumerate}
+\begin{eqnarray}
+C&=&\frac{1}{9}\left(\begin{array}{ccc}1&1&1\\1&1&1\\1&1&1\end{array}\right)
+\end{eqnarray}
+nebo
+\begin{eqnarray}
+C&=&\frac{1}{16}\left(\begin{array}{ccc}1&2&1\\2&4&2\\1&2&1\end{array}\right)
+\end{eqnarray}
+
+
+
+
+Tato metoda
+
+
+\begin{eqnarray}
+w=\frac{1}{4}(0,\dots,0,1,2,1,0,\dots,0)
+\end{eqnarray}
+\end{enumerate}
+
+
+
+
+
+\begin{equation}
+\end{array}\right.
+\end{equation}
+
+\begin{eqnarray}
+C&=&\frac{1}{8}\left(\begin{array}{ccc}1&1&1\\1&0&1\\1&1&1\end{array}\right)
+\end{eqnarray}
+
+
+
+
+
+
+
+jako
+\begin{eqnarray}
+SNR=\frac{|N|^2}{|F|^2}(u,v)
+\end{eqnarray}
+
+
+\begin{eqnarray}
+SNR=\frac{|N|^2}{|F|^2}(u,v)=\frac{\sigma_n^2}{\sigma_f^2}.
+\end{eqnarray}
+
+
+\begin{eqnarray}
+snr=-10\log\frac{\sigma_n^2}{\sigma_f^2}
+\end{eqnarray}
+
+
+\subsubsection{Aproximace}
+
+
+\begin{eqnarray}
+min[\lambda \sum\limits_{ij} \|f(x_{ij})-u_{ij}\|^2+\mathcal{J}(f)]\\
+\noalign{\hbox{kde}\nonumber}\\
+\mathcal{J}(f)=\int\!\!\!\!\int\left(\frac{\partial^2f}{\partial x^2}\right)^2+2\frac{\partial^2f}{\partial x\partial y}+
+\left(\frac{\partial^2f}{\partial y^2}\right)^2
+\end{eqnarray}
+
+
+\begin{eqnarray}
+min[\lambda \sum\limits_{ij}w_{ij}\|f(x_{ij})-u_{ij}\|^2+\mathcal{J}(f)],
+\end{eqnarray}
+
+
+\subsection{Detekce hran}
+
+\begin{description}
+\end{description}
+
+funkce intenzity.
+
+
+\begin{enumerate}
+\begin{eqnarray}
+C=\left(\begin{array}{ccc}1&0&-1\\1&0&-1\\1&0&-1\end{array}\right)
+\end{eqnarray}
+
+
+
+\begin{eqnarray}
+C=\left(\begin{array}{ccc}-1&-2&-1\\0&0&0\\1&2&1\end{array}\right)
+\end{eqnarray}
+
+
+\begin{eqnarray}
+C_1&=&\left(\begin{array}{ccc}1&1&1\\1&1&1\\1&1&1\end{array}\right)\\
+C_2&=&\left(\begin{array}{ccc}-1&-2&-1\\0&0&0\\1&2&1\end{array}\right)\\
+C_3&=&C_1\circ C_2=\left(\begin{array}{ccc}-&-&-\\0&0&0\\+&+&+\end{array}\right)\\
+(f\conv C_1)\conv C_2&=&f\conv C_3
+\end{eqnarray}
+
+
+
+\begin{eqnarray}
+\Delta (G\conv f)=(\Delta G)\conv f
+\end{eqnarray}
+
+Laplaceovy rovnice $\Delta f=0$
+
+\begin{eqnarray}
+\Delta =\left(\begin{array}{ccc}0&1&0\\1&-4&1\\0&1&0\end{array}\right)
+\end{eqnarray}
+
+\begin{eqnarray}
+h =\left(\begin{array}{ccc}-1&1&1\\-1&-2&1\\-1&1&1\end{array}\right)
+\end{eqnarray}
+
+\begin{itemize} 
+\item jedna hrana -- jedna odezva
+\end{itemize}
+
+Postup:
+
+\begin{enumerate} 
+$$\left|\begin{array}{cc}1&0\\0&-1\end{array}\right|$$
+\end{enumerate}
+
+\end{enumerate}
+
+
+
+
+
+\begin{eqnarray}
+C&=&\left(\begin{array}{ccc}0&-1&0\\-1&5&-1\\0&-1&0\end{array}\right)
+\end{eqnarray}
+
+
+
+
+
+\begin{itemize}
+\item[a)]
+\begin{enumerate}
+\item provedeme segmentaci obrazu
+\end{enumerate}
+
+\begin{equation}
+C_B=\frac{f_{xx}f_{yy}-f_{xy}^2}{(1+f_x^2+f_y^2)^2}
+\end{equation}
+
+
+\begin{equation}
+\phi(x,y)=\tan^{-1}\left(\frac{f_y}{f_x}\right)
+\end{equation}
+
+
+\begin{eqnarray}
+C_{KR}&=&\frac{(\phi_x,\phi_y)(-f_y,f_x)}{\left|(-f_y,f_x)\right|}\left|(f_x,f_y)\right|=\nonumber\\
+&=&(\phi_x,\phi_y)(-f_y,f_x)=\frac{f^2_xf_{yy}-2f_xf_yf_{xy}+f_y^2f_{xx}}{f_x^2+f_y^2}
+\end{eqnarray}
+
+
+
+\begin{equation}
+K=\frac{\overline{f^2_x}\,\overline{f^2_y}-(\overline{f_x}\,\overline{f_y})^2}{\overline{f^2_x}+\overline{f^2_y}}
+\end{equation}
+
+\end{itemize}
+
+
+\subsection{Restaurace obrazu}
+
+\begin{eqnarray}
+\mathcal{O}&=&T_G\circ T_I\\
+g&=&T_G\circ T_I (f) +n
+\end{eqnarray}
+
+
+\begin{eqnarray}
+g&=&f\conv h +n \label{eqv1}
+\end{eqnarray}
+
+
+
+\begin{eqnarray}
+G&=&F\cdot H\label{eqv2}
+\end{eqnarray}
+
+\begin{eqnarray}
+F&=&G/H\label{eqv3}\\
+\hat{f}&=&\mathcal{FT}^{-1}(F)
+\end{eqnarray}
+
+
+
+
+\begin{eqnarray}
+g&=&f \conv h+n\label{eqv4}\\
+G&=&F\cdot H+N\label{eqv5}\\
+F&=&\frac{G-N}{H}=\frac{G}{H}-\frac{N}{H}\label{eqv6}
+\end{eqnarray}
+
+
+
+
+\begin{eqnarray}
+H&=&\left(\begin{array}{ccc}a&b&a\\b&c&b\\a&b&a\end{array}\right)\\
+G&=&F\cdot H
+\end{eqnarray}
+
+
+\begin{eqnarray}
+\hat{F}&=&G\cdot W\\
+\noalign{\hbox{kde $\hat{F}$ se definuje}\nonumber}\\
+\hat{F}&=&\|f-\hat{f}\|^2\\
+W&=&\mathrm{argmin}E(\|f-\hat{f}\|^2)\label{minimalizace}
+\end{eqnarray}
+
+
+\begin{eqnarray}
+W&=&\frac{1}{H}\cdot\frac{|H|^2}{|H|^2+\phi(u,v)}
+\end{eqnarray}
+
+\begin{eqnarray}
+\phi&=&\frac{|N|^2}{|F|^2}
+\end{eqnarray}
+
+
+\begin{eqnarray}
+\end{eqnarray}
+
+\begin{eqnarray}
+\phi&=&\frac{\sigma_n^2}{\sigma_f^2}
+\end{eqnarray}
+
+
+
+\begin{itemize}
+\end{itemize}
+
+\begin{itemize}
+jas. 
+\end{itemize}
+
+
+\begin{itemize}
+\end{itemize}
+
+
+
+
+\begin{itemize}
+  \begin{eqnarray}
+    H\sim \frac{J_1}{r}\label{bessel}\qquad\begin{array}{ccl}\hbox{$J_1$}&\hbox{\dots}&\hbox{Besselova funkce 1. druhu}\\
+    \end{array}
+  \end{eqnarray}
+
+\end{itemize}
+
+\begin{itemize}
+\end{itemize}
+
+
+\begin{itemize}
+\item omezenost supportu $h$
+\end{itemize}
+
+\begin{eqnarray}
+g_1&=&f\conv h_1+n_1\\
+&\vdots&\nonumber\\
+g_l&=&f\conv h_l+n_l
+\end{eqnarray}
+
+
+
+\begin{eqnarray}
+g=T_G(f)
+\end{eqnarray}
+
+
+
+
+\begin{itemize}
+\end{itemize}
+
+
+
+\begin{itemize} 
+\end{itemize}
+
+
+
+\begin{eqnarray}
+u&=&f(x,y)\\
+v&=&g(x,y)\\
+u_i&=&f(x_i,y_i)\\
+\end{eqnarray}
+
+\begin{itemize}
+\end{itemize}
+
+
+\begin{itemize}
+
+\begin{eqnarray}
+\frac{E[(X-EX)(Y-EY)]}{varX varY}
+\end{eqnarray}
+
+
+\begin{eqnarray}
+C(X,Y)=\frac{\sum\limits_{i=0}^{N-1}
+\sum\limits_{j=0}^{N-1}((X_{ij}-\bar{X})\cdot(Y_{ij}-\bar{Y}))}
+{\sqrt{\sum\limits_{i=0}^{N-1}\sum\limits_{j=0}^{N-1}(X_{ij}-\bar{X})^2\cdot(Y_{ij}-\bar{Y})^2}}
+\end{eqnarray}
+
+
+
+\begin{eqnarray}
+f\corr g \stackrel{CFT}{\rightarrow}F\cdot G^\star
+\end{eqnarray}
+
+
+transformaci bude
+
+\begin{eqnarray}
+f(x)&\stackrel{CFT}{\rightarrow}&F(u)\\
+g(x)&\stackrel{CFT}{\rightarrow}&e^{iau}F(u)\\
+\frac{F\cdot G^\star}{|F||G|}&=&\frac{F^2e^{iau}}{|F|^2}\stackrel{CFT^{-1}}{\longrightarrow}\delta(x-a)
+\end{eqnarray}
+
+
+ kde vztah $\sum|f_{ij}-g_{ij}|$
+\end{itemize}
+
+
+
+\begin{itemize}
+
+
+
+
+ \begin{itemize}
+ \end{itemize}
+\end{itemize}
+
+
+\begin{eqnarray}
+u&=&a_0+a_1x+a_2y\nonumber\\
+v&=&b_0+b_1x+b_2y\label{afinita}
+\end{eqnarray}
+
+
+\begin{eqnarray}
+u&=&\frac{a_0+a_1x+a_2y}{1+c_1x+c_2y}\nonumber\\
+v&=&\frac{b_0+b_1x+b_2y}{1+c_1x+c_2y}\label{perspekt}
+\end{eqnarray}
+
+
+
+
+\begin{eqnarray}
+u&=&a_0+a_1x+a_2y+a_3xy\ [{}+a_4x^2+a_5y^2\ ]\nonumber\\
+v&=&b_0+b_1x+b_2y+b_3xy\ [{}+b_4x^2+b_5y^2\ ]
+\end{eqnarray}
+
+Definujme funkci $d$ 
+
+\begin{eqnarray}
+d&=&\sum\limits_{i=1}^K (f(x_i)-y_i)^2\label{minkvad}
+\end{eqnarray}
+
+\begin{eqnarray}
+\frac{\partial d}{\partial a_i}&=&0\qquad\forall i\in \hat{K}
+\end{eqnarray}
+
+
+\begin{itemize}
+
+\end{itemize}
+
+
+\begin{eqnarray}
+u=\sum a_i\phi_i(r_i)
+\end{eqnarray}
+
+
+
+
+
+\begin{enumerate}
+\begin{itemize}
+\end{itemize}
+\begin{itemize}
+\end{itemize}
+\end{enumerate}
+
+
+
+\begin{itemize}
+\end{itemize}
+
+
+\ods{Jak konstruhovat nadplochy?}
+
+
+
+
+
+\ods{NN -- Nearest neighbour}
+\begin{itemize}
+\end{itemize}
+
+
+\begin{tabular}{ccc}
+$\omega_1,\dots,\omega_n$ &\dots& individua\\
+\end{tabular}
+
+
+
+
+\begin{eqnarray}
+Cov(\xi,\nu)&=&E(\xi-E\xi)(\nu-E\nu)\\
+Cor(\xi,\nu)&=&\frac{Cov(\xi,\nu)}{\sqrt{D\xi D\nu}}
+\end{eqnarray}
+
+
+\begin{equation}
+p(\omega_i|x)=\frac{p(x|\omega_i)p(\omega_i)}{\sum\limits_j p(x|\omega_j)p(\omega_j)}
+\end{equation}
+
+\begin{description}
+\end{description}
+
+
+
+\def\x{\mathbf{x}}
+\def\m{\mathbf{m}}
+\def\bSigma{\mathbf{\Sigma}}
+
+\begin{eqnarray}
+p(x)&=&\frac{1}{\sigma \sqrt{2\pi}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\\
+p_N(\x)&=&\frac{1}{(2\pi)^\frac{N}{2}\sqrt{|\bSigma|}}e^{-\frac{1}{2}(\x-\m)^T\bSigma^{-1}(\x-\m)}
+\end{eqnarray}
+
+
+Pro $N=2$ bude
+$$
+\Sigma=\left(\begin{array}{cc}\sigma_1^2 & Cov\\ Cov & \sigma_2^2\end{array}\right)
+$$
+
+
+
+
+
+
+\begin{itemize}
+\end{itemize}
+
+
+Maximum likelihood test:
+\begin{equation}
+\max\limits_q\prod\limits_{k=1}^N p(x_k|q)
+\end{equation}
+
+
+\begin{eqnarray}
+e&=&\frac{\sum x_i}{N}\\
+\sigma^2&=&\frac{1}{N}\sum(x_i-e)^2
+\end{eqnarray}
+
+
+
+\begin{itemize}
+\end{itemize}
+
+jsou:
+\begin{itemize}
+\end{itemize}
+
+
+
+
+\begin{eqnarray}
+p(\omega_i|x)&=&\max\limits_i\prod\limits_{k=1}^L p_k(\omega_i|x)\\
+p(\omega_i|x)&=&\max\limits_i \sum\limits_{k=1}^L p_k(\omega_i|x)\\
+p(\omega_i|x)&=&\max\limits_i \max\limits_{k\in\hat{L}} p_k(\omega_i|x)
+\end{eqnarray}
+
+
+
+
+
+\begin{equation}
+Q=\sum\limits_{i=1}^N\sum\limits_{x\in C_i}\|x-m_{C_i}\|^2
+\end{equation}
+
+
+\ods{$N$-means clustering algoritmus}
+\begin{enumerate}
+\end{enumerate}
+
+
+
+\begin{itemize}
+\end{itemize}
+
+
+\begin{eqnarray}
+f&=&\min\limits_{a,b}\rho(a,b)\\
+f&=&\max\limits_{a,b}\rho(a,b)\\
+f&=&\rho(\mu_i,\mu_j)\\
+\noalign{\hbox{{\em Hausdorfova metrika: }}}\nonumber\\ 
+f&=&\max(\max\limits_a\rho(a,B),\max\limits_b\rho(b,A))
+\end{eqnarray}
+
+
+
+
+{\def\mez{\hskip0em}
+\def\scal{0.35}
+\def\mezv{\vskip12pt}
+\begin{figure}[htbp]%
+  \centerline{%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys000_.ppm}}\\$iter= 0$\end{tabular}\mez%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys001_.ppm}}\\$iter= 1$\end{tabular}\mez%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys002_.ppm}}\\$iter= 2$\end{tabular}\mez%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys003_.ppm}}\\$iter= 3$\end{tabular}\mez%
+  }
+   \mezv
+  \centerline{%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys004_.ppm}}\\$iter= 4$\end{tabular}\mez%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys005_.ppm}}\\$iter= 5$\end{tabular}\mez%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys006_.ppm}}\\$iter= 6$\end{tabular}\mez%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys007_.ppm}}\\$iter= 7$\end{tabular}\mez%
+   }\mezv%
+  \centerline{%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys008_.ppm}}\\$iter= 8$\end{tabular}\mez%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys009_.ppm}}\\$iter= 9$\end{tabular}\mez%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys010_.ppm}}\\$iter= 10$\end{tabular}\mez%
+  \begin{tabular}{c}\scalebox{\scal}{\includepng{vys011_.ppm}}\\$iter= 11$\end{tabular}\mez%
+   }%
+  \label{shlukpic}%
+\end{figure}%
+}
+
+
+
+
+\begin{itemize}
+\end{itemize}
+
+\begin{enumerate}
+\end{enumerate}
+
+\ods{One-class}
+
+\refobr{oneclass}.
+
+\ods{Principle component transformation -- PCT (Karhunen, Loeve)}
+
+\begin{enumerate}
+\end{enumerate}
+
+
+schopnosti}
+
+\ods{Two-class a feature selection}
+
+\begin{equation}
+\Phi=\frac{(\mu_1-\mu_2)^2}{(\sigma_1^2+\sigma_2^2)}
+\end{equation}
+
+\def\bmu{\mathbf{\mu}}
+
+
+\begin{eqnarray}
+d_M=(\m_1-\m_2)(\Sigma_1+\Sigma_2)^{-1}(\m_1-\m_2)^T\\
+d_B=\frac{1}{4}d_M+\frac{1}{2}\ln\frac{|\frac{1}{2}(\Sigma_1+\Sigma_2)|}{\sqrt{|\Sigma_1||\Sigma_2|}}
+\end{eqnarray}
+ 
+
+\ods{Algoritmus Branch \& Bound}
+ 
+ 
+
+
+
+\ods{Algoritmus Sequentional forward selection (SFS)}
+\begin{enumerate}
+\item[$\vdots$]
+\end{enumerate}
+
+
+\ods{Algoritmus Plus $l$ minus $s$}
+
+\subsection{Segmentace}
+\begin{itemize}
+\end{itemize}
+
+\begin{enumerate}
+\item Hrany
+\end{enumerate}
+
+
+\ods{ad 2) Hrany}
+
+
+
+\begin{enumerate}
+\item binarizace
+\end{enumerate}
+
+
+
+
+
+\ods{Popis hranice}
+
+
+
+
+\begin{description}
+\item[Dilatace $\oplus$ (expanze):] $A\oplus B=\{x|B_x\cap A\neq \emptyset\}$
+\item[Eroze $\ominus$:] $A\ominus B=\{x|B_x\subset A\}$
+\end{description}
+
+
+\begin{equation}
+\end{equation}
+
+\begin{description}
+\end{description}
+
+\begin{description}
+\end{description}
+
+\def\R{\mathbf{R}}
+
+\begin{description}
+\end{description}
+
+\begin{itemize}
+\end{itemize}
+
+
+
+
+\vecobr{0.8}{shapevec}{Konstrukce Shape-vectoru}
+
+
+\begin{eqnarray}
+{A'}_k&=&e^{-i\pi\phi}A_k\\
+\noalign{\hbox{tedy}\nonumber}\\
+|{A'}_k|&=&|e^{-i\pi\phi}||A_k|=|A_k|=\sqrt{\Re^2A_k+\Im^2A_k}
+\end{eqnarray}
+
+\begin{itemize}
+\end{itemize}
+
+
+
+
+
+
+
+
+{\em Momenty}.
+
+\def\d{{\rm d}}
+\begin{equation}
+m_{pq}=\int x^py^qf(x,y)\d x\d y\qquad \hbox{pro $p,q=0,1,\dots$}
+\end{equation}
+
+a naopak.
+
+\begin{eqnarray}
+x_t&=&\frac{m_{10}}{m_{00}}\nonumber\\
+y_t&=&\frac{m_{01}}{m_{00}}
+\end{eqnarray}
+
+
+\begin{equation}
+\mu_{pq}=\int (x-x_t)^p(y-y_t)^qf(x,y)\d x\d y\qquad \hbox{pro $p,q=0,1,\dots$}
+\end{equation}
+
+
+
+
+\begin{eqnarray}
+x'&=&ax\nonumber\\
+y'&=&ay
+\end{eqnarray}
+
+Je pak ale
+\begin{eqnarray}
+{m'}_{pq}&=&\int {x'}^p{y'}^q{f'}(x',y')\d x'\d y'=\int (ax)^p(ay)^qf(x,y)a^2\d x\d y=\nonumber\\
+&=&a^{p+q+2}\int x^py^qf(x,y)\d x\d y=a^{p+q+2} m_{pq}\\
+\end{eqnarray}
+
+\begin{eqnarray}
+\nu_{pq}&=&\frac{\mu_{pq}}{\mu^\omega_{00}}\\
+\noalign{\hbox{Pak bude}\nonumber}\\
+{\nu'}_{pq}&=&\frac{{\mu'}_{pq}} {{\mu'}^\omega_{00}}=\frac{a^{p+q+2}\mu_{pq}}{a^{2\omega}\mu^\omega_{00}}=
+\frac{a^{p+q+2}}{a^{2\omega}}\nu_{pq}\nonumber\\
+\omega&=&\frac{p+q}{2}+1
+\end{eqnarray}
+
+
+\subsubsection{Rotace soustavy}
+\begin{eqnarray}
+x'&=&x\cos\phi-y\sin\phi\nonumber\\
+y'&=&x\sin\phi+y\cos\phi
+\end{eqnarray}
+
+\begin{eqnarray}
+{m'}_{20}&=&\int(x\cos\phi-y\sin\phi)^2f(x,y)\d x\d y\\
+{m'}_{20}&=& m_{20}\cos^2\phi-2m_{11}\cos\phi\sin\phi +m_{02}\sin^2\phi \\
+{m'}_{02}&=& m_{20}\sin^2\phi+2m_{11}\cos\phi\sin\phi +m_{02}\cos^2\phi 
+\end{eqnarray}
+
+\begin{equation}
+{m'}_{20}+{m'}_{02}=m_{20}+m_{02}
+\end{equation}
+\begin{equation}
+(m_{20}-m_{02})^2+4m^2_{11}
+\end{equation}
+
+
+\ods{Classical moments invariants}
+\begin{eqnarray}
+\Phi_1&=&\mu_{20}+\mu_{02}\\
+\Phi_2&=&(\mu_{20}-\mu_{02})^2+4\mu^2_{11}\\
+\Phi_3&=&(\mu_{30}-3\mu_{12})^2+(3\mu_{21}-\mu_{03})^2\\
+\Phi_4&=&(\mu_{30}+\mu_{12})^2+(\mu_{21}+\mu_{03})^2\\
+\Phi_5&=&(\mu_{30}-3\mu_{12})(\mu_{30}+\mu_{12}((\mu_{30}+\mu_{12})^2-3(\mu_{21}+\mu_{03})^2)+\nonumber\\
+&&+(3\mu_{21}-\mu_{03})(\mu_{21}+\mu_{03})(3(\mu_{30}+\mu_{12})^2-(\mu_{21}+\mu_{03})^2)\\
+\Phi_6&=&(\mu_{20}-\mu_{02})((\mu_{30}+\mu_{12})^2-(\mu_{21}+\mu_{03})^2)+\nonumber\\
+&&+4\mu_{11}(\mu_{30}+\mu_{12})(\mu_{21}+\mu_{03})\\
+\Phi_7&=&(3\mu_{21}-\mu_{03})(\mu_{30}+\mu_{12})((\mu_{30}+\mu_{12})^2-3(\mu_{21}+\mu_{03})^2)+\nonumber\\
+&&-(\mu_{30}-3\mu_{12})(\mu_{21}+\mu_{03})(3(\mu_{30}+\mu_{12})^2-(\mu_{21}+\mu_{03})^2)
+\end{eqnarray}
+
+\begin{eqnarray}
+C_{pq}&=&\int\limits_{-\infty}^\infty\int\limits_{-\infty}^\infty(x+iy)^p(x-iy)^q f(x,y)\d x\d y\\
+C_{pq}&=&\int\limits_0^\infty\int\limits_0^{2\phi}r^{p+q}e^{i(p-q)\theta}\tilde{f}(r,\theta)\d r\d \theta
+\end{eqnarray}
+\begin{equation}
+{C'}_{pq}=C_{pq}\cdot e^{-i(p-q)\phi}
+\end{equation}
+
+\begin{eqnarray}
+I&=&\prod\limits_{j=1}^nC_{p_jq_j}^{k_j}\\
+\sum\limits_{j=1}^nk_j(p_j-q_j)&=&0
+\end{eqnarray}
+\begin{eqnarray}
+C_{00}&=&m_{00}\\
+C_{10}&=&m_{10}+im_{01}\\
+C_{20}&=&m_{20}-m_{02}+2im_{11}\\
+C_{11}&=&m_{20}+m_{02}
+\end{eqnarray}
+
+\begin{equation}
+m_{pq}=\sum\limits_{ij}i^pj^qf_{ij}
+\end{equation}
+
+\begin{eqnarray}
+m_p&=&\int x^p f(x)\d x=\sum\limits_{i}f_i\int\limits_{A_i}x^p\d x\quad\hbox{kde $A_i\equiv<i,i+1>$}\\
+&=&\sum\limits_{i}f_i\left[\frac{x^{p+1}}{p+1}\right]^{i+1}_i=\sum\limits_{i}f_i
+\left[\frac{(i+1)^{p+1}}{p+1}-\frac{i^{p+1}}{p+1}\right]
+\end{eqnarray}
+
+
+\begin{itemize}
+\end{itemize}
+
+
+\begin{eqnarray}
+F(u)&=&\int e^{-iux}f(x)\d x=\int\sum\frac{(-iux)^n}{n!}f(x)\d x=\nonumber\\
+&=&\sum\frac{(-i)^n}{n!}u^n\int x^nf(x)=\sum\frac{(-i)^n}{n!}u^n m_n\label{rada}
+\end{eqnarray}
+
+
+
+
+\begin{eqnarray}
+G&=&F\cdot H\\
+|G|&=&|F||H|\\
+ph(G)&=&ph(F)+ph(H)\\
+ph(H)&=&\left\{\begin{array}{ll}0\\\pi\end{array}\right.\\
+\tan ph(G)&=&\tan ph(F)
+\end{eqnarray}
+
+\begin{eqnarray}
+\mu_{20}^g&=&\mu_{20}^f\mu_{00}^h+\mu_{20}^h\mu_{00}^f\\
+\mu_{02}^g&=&\mu_{02}^f\mu_{00}^h+\mu_{02}^h\mu_{00}^f\\
+\mu_{20}^g-\mu_{02}^g&=&(\mu_{20}^f-\mu_{02}^f)\mu_{00}^h+(\mu_{20}^h-\mu_{02}^h)\mu_{00}^f\\
+\mu_{20}^g-\mu_{02}^g&=&\mu_{20}^f-\mu_{02}^f
+\end{eqnarray}
+
+\section*{Disclaimer}
+{
+\sc
+vrub.
+
+}
+
