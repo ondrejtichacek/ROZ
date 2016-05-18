@@ -12,68 +12,112 @@
 \def\corr{\bast}
 \def\conv{\ast}
 
+\section{Základní pojmy}
 
+Mějme dánu spojitou funkci $f:L_1^2\rightarrow \R$, tedy $f(x,y)$ integrabilní. Nazveme ji {\em spojitým obrazem}.
+Podobně {\em diskrétní obraz} definujeme jako posloupnost $F_{ij}\in \hat{n}\cup \{0\}$ pro $i,j\in\Z,n\in\N$.
+Libovolné zobrazení $\Phi: f(x,y)\rightarrow F_{ij}$ nazýváme {\em digitalizací}.
 
 
 
 \ods{Digitalizace}
 
 
+Digitalizaci rozlišujeme podle toho, zda diskretizaci provedeme v prostoru souřadnic či v oboru hodnot. Pak hovoříme o
  \begin{itemize}
+\item {\em vzorkování (prostor souřadnic)}
+\item {\em kvantování (obor hodnot)}
  \end{itemize}
 
+ Ukazuje se, že vzorkování lze za určitých předpokladů provést tak, aby se žádná informace neztratila.
  
+\ods{Předzpracování} -- sem patří následující operace:
  
  \begin{itemize}
+\item potlačení šumu
+\item zvýraznění hran
+\item doostření
+\item změna kontrastu
  \end{itemize}
 
+\ods{Analýza} -- je v podstatě získávání další dodatečné (neobrazové) informace z obrazu. Příkladem je třeba
+určení hranic, rozpoznávání objektů, atd.
 
+\subsection{Matematické transformace}
 
 \ods{Konvoluce}
+Definujeme {\em konvoluci} dvou funkcí $f,g$ jako zobrazení $A: \L_1\times\L_1\rightarrow L_2$
 
 \begin{equation}
 (f\conv g)(x)=\int f(t)g(x-t)\d t
 \end{equation}
 
+V podstatě se tedy jedná o průměrování funkce $f$ jinou funkcí $g$, protože $g$ je obyčejně symetrická funkce s
+malým supportem \refobr{konvoluce}. Je-li např. $g$ obdelníkový puls, pak se jedná o klasické průměrování. Dost 
+často se taky požaduje, aby výsledná funkce měla stejně omezený obor hodnot jako původní $f$, takže se volí $\int g=1$.
 
 \vecobr{0.6}{konvoluce}{K definici konvoluce v 1D.}
+\vecobr{0.6}{konv}{Ukázka konvoluce dvou obdélníkových pulsů. A problém počítání prvku na okraji při diskrétní konvoluci 
 ve 2D.}
+V diskrétním případě je $F$ i $G$ matice. Otočenou matici $G$ posouváme po $F$ a do každého bodu výsledné matice
+napíšeme součet součinů překrývajících se prvků. Na krajích matice $F$ a v rozích je pak třeba zvolit postup, jak se chovat.
+Pokud zůstaneme s $G$ uvnitř $F$, výsledná matice bude menší než původní. Většinou se dělá stejně velká matice jako $F$, ale
+stejně tak ji lze i rozšiřovat \refobr{konv}.
 
 \ods{Korelace}
 
+{\em Korelaci} dvou funkcí definujeme podobně jako konvoluci s tím rozdílem, že funkce $g$ se \uv{neotáčí}. Je to tedy opět zobrazení $A: \L_1\times\L_1\rightarrow L_2$
 
 \begin{equation}
 (f\corr g)(x)=\int f(t)g(t-x)\d t
 \end{equation}
 
+\ods{Spojitá Fourierova transformace (CFT)}
+Nechť $f\in L_1$, pak {\em Spojitá Fourierova transformace\footnote{Fourierova transformace a Spojitá Fourierova transformace se
+nepatrně liší.\\$FT(f(x))=\int f(x)e^{-i u x}\d x,\quad IFT(F(u))=\frac{1}{2\pi}\int F(u)e^{i u x}\d u$}} je definována vztahem:
 
 \begin{equation}
 F(u)=\int f(x)e^{-2\pi i u x}\d x
 \end{equation}
 
+Existence komplexní funkce $F$ plyne z předpokladu, není ovšem zaručeno, že i $F(u)$ bude z $L_1$. 
+V podstatě se jedná o vyjádření původní
+funkce jako lineární kombinace $\sin$ a $\cos$ funkcí.
 
+V diskrétním prostoru, nechť máme ortonormální bázi funkcí 
 \begin{equation}
 \mathcal{B}=\{\sin mx,\cos nx,1\}
 \end{equation}
+na konečném
+dvojrozměrném intervalu. Funkci $f$ jsme pak schopni
+vyjádřit ve tvaru $f=\sum c_k \phi_k$, kde $c_k$ jsou tzv. {\em Fourierovy koeficienty}. To, že jsme se omezili pouze na
+celočíselné násobky frekvencí má za následek fakt, že jsme schopni v celém oboru popsat jen periodické funkce. V obecném
+ pojetí lze libovolnou funkci složit z bazických $\sin$ a $\cos$ funkcí, ovšem jejich frekvence musí být spojitě se měnící.
  
+\ods{Spojitá Fourierova transformace ve 2D (CFT2)}
 \begin{equation}
 F(u,v)=\int f(x,y)e^{-2\pi i (ux+vy)}\d x\d y
 \end{equation}
 
+\ods{Inverzní spojitá Fourierova transformace (ICFT)}
 \begin{equation}
 f(x)=\int F(u)e^{2\pi i u x}\d u
 \end{equation}
 
+\ods{Inverzní spojitá Fourierova transformace 2D (IFT2)}
 \begin{equation}
 f(x,y)=\int F(u)e^{2\pi i (u x+vy)}\d u\d v
 \end{equation}
  
+Ze vztahů a z vlastnosti integrálnu je zřejmé, že 
 \begin{eqnarray}
 f_1+f_2\stackrel{CFT}{\rightarrow} F_1+F_2\\
 \alpha f \stackrel{CFT}{\rightarrow} \alpha F
 \end{eqnarray}
 
+\ods{Diracův puls ($\delta$-funkce)} 
 
+V signálech se definuje speciální bodová funkce $\delta$, která je všude nulová, jen v nule má takovou hodnotu, že
 $\int \delta(x)=1$.
 
 \begin{eqnarray}
@@ -81,6 +125,7 @@ $\int \delta(x)=1$.
 \int\limits_{-\infty}^\infty\delta(x)\d x&=&1
 \end{eqnarray}
 
+Platí tyto vztahy, jejichž důkaz přenecháme matematické analýze.
 
 \begin{eqnarray}
 f\conv\delta&=&f\quad\forall f\\
@@ -88,14 +133,26 @@ FT(\delta)&=&1\\
 FT(1)&=&\delta
 \end{eqnarray}
 
+\ods{Konvoluční teorém}  Vyjadřuje skutečnost, že konvoluci lze ve frekvenční oblasti převést na násobení a naopak.
 
 \begin{eqnarray}
 FT(f\conv g)&=&F\cdot G\\
 FT(f\cdot g)&=&F\conv G
 \end{eqnarray}
 
+Zde se symbolem $\cdot$ nemyslí maticové násobení, ale násobení stejně rozměrných matic po prvcích.
+Pokud chceme ověřit konvoluční teorém v praxi, je potřeba diskrétní data periodicky prodlužovat!
 
+Poznamenejme, že při FT2, tedy dvojdimenzionální Fourierově transformaci, dostáváme komplexní data ({\em Fourierův obraz}).
+Protože jsme ovšem původně měli reálný signál, bude fourierův obraz symetrický podle středu. Co se týká náročnosti,
+má výpočet FT (1D) v základním tvaru složitost $O(n^2)$. V roce 1965 Cooley a Turkey ukázali urychlení výpočtu za předpokladu
+$n=2^k$. Tato rychlá Fourierova transformace (FFT) se používá dodnes, lze ji sestrojit pro obecné obdélníkové matice
+a její složitost je $O(n\log n)$. Naproti tomu konvoluce má složitost $O(n^2)$ pro každý bod výsledné matice, 
+tedy je jasné, že při počítání konvoluce s rozměrnějšími maticemi je výhodnější použít konvolučního teorému a ve frekvenční
+oblasti pouze vynásobit matice. Například už pro obrázek $512\times512$ a konvoluční matici  $11\times11$ je použití
+konvolučního teorému výhodnější.
 
+Nyní ukažme jak vypadá Fourierův obraz {\em obdélníkového pulsu}. Nechť $f$ je funkce definovaná takto:
 
 \begin{eqnarray}
 f(x)&=&\left\{\begin{array}{ll}c\quad\forall x\in\langle-\lambda,\lambda\rangle,c\in \R\\
@@ -108,14 +165,22 @@ F(u)&=&\int\limits_{-\infty}^{\infty}f(x)e^{-2\pi iux}\d x=c\int\limits_{-\lambd
 F(u)&=&\frac{\sin(\pi u)}{\pi u}=\mathrm{sinc}(u)
 \end{eqnarray}
 
+Pozn. Ve 2D vzniká funkce $\mathrm{sinc}(x)\mathrm{sinc}(y)$. Tato funkce není středově symetrická, jak by se mohlo zdát.
 
+\vecobr{0.5}{sinc}{Fourierova transformace obdélníkového pulsu a vzniklá funkce $\mathrm{sinc}(u)$.}
 
+Při násobné konvoluci obdélníkových pulsů vznikají křivky, které se označují jako {\em B-spline}. Mimo jiné mají tu
+vlastnost, že aproximují Gaussovu funkci normálního provděpodobnostního rozložení.
 
+\vecobr{0.5}{bspline}{Opakováním konvoluce obdélníkových pulsů vznikají B-spline křivky, které stále lépe aproximují
+Gaussovu rozdělovací funkci.}
 
+\ods{Fourier Shift Theorem (FST)}  Máme-li funkci $g$ posunutou vzhledem k $f$ o konstantu $a$, dává Fourierova transformace vztah:
 
 \begin{equation}
 f(x-a)\stackrel{CFT}{\rightarrow} e^{-2\pi i a u} F(u)
 \end{equation}
+Protože
 \begin{eqnarray}
 f(x-a)&=&g(x)\stackrel{CFT}{\rightarrow}\int g(x)e^{-2\pi i u (x-a+a)}\d x=\nonumber\\
 &=&\int f(x-a)e^{-2\pi i u (x-a)-2\pi i u a}\d x=\nonumber\\
@@ -124,86 +189,174 @@ f(x-a)&=&g(x)\stackrel{CFT}{\rightarrow}\int g(x)e^{-2\pi i u (x-a+a)}\d x=\nonu
 \end{eqnarray}
 
 
+Tedy obraz je akorát násobený komplexní jednotkou $e^{-2\pi iau}$, jeho amplituda má tedy stejnou velikost jako originál.
+Toho lze využít pro rozpoznávání, fázi lze zjistit dodatečně. Lze také ukázat, že nejpodstatnější část obrazové informace
+je obsažena ve fázi, amplituda nemá tak zásadní vliv na vzhled obrazu.
 
 \subsection{Digitalizace}
 
 \begin{equation}
+f(x)\rightarrow \{\hbox{vzorkování}\}\rightarrow d(x) \rightarrow \{\hbox{kvantování}\} \rightarrow F\qquad F\in\langle0,255\rangle
 \end{equation}
 
+Při vzorkování ({\em sampling}) vzniká otázka, jak hustě vzorkovat, abychom neztratili obrazové informace, 
+eventuelně, zda existuje vzorkovací frekvence, která již zachytí všechny tyto informace. Shannonův teorém dává za určitých
+předpokladů kladnou odpověd na předchozí otázku. 
 
+Vzorkování lze považovat a za násobení původího spojitého signálu nekonečným polem $\delta$-funkcí.
 
 \begin{eqnarray}
 s(x,y)&=&\sum\limits_{i=-\infty}^\infty\sum\limits_{j=-\infty}^\infty\delta(x-i\Delta x,y-j\Delta y)\\
 d(x,y)&=&f(x,y)\cdot s(x,y)
 \end{eqnarray}
 
+Lze ukázat, že Fourierův obraz nekonečného pole $\delta$-funkcí bude opět nekonečné pole $\delta$-funkcí s krokem
+$\frac{1}{\Delta x},\frac{1}{\Delta y}$. Ve frekvenční oblasti pak dostáváme
 \begin{eqnarray}
 S(U,V)&=&\frac{1}{\Delta x}\frac{1}{\Delta y}\sum\limits_{i=-\infty}^\infty\sum\limits_{j=-\infty}^\infty
 \delta(\frac{u-i}{\Delta x},\frac{u-j}{\Delta y})\\
 D(u,v)&=&F(u,v)\conv S(u,v)\label{shannon}
 \end{eqnarray}
 
+Tedy zvyšováním vzorkovací frekvence (tj. zmenšováním $\Delta x$ a $\Delta y$) současně zvyšujeme vzdálenost mezi
+Fourierovými obrazy dvou vzorků, protože funkce $D(u,v)$ ve vztahu (\ref{shannon}) není nic jiného než opakováním
+funkce $F(u,v)$ ve vzálenosti Fourierových pulsů vzorkovací funkce. Pokud budeme chtít funkci zrekonstruhovat
+z jejích Fourierových vzorků je nezbytně nutné, aby tyto vzorky nebyly poškozeny vzájemným překrytím. To je možné za 
+dvou předpokladů
 
 \begin{itemize}
+\item Pokud je funkce frekvenčně omezená. U frekvenčně neomezených funkcí, kde neexistuje $f_{\max}<\infty$, je i jejich
+frekvenční spektrum neomezené, proto se vzorky budou překrývat vždy.
+\item Pokud je vzorkovací frekvence větší nebo rovna dvojnásobku maximální frekvence $f_{\max}$ (tzv. Nyquistův limit)
 \end{itemize}
 
+\vecobr{0.6}{sampling}{Vzorkování ve frekvenční oblasti a překrývání obrazů frekvenčně omezené funkce}
  
+Což je zmíněný {\em Shannonův vzorkovací teorém}. Ideální rekonstrukční filtr má tedy ve Fourierově oblasti tvar obyčejné
+schodovité funkce a její spojitý vzor v časové oblasti  má tvar již zmíněné funkce $\mathrm{sinc}$.
 \begin{equation}
 \mathrm{sinc}(x,y)=\frac{\sin(\pi x)\sin(\pi y)}{\pi x \pi y}
 \end{equation}
 
+Pro frekvenčně neomezené funkce by byl teoreticky potřeba nekonečně malý krok. Vzorkováním tak vzniká velmi
+nepříjemný jev zvaný {\em Aliasing}.
 
+\ods{Aliasing} vzniká ve dvou případech
 \begin{enumerate}
+\item Pokud je původní funkce frekvenčně neomezená, tj. neexistuje žádná maximální frekvence a funkci tudíž nelze v diskrétním
+rastru reprezentovat přesně.
+\item Funkce je sice frekvenčně omezená, tj. existuje $f_{\max}<\infty$, ale funkci vzorkujeme s frekvencí menší nežli
+$2f_{\max}$, tedy pod Nyquistovým limitem.
 \end{enumerate}
 
+\subsection{Kvantování} 
 
+Kvantování je zobrazení z $\R$ do množiny $K=\{0,1,\dots,l-1\}$. Počet intenzit $l$ se většinou volí 256.
+Z povahy množin $\R$ a $K$ je jasné, že se jedná o ztrátovou operaci a není jenoznačný inverzní proces. Hodnoty intenzit
+$i\in K$ označujeme při kvantování jako tzv. {\em Kvantovací prahy}.
 
+Kvantovací prahy můžeme volit několika způsoby. První a poslední je většinou určen snímacím zařízením. Dále se používají
 \begin{itemize}
+\item {\em ekvidistantní} -- prahy jsou od sebe stejně vzdáleny, velmi často se používá
+\item {\em logaritmické (exponencielní)} -- využívá se u ztmavených obrázků
+\item další volba je třeba taková, aby každá barva byla zastoupena přibližně stejným počtem pixelů
 \end{itemize}
 
+\hyphenation{kvan-ti-zační}
+\vecobr{0.6}{kvantovani}{Kvantovací prahy a vznik falešných kvantizačních hran}
+Nedostatečným počtem úrovní intenzit  vznikají falešné kvantizační hrany (false contour effect). Lidské oko se ovšem
+podle hran orientuje, proto se přidává aditivní šum, který tento nepříjemný efekt rozmaže (samozřejmě pouze tehdy, pokud 
+nelze zvýšit počet prahů).
 
+Máme-li omezenou paměť je třeba volit vhodně počet úrovní a prostorové rozlišení.
+Má-li obraz málo detailů, je lepší volit více hodnot pro kvantování s menším rozlišením,
+pro hodně detailů a hran upřednostnit vetší rozlišení a méně úrovní pro kvantování.
 
+\ods{Charakteristiky lidského oka} Experimentálně byly zjistěny tyto charakteristiky  zdravého liského oka.
 \medskip
 
 \begin{tabular}{ll}
+$\bullet$ prostorová rozlišovací schopnost& 0,1~mm ze vzdálenosti 25~cm\\
+$\bullet$ rozlišení šedi (oddělěně) & 40 úrovní \\
+$\bullet$ rozlišení šedi (porovnání vedle sebe) & 100 úrovní 
 \end{tabular}
 
 \medskip
+\noindent Dále podle průzkumu, bylo vypozorováno, že standartní obrázek velikosti $512\times512$ se 128 stupni šedi 
+zobrazený na plochu $5\times5$ cm pozorovaný ze vzdálenosti 25~cm se jeví jako {\bf spojitý}.
 
+\section{Předzpracování}
 \subsection{Operace s Histogramem}
 
 \begin{description}
+\item[Histogram] obrazu je funkce četností jednotlivých intenzit. Lze jej přirovnat k hustotě pravděpodobnosti
+\item[Kumulativní histogram] je pak funkce intenzit, kde pro každou intenzitu je funkční hodnota rovna počtu bodů
+ mající svou intenzitu menší nebo rovnu. Je to tedy obdoba distribuční funkce.
 \end{description} 
 
+\vecobr{0.6}{histogram}{Histogram a kumulativní histogram}
 
+\ods{Předzpracování obrazu}
 
+Patří sem
 \begin{enumerate}
+\item Metody pro vylepšení vzhledu (Image enhancement methods) -- změna jasu a kontrastu, potlačení šumu, zvýraznění hran
+\item Obnovení obrazu (Image restauration) -- snažíme se rozpoznat a invertovat vzniklé poškození
 \end{enumerate}
 
 \subsection{Image enhancement methods} 
 \ods{Jas a kontrast}
+Změna kontrastu a jasu se provádí změnou hodnot v histogramu. Realizuje se transformační funkcí $\psi:K\rightarrow K$.
+Hodnota výsledků závisí pouze na hodnotě v jednom bodě, jedná se tedy o {\em bodové operace}.
 
+\vecobr{0.6}{zmkontrast}{Změna kontrastu v histogramu a znázornění transformační funkce (nahoře a vlevo dole). Vpravo dole pak transformační
+funkce pro provedení binarizace obrázku.}
 
+\ods{Ekvalizace histogramu} je operace, kdy chceme převést histogram na požadovaný tvar (např. konstatní). K transformaci 
+používáme distribuční funkci (kumulativní histogram). Dojde-li k tomu, že následující hodnota v histogramu pro 
+danou intenzitu převyšuje požadovanou hodnotu, je potřeba provést štěpení (tj. nějakým způsobem ji rozdělit
+do více intenzit). Někdy se ekvalizuje i lokálně (změna jasu, kontrastu), postup probíhá v okně podobně jako při konvoluci.
 
+\vecobr{0.6}{ekvhist}{Ekvalizace histogramu -- převedení na konstantní histogram.}
 
+\subsection{Odstranění šumu}
 
+\ods{Aditivní model šumu}
+Předpokládejme tzv. {\em aditivní model šumu\footnote{Existuje i multiplikativní model šumu, tj. $f=f_{\mathrm{org}}\cdot n$.}}, neboli na signálu nezávislý šum. Modelujeme jej pomocí funkce $n$.
 \begin{equation}
 f=f_{\mathrm{org}}+n
 \end{equation}
 
+V našem diskrétním pojetí budeme uvažovat funkci $n$ jako náhodnou veličinu (NV), která měla $h\cdot w$ realizací ($h$ \dots
+výška, $w$ \dots šířka) nebo jako $h\cdot w$ náhodných veličin. 
 
+\subsubsection{Bílý šum}
 
+Situaci si zjednodušíme předpokladem tzv. {\em Bílého šumu}, což jsou nezávislé, stejně rozdělené (iid) NV $X$, takové, že $EX=0$.
+Analogie s bílým světlem plyne z toho, že tento šum obsahuje všechny frekvence. 
 
+Spočítejme {\em power spectrum (PS)} naší
+šumové funkce. Power spektrum odpovídá amplitudě spektra po Fourierově transformace funkce $n$ (tj. $PS=|N|^2$).
  
+Pokud provedeme korelaci bílého šumu, dostáváme
 \begin{eqnarray}
 n\corr n&=&\sigma^2\cdot \delta\stackrel{CFT}{\rightarrow}\sigma^2\label{korel}\\
+\noalign{\hbox{Ve frekvenční oblasti je ale}\nonumber}\\
 N\cdot N^\star&=&|N|^2
 \end{eqnarray}
 
+Vztah (\ref{korel}) plyne z vlastností šumu (tj. z nezávislosti NV). Vidíme, že power spectrum je rovno rozptylu a je to tudíž 
+konstantní veličina (což je opět pro bílý šum charakteristické). V praxi by měla při korelaci vzniknout matice,
+která je všude nulová jen vprostřed je hodnota rozptylu.
 
+\ods{Ostranění šumu} 
 
+Cílem je snížit rozptyl šumové funkce. Protože lidskému oku nejvíce \uv{vadí} vysoké frekvence šumu, provádí
+se tzv. {\em nízkofrekvenční filtr}, který tyto frekvence potlačuje. To s sebou nese i nepříjemnou vlastnost a to, že
+na vysokých frekvencích jsou zaznamenány i informace o hranách, které se tímto způsobem rozmazávají.
 
 \begin{enumerate}
+\item Průměrování -- používáme například konvoluční maticí $C$
 \begin{eqnarray}
 C&=&\frac{1}{9}\left(\begin{array}{ccc}1&1&1\\1&1&1\\1&1&1\end{array}\right)
 \end{eqnarray}
@@ -212,53 +365,95 @@ nebo
 C&=&\frac{1}{16}\left(\begin{array}{ccc}1&2&1\\2&4&2\\1&2&1\end{array}\right)
 \end{eqnarray}
 
+\item Průměrování podél hran -- podél hran používáme jiný druh filtru (pokud  ovšem hrany známe), 
+v ostatních částech obrazu používáme obyčejné průměrování.
 
+\item Metoda rotujícího okna -- používájí se dva typy konvoluční matice pro všech 8  směrů (4+4) v daném bodě. 
+Spočítáme konvoluce a za výslednou hodnotu bereme tu, která vznikla v okně, jež má minimální rozptyl od této 
+hodnoty. Děláme v podstatě \uv{průměr přes maximální homogenitu}. Tato metoda se dost používá a dává dobré výsledky.
 
+\item Prahování -- výsledek měníme pouze pokud konvoluce v bodě překročila zadaný práh. 
+\item Mediánový filtr -- v okně provedeme seřazení dat a prostřední prvek (medián) dáváme do výsledku. 
 
 Tato metoda
+potlačuje šum, ale \uv{okusuje} okraje a rohy. Proto je vhodnější volit za výběrové okno třeba kříž. 
 
+Náročnost algoritmu
+pro okno šířky $n$ by byla při klasickém třídění $O(n^4)$, při QUICKSORTu nebo HEAPSORTu $O(n^2\log^2 n)$, případně
+$O(n\log n)$, když využijeme vkládání do utříděné posloupnosti. Novější algoritmus FMF (fast median filter) pracuje při
+složitosti $O(n)$. Urychlení je provedeno díky konstrukci a aktualizaci histogramu, hledání mediánu je pak velmi rychlé.
 
+\item Zobecněný mediánový filtr -- v okně provedeme seřazení dat a na setříděnou posloupnost aplikujeme váhovou funkci $w$
+ rovnu např. 
 \begin{eqnarray}
 w=\frac{1}{4}(0,\dots,0,1,2,1,0,\dots,0)
 \end{eqnarray}
 \end{enumerate}
 
+\vecobr{0.6}{rotwin}{Metoda rotujícího okna}
 
+Téměř všechny předchozí filtry jde provádět i ve frekvenční oblasti. Pokud víme, že má obraz jen jisté druhy
+hran (např. vodorovné), lze použít speciální filtr (např. $\frac{1}{4}(1\ 1\ 1\ 1)$). Ve frekvenční oblasti
+má pak tento filtr taktéž speciální tvar.
 
+\subsubsection{Šum typu sůl a pepř (salt \& pepper)}
 
+Tento speciální druh šumu vzniká při pořizování obrázku na snímacích zařízeních. Většina bodů je správně načtená, ale 
+občas některý vypadne nebo se maximálně zesvětlí. Matematický model vypadá takto.
 
 \begin{equation}
+n=\left\{\begin{array}{cl}+\infty&\hbox{s pravděp. $p$}\\
+0&\hbox{jinak}\\-\infty&\hbox{s pravděp. $p$}
 \end{array}\right.
 \end{equation}
 
+Filtr, který tyto nesprávně načtené body opravuje, je opět v podobě konvolučního filtru s maticí tvaru
 \begin{eqnarray}
 C&=&\frac{1}{8}\left(\begin{array}{ccc}1&1&1\\1&0&1\\1&1&1\end{array}\right)
 \end{eqnarray}
 
+Aplikuje se pouze na tmavé a světlé body obrazu (v ostatních to nemá smysl) a dává uspokojivé výsledky.
+
+Pokud provádíme opakované snímání (např. sledujeme experiment v laboratoři), používá se i triviální odstranění šumu
+pomocí průměrování více kopií, protože na každé je jiná realizace šumu, kterýžto v průměru vymizí. Pokud je možnost
+takového snímání, pak se jedná o ideální způsob, jak šum odstranit.
+
+\subsubsection{Periodické poškození obrázku}
+
+Pokud se na obraze vyskytuje jisté periodické poškození (např. pohled přes pletivo, mříže, fotka na vroubkovaném papíře),
+lze tyto \uv{funkce} z obrazu odstranit. Ve frekvenční oblasti totiž obdržíme amplitudové spektrum s nápadnými
+symetrickými píky mimo střed. Když tyto odstraníme, vymizí z obrazu i poškození.
 
 
+\subsubsection{Kvantifikace šumu}
 
-
-
-
+Pro měření \uv{velikosti} šumu v obraze se zavádí tzv. {\em signal noise ratio (SNR)}, což je funkce definovaná
 jako
 \begin{eqnarray}
 SNR=\frac{|N|^2}{|F|^2}(u,v)
 \end{eqnarray}
 
+Tato funkce zachycuje tu vlastnost, že šum nám vadí hlavně při vysokých frekvencích.
+Pokud provedeme velké zjednodušení a budeme předpokládat, že obrázek (tj. signál) není prostorově korelovaný, dále budeme
+předpokládat bílý šum, dostáváme vztah
 
 \begin{eqnarray}
 SNR=\frac{|N|^2}{|F|^2}(u,v)=\frac{\sigma_n^2}{\sigma_f^2}.
 \end{eqnarray}
 
+Pro rozumnou práci definujeme tzv. {\em odstup signálu od šumu}, který měříme v decibelech [dB] a definujeme jej jako
 
 \begin{eqnarray}
 snr=-10\log\frac{\sigma_n^2}{\sigma_f^2}
 \end{eqnarray}
 
+Čím vyšší je hodnota, tím lepší (kvalitnější) máme signál.
 
 \subsubsection{Aproximace}
+Pohlédneme-li na zašumělý signál jako na přibližnou funkci, můžeme se pokusit použít aproximačních metod k rekonstrukci
+původního (nezašuměného) signálu. Hledáme funkci $f$, která řeší rovnici
 
+\vecobr{0.6}{aprox}{Odstraňování šumu z pohledu aproximace funkcí.}
 
 \begin{eqnarray}
 min[\lambda \sum\limits_{ij} \|f(x_{ij})-u_{ij}\|^2+\mathcal{J}(f)]\\
@@ -267,31 +462,52 @@ min[\lambda \sum\limits_{ij} \|f(x_{ij})-u_{ij}\|^2+\mathcal{J}(f)]\\
 \left(\frac{\partial^2f}{\partial y^2}\right)^2
 \end{eqnarray}
 
+kde $u_{ij}$ jsou naše naměřená data, koeficient $\lambda$  udržuje  hladkost výsledku a $f$ je hledaná funkce.
+Tu předpokládáme ve tvaru {\em kubické spline} křivky, takže gradientními metodami jsme schopni nalézt její koeficienty.
+Ještě obecnější je rovnice pracující s váhami $w_{ij}$
 
 \begin{eqnarray}
 min[\lambda \sum\limits_{ij}w_{ij}\|f(x_{ij})-u_{ij}\|^2+\mathcal{J}(f)],
 \end{eqnarray}
 
+přičemž váhy se dávájí do míst předpokládaných hran.
 
 \subsection{Detekce hran}
+Nejedná se již o předzpracování, spíše už se snažíme rozpoznat další neobrazové informace. {\em Hranou}  pro nás bude
+výrazná změna intenzity obrazu. Rozlišujeme tedy
 
 \begin{description}
+\item[hrana (edge)] -- surová (obrazová) informace
+\item[hranice (boundary)] -- silnější informace, popsána jinak než obrazově
 \end{description}
 
+Experimenty ukazují, že lidské oko se podle hran silně orientuje, ztráta hranové informace vede k zmatení a chybám v 
+interpretaci vjemu. Detekce hran se realizuje několika způsoby. Jsou založeny na sledování 1. (resp. 2.) derivace
 funkce intenzity.
 
+\vecobr{0.8}{druhyhran}{Typy hran pro rozpoznávání v obraze}
+\vecobr{0.8}{druhaderivace}{Funkce obsahující hranu a její derivace}
+\vecobr{0.8}{maxlaplace}{Hledání {\em zero-crossing point} pomocí $\max|\Delta f|$.}
 
 \begin{enumerate}
+\item první derivace -- {\em Robertsův detektor:}  Jedná se o konvoluční filtr s maticí $C=(1\ -1)$ nebo $C=(1\ 0\ -1)$.
+Objevuje se však velká citlivost na šum, najdou se hrany i na místech, kde nejsou. Jistým vylepšením konvoluce s maticí
 \begin{eqnarray}
 C=\left(\begin{array}{ccc}1&0&-1\\1&0&-1\\1&0&-1\end{array}\right)
 \end{eqnarray}
 
+Pozn. Uvažovali jsem pouze svislé hrany, pro vodorovné hrany jsou matice symetrické.
 
+\item první derivace -- {\em Sobelův detektor:} Pro vodorovné hrany by konvoluční matice vypadala takto
 
 \begin{eqnarray}
 C=\left(\begin{array}{ccc}-1&-2&-1\\0&0&0\\1&2&1\end{array}\right)
 \end{eqnarray}
 
+Pro zbylých 7 směrů jsou matice obdobné. Všesměrovou detekci pak realizujeme postupně a všech 8 hranových obrazů spojíme 
+dohromady za použití maximového pravidla. Pokud nejprve obrázek vyhladíme, a pak na něj aplikujeme hranový detektor,
+dostaneme hranový obraz, který by vznikl jako aplikace Robertsova detektoru na větší okolí, takže žádný lepší výsledek
+se nedostaví.
 
 \begin{eqnarray}
 C_1&=&\left(\begin{array}{ccc}1&1&1\\1&1&1\\1&1&1\end{array}\right)\\
@@ -301,100 +517,169 @@ C_3&=&C_1\circ C_2=\left(\begin{array}{ccc}-&-&-\\0&0&0\\+&+&+\end{array}\right)
 \end{eqnarray}
 
 
+\item druhá derivace -- hledáme body, kde má druhá derivace průchod nulou. Neřešíme tedy rovnici $\Delta f=0$, ale hledáme,
+zda se v $\Delta f$ objevují velké přechody mezi kladnou a zápornou hodnotou (tzv. {\em zero-crossing points}). V těch 
+místech pak zaznamenáme hranu. Tento způsob je velmi náchylný na šum (dokonce víc než Robertsův detektor). Marr a Hildreth
+navrhli modifikaci, při které se sleduje funkce
 
 \begin{eqnarray}
 \Delta (G\conv f)=(\Delta G)\conv f
 \end{eqnarray}
 
+kde funkce $G$ je kruhově symetrická Gaussova funkce. Takto provedená modifikace dává dobré výsledky. Matice $\Delta G$ 
+se předpočítává a bývá široká $5\times5$ až $15\times15$ pixelů. Parametrizací Gaussovy funkce lze docílit výborných 
+výsledků. Širší funkce detekuje podstatné hrany a je méně náchylná na šum, užší se chová jako předchozí detektory.
+Detektor má tendenci vytvářet uzavřené hrany (křivky). Tento fakt plyne z teorie Laplaceových operátorů a řešení
 Laplaceovy rovnice $\Delta f=0$
 
 \begin{eqnarray}
 \Delta =\left(\begin{array}{ccc}0&1&0\\1&-4&1\\0&1&0\end{array}\right)
 \end{eqnarray}
 
+Pro lokalizaci hrany se často používá místo složitějšího hledání \uv{průchodu nulou} jednoduché nalezení $\max|\Delta f|$, 
+jak plyne z obrázku \ref{maxlaplace}.
+\item první derivace -- {\em Prewittův detektor.}
+Jako konvoluční jádro pro detekci hran ve svislém směru  se použije matice $3\times3$
 \begin{eqnarray}
 h =\left(\begin{array}{ccc}-1&1&1\\-1&-2&1\\-1&1&1\end{array}\right)
 \end{eqnarray}
 
+\item první derivace -- {\em Cannyho detektor.} Používá se velmi často. Byl vytvořen s požadavky:
 \begin{itemize} 
 \item jedna hrana -- jedna odezva
+\item přesná lokalizace hran
+\item nic nepřehlédnout
+\item nevytvářet zbytečné hrany
 \end{itemize}
 
 Postup:
 
 \begin{enumerate} 
+\item Obraz se vyhladí pomocí konvoluce s Gaussovým jádrem, za účelem odstranění šumu
+\item Provede se výpočet parciálních derivací, stačí i jednoduchý detektor, např. Roberts Cross function
 $$\left|\begin{array}{cc}1&0\\0&-1\end{array}\right|$$
+\item Provede se \uv{non-maximum suppression} -- tj. na základě gradientu spočítaného z parciálních derivací odstraníme
+z obrázku body, které nejsou lokálními maximy ve směru kolmém na hranu
+\item Provede se prahování celého obrázku, konkrétně prahování s hysterezí
 \end{enumerate}
 
 \end{enumerate}
 
 
 
+Cannyho detektor je tvořen sadou odvozených filtrů, které závisí na parametrech.
+\vecobr{0.4}{canny}{Ukázka sady filtrů {\em Cannyho detektoru}}
+\vecobr{0.6}{gauss}{Gaussova funkce a její druhá derivace}
+\ods{Zvýraznění hran} 
 
+Díky Laplaceově operátoru $\Delta$ jsme schopni v obrázku zvýraznit hrany. 
+Stačí provést opět konvoluci s maticí $C$.
 
 \begin{eqnarray}
 C&=&\left(\begin{array}{ccc}0&-1&0\\-1&5&-1\\0&-1&0\end{array}\right)
 \end{eqnarray}
 
+Vlastně jsme od funkce $f$ odečetli $\Delta f$, jak ukazuje obrázek \refobr{zvyrazneni}.
 
+\vecobr{0.6}{zvyrazneni}{Zvýraznění hran pomocí operátoru $\Delta f$.}
 
+\subsubsection{Detekce rohů}
+Pro detekci rohů se nehodí klasické hranové filtry, protože charakter rohů je svým způsobem
+specifický rohové útvary nedávají patřičné odezvy na konvoluční jádro.
 
+\vecobr{0.6}{typyrohu}{Typy rohů}
+\vecobr{0.6}{roh}{Odezva hranového detektoru na roh.}
 
 \begin{itemize}
 \item[a)]
 \begin{enumerate}
 \item provedeme segmentaci obrazu
+\item procházíme hranice a detekujeme zlomová místa
 \end{enumerate}
+Tato metoda funguje dobře pro binární obrázky, pro klasické selhává.
+\item[b)] Corner response function (Baudetův detektor) -- 
+máme speciální konvoluční masku a procházíme obraz $\rightarrow$ 
+dostáváme odezvu při výskytu rohu. Sleduje se veličina 
 
 \begin{equation}
 C_B=\frac{f_{xx}f_{yy}-f_{xy}^2}{(1+f_x^2+f_y^2)^2}
 \end{equation}
 
+\ods{Kitchen \& Rosenfeld} -- vyhodnocuje se změna směru gradientu podél hran, tato změna se násobí 
+velikostí lokálního gradientu. Funkce popisující směr gradientu je
 
 \begin{equation}
 \phi(x,y)=\tan^{-1}\left(\frac{f_y}{f_x}\right)
 \end{equation}
 
+Při procházení po hraně se směr gradientu v případě výskytu rohu zákonitě musí změnit. Konstatní směr naopak
+ukazuje na přímou hranu. Změnu směru zjišťujeme pomocí směrových derivací $\phi$. Směr hrany je kolmý na gradient,
+neboli je to směr $(-f_y,f_x)$. Funkce odezvy pak vypadá
 
 \begin{eqnarray}
 C_{KR}&=&\frac{(\phi_x,\phi_y)(-f_y,f_x)}{\left|(-f_y,f_x)\right|}\left|(f_x,f_y)\right|=\nonumber\\
 &=&(\phi_x,\phi_y)(-f_y,f_x)=\frac{f^2_xf_{yy}-2f_xf_yf_{xy}+f_y^2f_{xx}}{f_x^2+f_y^2}
 \end{eqnarray}
 
+Detektor je dost citlivý na šum a není invariantní na otáčení.
 
+\vecobr{0.6}{kitchen}{Detekce rohů metodou Kitchen \& Rosenfelda.}
 
+\ods{Harrisův detektor}
 \begin{equation}
 K=\frac{\overline{f^2_x}\,\overline{f^2_y}-(\overline{f_x}\,\overline{f_y})^2}{\overline{f^2_x}+\overline{f^2_y}}
 \end{equation}
+Pruh zde značí střední hodnotu přes okolí. Výsledkem je snížená citlivost na šum.
 
 \end{itemize}
 
 
 \subsection{Restaurace obrazu}
+Nyní se zabývejme modelováním jiné než šumové degradace vzorového obrazu. Zajímat nás bude hlavně konvoluční degradace.
+Nechť $g$ je náš obrázek, $f$ bude ideální, nezkreslený obraz (originál). Symbol $\mathcal{O}$ bude značit 
+{\em operátor degradace} a $n$ aditivní šum. Obecně případ modelujeme vztahem $g=\mathcal{O} (f)$. Předpokládejme
+speciální volbu operátoru $\mathcal{O}$ ve tvaru
 
 \begin{eqnarray}
 \mathcal{O}&=&T_G\circ T_I\\
+\noalign{\hbox{kde $T_G$ je geometrická degradace}\nonumber}
+\noalign{\hbox{a $T_I$ je radiometrická degradace}\nonumber}
+\noalign{\hbox{výsledný model pak bude tedy}\nonumber}\\
 g&=&T_G\circ T_I (f) +n
 \end{eqnarray}
 
+Pokud nepředpokládáme geometrické zkreslení a uvážíme, že ve většině běžně dostupných zobrazovacích systémů lze $T_I$ 
+modelovat pomocí konvoluce, můžeme vztah přepsat na
 
 \begin{eqnarray}
 g&=&f\conv h +n \label{eqv1}
 \end{eqnarray}
 
+Funkce $h$ se zde označuje jako  {\em Impulsní odezva} a jedná se o tzv. {\em point spread function} (polohově invariantní)
+funkci. Polohová invariance značí skutečnost, že výsledek vztahu ovlivňující dva pixely není závislý na jejich poloze, 
+nýbrž, jen a pouze na jejich vzájemné vzdálenosti.
 
+Předpokládejme nyní $n=0$ v rovnici (\ref{eqv1}). Pak s touto můžeme provést Fourierovu transformaci. Dostáváme
 
 \begin{eqnarray}
 G&=&F\cdot H\label{eqv2}
 \end{eqnarray}
+Funkce $H$ se označuje jako {\em přenosová funkce}. Pokud známe $h$ lze navrhnout {\em inverzní filtr} 
+ve frekvenční oblasti.
 
 \begin{eqnarray}
 F&=&G/H\label{eqv3}\\
+\noalign{\hbox{Po inverzní Fourierově transformaci}\nonumber}\\
 \hat{f}&=&\mathcal{FT}^{-1}(F)
 \end{eqnarray}
+obržíme obraz podobný originálu. Dělení ve vztahu (\ref{eqv3}) provádíme po složkách. Nulové body v $H$ můžou 
+následně vadit při inverzní Fourierově transformaci, proto provádíme bilineární interpolaci funkce $F$ 
+z nejbližšího okolí v místech, kde bylo $H$ nulové.
 
 
+\vecobr{0.5}{sumnh}{Hodnoty funkcí $H(x)$, $N(x)$ a jejich podílu}
 
+Pro model se šumem bude
 
 \begin{eqnarray}
 g&=&f \conv h+n\label{eqv4}\\
@@ -402,112 +687,203 @@ G&=&F\cdot H+N\label{eqv5}\\
 F&=&\frac{G-N}{H}=\frac{G}{H}-\frac{N}{H}\label{eqv6}
 \end{eqnarray}
 
+Člen $\frac{N}{H}$, který jsme v předchozím zanedbávali může mít velmi zásadní vliv na výsledek a to i pro malá $n$ jako
+ukazuje graf na obrázku \ref{sumnh}. Tato metoda je proto v reálných obrázcích téměř nepoužitelná.
 
+Další možností je například předpokládat $H$ ve tvaru 
 
 
 \begin{eqnarray}
 H&=&\left(\begin{array}{ccc}a&b&a\\b&c&b\\a&b&a\end{array}\right)\\
+\noalign{\hbox{a řešit lineární soustavu rovnic}\nonumber}\\
 G&=&F\cdot H
 \end{eqnarray}
 
+\subsubsection{Wienerův filtr}
+Požadavkem na Wienerův filtr $W$ bylo 
 
 \begin{eqnarray}
 \hat{F}&=&G\cdot W\\
 \noalign{\hbox{kde $\hat{F}$ se definuje}\nonumber}\\
 \hat{F}&=&\|f-\hat{f}\|^2\\
+\noalign{\hbox{a hledáme}\nonumber}\\
 W&=&\mathrm{argmin}E(\|f-\hat{f}\|^2)\label{minimalizace}
 \end{eqnarray}
 
+Ve vztahu (\ref{minimalizace}) minimalizujeme přes všechny realizace šumu. Matice $W$ není přesně daná, je to funkce obrazu!
+Po netriviálním odvození dostaneme výsledek
 
 \begin{eqnarray}
 W&=&\frac{1}{H}\cdot\frac{|H|^2}{|H|^2+\phi(u,v)}
 \end{eqnarray}
+Funkce $\phi(u,v)$ značí SNR (signal noise ratio). Připomeňme její definici ve frekvenční oblasti.
 
 \begin{eqnarray}
 \phi&=&\frac{|N|^2}{|F|^2}
 \end{eqnarray}
 
+Hodnoty $|N|^2$ a $|F|^2$ se nazývají výkonová spektra (power spectrum). Je vidět, že při nepřítomnosti šumu 
+přechází Wienerův filtr na předchozí jednoduchý filtr. Pokud neznáme (což je většinou) $|F|$ a $|N|$, můžeme zkusit
+uvažovat bílý šum a nekorelovanost původního obrazu.
 
 \begin{eqnarray}
+ f\corr f&=&\delta(x)\sigma_f^2=\left\{\begin{array}{cc}\sigma_f^2\cdot\delta(0)&\hbox{pokud leží přesně na sobě}\\0&\hbox{jinde}\end{array}\right.
 \end{eqnarray}
+Budeme mít
 
 \begin{eqnarray}
 \phi&=&\frac{\sigma_n^2}{\sigma_f^2}
 \end{eqnarray}
 
+Postupujeme tedy tak, že s hodnotou $\phi$ začínáme na nízko ($\sim 10^{-3}$) a postupně ji zvyšujeme a sledujeme, co se 
+děje s obrazem. 
 
+Stále neznámé $h$, které navíc může být tvaru $h=h_1\conv h_2\conv h_3 \conv \dots$, nelze obecně zjistit. Můžeme jej
+pouze předpokládat ve speciálních tvarech, abychom znali tvar impulsní odezvy. Reálně máme většinou jeden z těchto druhů degradace.
 
 \begin{itemize}
+\item[a)] špatné zaostření
+\item[b)] turbulence (např. snímek přes tlustou vrstvu atmosféry)
+\item[c)] rozmazání pohybem
 \end{itemize}
 
+\ods{ad c)} Je-li pohyb lineární (tj. po přímce) má impulsní odezva tvar obdélníka. 
 \begin{itemize}
+\item délka je úměrná délce expozice (při konstantní rychlosti pohybu)
+\item šířka bude obrácená hodnota délky, abychom zachovali $\int h=1$ a nevnášeli tak do obrázku
 jas. 
+\item ve směru kolmém na směr pohybu se tento obdélníček chová jako $\delta$-funkce, tedy nic nemění. 
 \end{itemize}
 
+Po Fourierově transformaci obdržíme ve frekvenční oblasti známou funkci $\mathrm{sinc}$, natočenou do směru pohybu. 
+Slangově se tato funkce označuje jako {\em vlnitý plech}\footnote{Název zavedl J. Flusser :-)}. 
 
 \begin{itemize}
+\item nulové hodnoty funkce $H$ budou ležet na přímkách kolmých na směr pohybu. Čím blíže budou k sobě, tím je rozmazání 
+větší. 
+\item stejné nulové body budou zachovány i ve funkci $G$. Můžeme tak najít směr a délku pohybu (během
+expozice). Získáváme odhad pro $H$ do Wienerova filtru. 
 \end{itemize}
 
+Podobně lze odhadovat impulsní odezvy na jiné druhy pohybu (např. dítě na houpačce). Některé druhy pohybů lze převést na
+známé užitím souřadnicové transformace. Třeba rotační pohyb gramofonové desky při snímání shora, převedeme na pohyb 
+lineární s konstatní (úhlovou) rychlostí pomocí radiálních souřadnic.
+
+Při nekonstatních rychlostech je situace obtížná, protože se vytrácí polohová invariance.
 
 
-
+\ods{ad a)} Ideálním rozostřením světelného bodu je kruh. 
 \begin{itemize}
+\item ve skutečnosti klesá jeho intenzita ke krajům
+\item impulsní odezva je tvaru válce -- přenosová funkce má nulové body na soustředných kružnicích
   \begin{eqnarray}
     H\sim \frac{J_1}{r}\label{bessel}\qquad\begin{array}{ccl}\hbox{$J_1$}&\hbox{\dots}&\hbox{Besselova funkce 1. druhu}\\
+    \hbox{$r$}&\hbox{\dots}&\hbox{radiální souřadnice}
     \end{array}
   \end{eqnarray}
+Díky výrazu $\frac{1}{r}$ ve vztahu (\ref{bessel}) jsou Besselovy kmity tlumené.
 
+\item stejné nulové body budou zachovány i ve funkci $G$. Postup je obdobný jako v případě lineárního posunutí.
+Změříme vzdálenost kružnic, odhadneme impulsní odezvu a aplikujeme Wienerův filtr. 
 \end{itemize}
 
+\ods{ad b)} Vzniká např. při delší expoziční době, než je perioda Brownova pohybu částic v atmosféře. 
 \begin{itemize}
+\item impulní odezva (a přenosová funkce) jsou Gaussovy funkce. Nemají tedy nulové body a nelze proto použít metodu
+z předchozích případů
+\item k odhadu se používájí body, které nemění polohu, např. hvězdy ve snímcích oblohy (astronomie)
 \end{itemize}
 
+\subsubsection{Problém slepé dekonvoluce}
+V obecném případě pro neznámé $h$ nemá úloha jednoznačné řešení. Zavádíme proto dodatečné omezující podmínky.
 
 \begin{itemize}
+\item nezápornost originálního signálu (snímku)
 \item omezenost supportu $h$
+\item minimalizace jistého potenciálového funkcionálu výsledného obrazu
 \end{itemize}
 
+Jiným problémem je tzv. {\em vícekanálová slepá dekonvoluce}, kdy máme k dispozici několik stejných snímků s jinými
+impulsními odezvami. Tedy systém
 \begin{eqnarray}
 g_1&=&f\conv h_1+n_1\\
 &\vdots&\nonumber\\
 g_l&=&f\conv h_l+n_l
 \end{eqnarray}
 
+Tato úloha je nepoměrně snažší, protože máme daleko více informací a z každého $g_i$ jsme schopni zrekonstruhovat 
+jiné části obrázku. Výsledek tedy můžeme \uv{poslepovat} z několika takových částí. Také jsme schopni daleko lépe 
+odstraňovat případné šumy, podobně jako při průměrování více kopií.
 
+\subsection{Geometrické zkreslení}
+Model geometrického zkreslení obrazu lze zapsat jako
 
 \begin{eqnarray}
 g=T_G(f)
 \end{eqnarray}
 
+Máme-li snímek téže scény z různých pohledů (tj. s jiným geometrickým zkreslením) a potřebujeme-li zjistit odpovídající
+pixely (tj. aby stejné pixely měly stejné souřadnice), mluvíme o {\em Registraci obrazu (image registration)}. Využití
+spočívá např. v detekci časových změn. Nepřesná registrace vede na chybnou detekci resp. zjištění změn tam kde nejsou.
 
+Registrace se provádí pomocí řídících bodů (control points). Pokud jsou správně nalezeny odpovídající řídící body v obou
+obrazech, je možné sestavit geometrické transformace a snímky zregistrovat.
 
+\ods{Požadavky na řídící body}
 
 \begin{itemize}
+\item větší počet
+\item detekovatelné v obou obrazech
+\item rozmístěny po celém snímku
 \end{itemize}
 
+Po určení řídících bodů je třeba provést vzájemnou korespondenci. Tato operace se označuje jako ({\em matching}). 
+K tomuto účelu musíme mít dostatečně robusní, spolehlivou metodu, neboť některé body mohou chybět, mohlo dojít
+k nepřesnostem atp. 
 
+Jako významné řídící body se volí {\em rohy, průsečíky} -- tyto jsou však citlivé na šum, nebo {\em těžiště uzavřených 
+oblastí} -- na šum více stabilní.
 
+Hledání odpovídajících bodů se provádí
 \begin{itemize} 
+\item topologicky (předpokládaný výskyt)
+\item prohledává se okolí bodu s ohledem na intenzity (barvy) okolních pixelů
 \end{itemize}
 
+\vecobr{0.7}{contrpoint}{Postup při registraci dvou snímků}
+\ods{Mapovací funkce (Mapping function design)}
 
+Při vlastním mapování hledáme
 
 \begin{eqnarray}
 u&=&f(x,y)\\
 v&=&g(x,y)\\
+\noalign{\hbox{s podmínkou P1:}\nonumber}
 u_i&=&f(x_i,y_i)\\
+v_i&=&g(x_i,y_i)\qquad\forall i\in m,\ \hbox{kde $m$ je počet řídících bodů}
 \end{eqnarray}
 
+Funkce $f,g$ předpokládáme spojité a dost hladké, navíc parametrizovatelné (např. afinní transformace). 
+Parametry funkcí hledáme řešením následujících úloh
 \begin{itemize}
+\item {\em interpolační úloha} -- s podmínkou P1
+\item {\em extrapolační úloha} -- bez podmínky P1
 \end{itemize}
 
+Po nalezení funkcí již nic nebrání tomu, abychom obrazy namapovali bod po bodu.
 
+\subsection{Výběr řídících bodů (control point selection)}
+Metody dělíme na
 \begin{itemize}
+\item {\em Korelační (signálně závislé)} -- korelaci provádíme se skutečnými obrazovými hodnotami. Jeden obraz (okno)
+posouváme po druhém a počítáme korelaci. Pokud existuje větší či menší shoda obrázku, bude na daném bodě ve výsledné matici
+vysoká hodnota. Při konstatní korelační matici pak tento postup odpovídá počítání vztahu
 
 \begin{eqnarray}
 \frac{E[(X-EX)(Y-EY)]}{varX varY}
 \end{eqnarray}
 
+což odpovídá vztahu
 
 \begin{eqnarray}
 C(X,Y)=\frac{\sum\limits_{i=0}^{N-1}
@@ -515,125 +891,228 @@ C(X,Y)=\frac{\sum\limits_{i=0}^{N-1}
 {\sqrt{\sum\limits_{i=0}^{N-1}\sum\limits_{j=0}^{N-1}(X_{ij}-\bar{X})^2\cdot(Y_{ij}-\bar{Y})^2}}
 \end{eqnarray}
 
+Metoda funguje dobře pro obrazy se stejnou intenzitou nebo pokud došlo ke globálním změnám kontrastu a jasu. Ostatní změny
+dost vadí. V základním provedení by metoda fungovala jen pro posun. 
 
+Provádí se modifikace, kdy je korelační matice trojrozměrná. Časová náročnost je ale příliš velká, proto se metoda používá
+pro malé rotace. Metoda dává dobré výsledky po hranové detekci v obou obrazech.
 
+Urychlení výpočetní složitosti plyne z {\em Korelačního teorému}
 \begin{eqnarray}
 f\corr g \stackrel{CFT}{\rightarrow}F\cdot G^\star
 \end{eqnarray}
 
+kde symbol $(\cdot)^\star$ značí komplexně sdruženou matici
 
+\item {\em Fázová korelace} -- Využívá Fourier-shift-theoremu. Máme dány funkce $f(x)$ a $g(x)=f(x-a)$. Po Fourierově
 transformaci bude
 
 \begin{eqnarray}
 f(x)&\stackrel{CFT}{\rightarrow}&F(u)\\
 g(x)&\stackrel{CFT}{\rightarrow}&e^{iau}F(u)\\
+\noalign{\hbox{a protože se snažíme získat vektor posunutí $a$, spočteme}\nonumber}\\
 \frac{F\cdot G^\star}{|F||G|}&=&\frac{F^2e^{iau}}{|F|^2}\stackrel{CFT^{-1}}{\longrightarrow}\delta(x-a)
 \end{eqnarray}
 
+Tím vznikne dobře lokalizovatelný pík. Metoda funguje dobře, odpovídá vlastně detekci hran a korelaci v obrazové oblasti.
 
+\item {\em nepodobnost (SSDA)} -- označuje se také jako \uv{klasická korelace}. Hledá se bod,
  kde vztah $\sum|f_{ij}-g_{ij}|$
+nabývá minima. Hledání minima zřejmě urychluje metodu, protože při napočítávání sumy, máme samé kladné hodnoty a 
+jakmile jednou částečný součet převýší již vypočtené minimum, lze přímo přejít k dalšímu bodu.
 \end{itemize}
 
+Pro snadnou hardwarovou implementaci korelace jsou tyto metody dosti používané.
 
 
 \begin{itemize}
+\item {\em Point-based method} -- pro zjistění korespondence řídících bodů (matching) se vytváří úplný graf a hledají se 
+4 parametry pro geometrickou transformaci (posun 2, rotace 1, měřítko 1). Porovnáváme po dvojici úseček a zjišťujeme,
+jak ostatní body padají do okolí řídících bodů.
 
+Další možnost je provést matching a zaznamenávat do parametrického prostoru provedenou transformaci. Pak hledat shluk
+v tomto prostoru a vybrat tak nejlepší parametr.
 
+Pro urychlení se nekonstruhuje úplný graf, ale třeba konvexní obálka nebo kostra grafu. Tím ovšem zavádíme do algoritmu výšší 
+náchylnost k chybám a nestabilitě.
 
+\vecobr{0.7}{match}{Zjištění vzájemné korespondence řídících bodů (matching)}
 
+\item {\em Region-based method} -- pro okolí řídících bodů hledáme společné charakteristiky, které by měli být
  \begin{itemize}
+  \item {\em invariantní vzhledem k transformaci} -- rotace, měřítko, \dots
+  \item {\em dostatečně diskriminabilní} 
  \end{itemize}
 \end{itemize}
 
+\vecobr{0.7}{regbased}{Určování okolí bodů a jejich charakteristik (Region-based method)}
+\subsection{Mapovací funkce}
+Předpokládejme transformační model
 
 \begin{eqnarray}
 u&=&a_0+a_1x+a_2y\nonumber\\
 v&=&b_0+b_1x+b_2y\label{afinita}
 \end{eqnarray}
 
+Tento model ({\em Afinita}) je jeden z nejjednodušších, přesto velmi používaný. Zachovává rovnoběžnost přímek. 
+Dalším modelem je {\em Perspektivní projekce}.
 
 \begin{eqnarray}
 u&=&\frac{a_0+a_1x+a_2y}{1+c_1x+c_2y}\nonumber\\
 v&=&\frac{b_0+b_1x+b_2y}{1+c_1x+c_2y}\label{perspekt}
 \end{eqnarray}
 
+Perspektivní projekce je obecnější transformace. Má však tu vlastnost, že při pozorování z větších vzdáleností v afinitu
+přechází, neboť $c_1$ a $c_2$ ve vztazích (\ref{perspekt}) budou malé.
 
+\vecobr{0.7}{trans}{Základní mapovací funkce}
 
+Jeden z nejobecnějších modelů má tvar
 
 \begin{eqnarray}
 u&=&a_0+a_1x+a_2y+a_3xy\ [{}+a_4x^2+a_5y^2\ ]\nonumber\\
 v&=&b_0+b_1x+b_2y+b_3xy\ [{}+b_4x^2+b_5y^2\ ]
 \end{eqnarray}
+Tento model je silně nelineární, nezachovává přímky ani rovnoběžnost. Používá se často.
 
+\subsubsection{K metodě nejmenších čtverců}
+Předpkládejme parametrizovatelnou funkci $f(x,a_1,\dots,a_l)$ a k ní předem zadanou množinu bodů $U=\{[x_1,y_1],\dots,[x_K,y_K]\}$.
 Definujme funkci $d$ 
 
+\vecobr{0.7}{minkv}{K metodě nejmenších čtverců}
 \begin{eqnarray}
 d&=&\sum\limits_{i=1}^K (f(x_i)-y_i)^2\label{minkvad}
 \end{eqnarray}
+Protože hledáme minumum funkce $d$, mluvíme o {\em metodě nejmenších čtverců}. Položíme-li 
+parciální derivace podle parametrů do rovnosti s
+nulou, dostáváme
 
 \begin{eqnarray}
 \frac{\partial d}{\partial a_i}&=&0\qquad\forall i\in \hat{K}
 \end{eqnarray}
+Což je obecně nelineární systém rovnic, po jehož vyřešení a ověření, že se jedná o minimum,  získáme námi hledané koeficienty. Vztah (\ref{minkvad}) lze 
+obecně psát ve tvaru $\|U-f\|_\mathcal{N}$, kdy norma $\|\cdot\|_\mathcal{N}$ definuje nějakým způsobem vzdálenost bodů
+od hledané funkce (křivky).
 
+\subsubsection{Vlastní mapování}
+Při vlastním mapování se používájí přímé a nepřímé transformace.
 
 \begin{itemize}
+\item {\em přímá} -- procházíme všechny body ze zdrojového obrazu, transformujeme je a zapisujeme do výsledku. 
+Vznikají situace, kdy se více bodů namapuje na stejné místo (přepisování) a výsledný obraz může obsahovat některé
+prázné pixely (díry). Pro takové body je třeba provést interpolaci z okolních pixelů.
 
+\item {\em nepřímá} -- procházíme všechny body výsledného obrazu a pomocí zpětné transformace určíme, který zdrojový bod
+se na ně obrazí.
 \end{itemize}
 
+Nelineární transformace se často provádí po trojúhelnících, na kterých se transformační funkce linearizuje 
+(obdoba metody konečných prvků).
+Pokud se použijí lineární polynomy, má tento postup za následek nepřirozené zalamování hran na přechodových stranách
+trojúhelníkové sítě. Obecněji se proto definují {\em Radiální bázové funkce}, které tyto vlastnosti nemají.
 
 \begin{eqnarray}
 u=\sum a_i\phi_i(r_i)
 \end{eqnarray}
 
+\pngfig{0.6}{lena}{Originální obraz}
+\pngfig{0.6}{origspec}{Frekvenční spektrum originálu}
+\pngfig{0.6}{lenaposkoz}{Obraz s periodickým poškozením}
+\pngfig{0.6}{poskspec}{Frekvenční spektrum poškozeného obrazu}
+\pngfig{0.6}{restorespec}{Upravené spektrum poškozeného obrazu}
+\pngfig{0.6}{lenares}{Výsledný restaurovaný obraz}
 
 
 
+\section{Rozpoznávání dat (pattern recognition)}
+\ods{Úloha rozpoznávání}
+Máme $n$ tříd, máme rozhodnout o objektu $\mathcal{O}$ do jaké třídy patří.
 
+Existují 2 přístupy: strukturární (syntaktické) a  příznakové (statistické)
 \begin{enumerate}
+\item strukturární
 \begin{itemize}
+\item založeno na teorii jazyků, rozhodování, zda patří slovo do jazyka
+\item příklad: dům, střecha, zdi, dveře, okna
 \end{itemize}
+\item příznakové
 \begin{itemize}
+\item příklad: žokejové $\times$ basketbalisté $\rightarrow$ příznaky: výška, váha
+\item pro každý objekt máme příznakový vektor (obecně tvořen čísly, vektory, maticemi, funkcemi atd.)
+\item nutné definovat metriku na prostoru příznaků (někdy problém)
 \end{itemize}
 \end{enumerate}
 
+\ods{Rozdělení na třídy}
 
+Nabízí se například klasifikátor beroucí minimální vzdálenost od těžišť jednotlivých tříd.
+\vecobr{0.4}{svestky}{Rozdělení na třídy}
 
 \begin{itemize}
+\item Většinou máme k dispozici tzv. {\em trénovací množinu} s daty.
+\item Otázka je podle jakého pravidla rozhodovat.
 \end{itemize}
+Příznakový prostor rozdělíme na oblasti (nadplochy), pak rozhodneme do které oblasti objekt padne.
+\vecobr{0.8}{oblasti}{Rozdělení do oblastí}
 
+Nejhorší případ je situace, kdy neznáme třídy (resp. počet), ani trénovací množinu. Pak v příznakovém prostoru
+provádíme tzv. {\em shlukování}.
 
 \ods{Jak konstruhovat nadplochy?}
 
+Pouhé zjišťování těžiště, nedává dobré výsledky. Lze také počítat rozptyly a podělit vzdáleností od těžišť.
 
 
+Další algoritmus: vezmu dva body (o,x) a udělám dělicí přímku, pak testuji další body z trénovací množiny
+a v případě špatné klasifikace posouvám, resp. natáčím přímku. (evidetně to lze udělat pouze pro lineárně separabilní
+množinu).
 
+Příklady klasifikátoru: minimální vzdálenost, minimální vzdálenost od těžišť, nejblišží soused (NN- nearest neighbour,
+nebezpečné, citlivý na atypické prvky, není lineární klasifikátor)
 
 \ods{NN -- Nearest neighbour}
 \begin{itemize}
+\item modifikace: k-NN klasifikátor (přiřadíme do třídy, kde je $k$-nejbližších bodů)  $\rightarrow$ $NN\equiv$ 1-$NN$
+\item k je třeba volit nízké oproti četnosti skupiny
 \end{itemize}
 
+Stále nerespektujeme rozložení četností $\rightarrow$ konstrukce statistických klasifikátorů.
 
 \begin{tabular}{ccc}
 $\omega_1,\dots,\omega_n$ &\dots& individua\\
+$g_i(x)$ &\dots& rozhodovací funkce
 \end{tabular}
 
+Hledáme $\mathcal{G}=\max\limits_i g_i(x)$ (maximální ve smyslu nejlepší).
 
+\subsection{Statistické klasifikace}
 
+Náhodná veličina (NV) $\xi$, $E\xi$, $D\xi=E\left(\xi-E\xi\right)^2$.
 
 \begin{eqnarray}
 Cov(\xi,\nu)&=&E(\xi-E\xi)(\nu-E\nu)\\
 Cor(\xi,\nu)&=&\frac{Cov(\xi,\nu)}{\sqrt{D\xi D\nu}}
 \end{eqnarray}
 
+\ods{Bayesův klasifikátor}
 
 \begin{equation}
 p(\omega_i|x)=\frac{p(x|\omega_i)p(\omega_i)}{\sum\limits_j p(x|\omega_j)p(\omega_j)}
 \end{equation}
 
 \begin{description}
+\item[$p(\omega_i|x)$] \dots  pravděpodobnost, že individum bude patřit do $i$-té třídy, přičemž 
+jsme na něm naměřili příznakový vektor $x$
+\item[$p(\omega_i)$] \dots pravděpodobnost $i$-té třídy v $\Omega$
+\item[$p(x|\omega_i)$] \dots  pravděpodobnost, že na prvku ze třídy $i$ můžeme naměřit vektor  $x$
 \end{description}
 
+Pravděpodobnosti $p(\omega_i)$ určíme buď z relativních četností trénovací množiny, v tom případě je nutné
+zajistit, aby četnosti odpovídaly skutečnosti, nebo předpokládáme pro všechny třídy {\em stejnou} pravděpodobnost
+tj. $p(\omega_i)=\frac{1}{n},\ \forall i\in \hat{n}$, kde $n$ je počet tříd.
 
+Nyní je třeba určit $p(x|\omega_i)$ pro každou třídu. Předpokládejme rozložení $x$ ve třídě jako normální. Pomocí
+trénovací množiny odhadneme parametry tohoto rozložení. Pro jednorozměrný příznakový vektor máme
 
 \def\x{\mathbf{x}}
 \def\m{\mathbf{m}}
@@ -641,46 +1120,89 @@ p(\omega_i|x)=\frac{p(x|\omega_i)p(\omega_i)}{\sum\limits_j p(x|\omega_j)p(\omeg
 
 \begin{eqnarray}
 p(x)&=&\frac{1}{\sigma \sqrt{2\pi}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}\\
+\noalign{\hbox{Pro vícerozměrný příznakový vektor pak}\nonumber}\\
 p_N(\x)&=&\frac{1}{(2\pi)^\frac{N}{2}\sqrt{|\bSigma|}}e^{-\frac{1}{2}(\x-\m)^T\bSigma^{-1}(\x-\m)}
 \end{eqnarray}
 
+kde $\bSigma_{ij}=Cov(\xi_i,\nu_j)$ tj. kovariance $i$-tého a $j$-tého příznaku.
 
+\ods{Příklad:}
 Pro $N=2$ bude
 $$
 \Sigma=\left(\begin{array}{cc}\sigma_1^2 & Cov\\ Cov & \sigma_2^2\end{array}\right)
 $$
 
+Je-li $Cov=0$ vytvoří případ $\sigma_1=\sigma_2$ kružnici, $\sigma_1\neq\sigma_2$ elipsu v základní poloze.
+Kovariance nenulová pak vede na elipsu v obecné poloze.
 
+Každá třída má tedy vlastní Gaussovu funkci s vlastní kovarianční maticí $\Sigma$.
+Pokud budou pouze dvě třídy a $\Sigma_1=\Sigma_2$, případ odpovídá Euklidovskému určování vzdáleností.
 
+\ods{Pozn.} Výraz $(\x-\m)^T\Sigma(\x-\m)$ definuje tzv. Mahalanobisovu vzdálenost.\\
+Rovnost kovariančních matic je ekvivalentní skutečnosti, že je Bayesův klasifikátor {\em lineární}.\\
+Pokud jsou tedy kovariančních matic stejné a změní se apriorní rozdělení 
+pravděpodobností $(p(\omega_i))$, posunuje se rozdělovací přímka od množiny s větší pravděpodobností.
 
+\vecobr{0.5}{bayes}{Posun rozdělovací přímky lineárního Bayesova klasifikátoru při změnách $p(\omega_i)$. Vpravo
+extrémní případ nulové četnosti.}
 
+Testování klasifikátoru, provádíme tak, že množinu předem klasifikovaných dat rozdělíme jednak na trénovací a
+testovací. Parametry určíme z trénovací množiny.
 
+\ods{Možné chyby}
 \begin{itemize}
+\item chyba modelu (není to např. normální rozložení)
+\item rozložení (byť normální) nemusí mít stejné parametry, někdy lepší 3 třídy klasifikovat jako dvě a pak tu
+jednu následně rozdělit
+\item chyby v odhadech kovarianční matice (celkem $\approx\frac{n^2}{2}$ prvků), pokud máme málo dat, 
+použijeme předpoklad o stejných kovariančních maticích, pak na odhady lze použít data všech tříd.
+\item chyba předpokladu diagonální matice (příznaky jsou většinou silně korelované)
+\item curse of dimensionality (prokletí dimenze) -- moc příznaku $\Rightarrow$ stejná testovací data $\Rightarrow$ 
+více parametrů $\Rightarrow$ chyby $\Rightarrow$ Je potřeba aspon $10\times$ více prvků než příznaků.
 \end{itemize}
 
+\ods{Odhady parametrů}
 
 Maximum likelihood test:
 \begin{equation}
 \max\limits_q\prod\limits_{k=1}^N p(x_k|q)
 \end{equation}
 
+$k$ $\dots$ index v trénovací množině. Uděláme logaritmus a vyšetříme extrém funkce tj. ($\frac{\partial}{\partial q}=0$).
+Což vede na lineární rovnice a odhady parametrů
 
 \begin{eqnarray}
 e&=&\frac{\sum x_i}{N}\\
 \sigma^2&=&\frac{1}{N}\sum(x_i-e)^2
 \end{eqnarray}
 
+V předchozím jsme předpokládali parametrické odhady.
 
+\ods{Neparametrické odhady} používáme až selžou parametrické odhady.
 
 \begin{itemize}
+\item hustotu pravděpodobnosti  na intervalech odhadneme pomocí relativních četností realizací
+\item vylepšení -- odhad po bodech (posouváme interval po bodech)
+\item nejlepší určení spojité hustoty pravděpodobnosti -- metoda Parzenova okna
 \end{itemize}
 
+Provádíme průměrování relativních četností nějakou váhovou funkcí, aby centrální bod měl větší váhu, 
+možné použít Gaussovu funkci. Dost záleží na tom, jak zvolíme šířku okna (support funkce)  $w$. Extrémem 
 jsou:
 \begin{itemize}
+\item $w=1$ $\dots$ Dirackova $\delta$-funkce, dostáváme jednotlivé realizace s pravděpodobností $\frac{1}{n}$
+\item $w=\max$ $\dots$ dostaneme konstatní hustotu po celém intervalu. 
 \end{itemize}
 
+Malá okna vedou na přetrénování neboli {\em overtraining} -- na trénovací množině to funguje bezchybně, ale na ostatních
+datech nespolehlivě.
 
+\vecobr{0.8}{cetnosti}{Určování četností}
 
+Pokud klasifikace stále selhává a vše je již optimalizované, nezbývá než zkusit změnit trénovací množinu nebo
+brát jiné příznaky. Často se používájí kombinace více klasifikátorů $\mathcal{K}_1,\dots,\mathcal{K}_L$, protože 
+některé fungují jen na určité příznaky. Pokud $k$-klasifikátor určí $p_k(\omega_i|x)$ bereme jako kombinovaný
+klasifikátor $\mathcal{K}$ jednu z těchto možností:
 
 \begin{eqnarray}
 p(\omega_i|x)&=&\max\limits_i\prod\limits_{k=1}^L p_k(\omega_i|x)\\
@@ -688,24 +1210,45 @@ p(\omega_i|x)&=&\max\limits_i \sum\limits_{k=1}^L p_k(\omega_i|x)\\
 p(\omega_i|x)&=&\max\limits_i \max\limits_{k\in\hat{L}} p_k(\omega_i|x)
 \end{eqnarray}
 
+\subsection{Klasifikace bez učení (shluková analýza)}
 
+Shlukovou analýzu neboli {\em clustering} používáme, když předem  neznáme počet tříd. Shluk není přesně definován,
+ale znamená zhruba to, že rozptyly parametrů ve shluku jsou \uv{malé}, naproti tomu vzdálenosti jednotlivých shluků
+\uv{velké}. 
 
+V obecné definici můžeme shluk považovat za libovolnou podmnožinu dat, a tedy proces shlukování pak lze přirovnat k pokrytí
+celé množiny disjunktními podmnožinami.
 
+Míru kvality shluků lze určit jako
 
 \begin{equation}
 Q=\sum\limits_{i=1}^N\sum\limits_{x\in C_i}\|x-m_{C_i}\|^2
 \end{equation}
 
+Pokud známe počet shluků, metoda funguje dobře, pokud ne, snaží se udělat z každého prvku samostatný shluk.
 
 \ods{$N$-means clustering algoritmus}
 \begin{enumerate}
+\item vyberem $N$ středních hodnot ($\times$)
+\item klasifikujeme všechny objekty minimální vzdáleností $\rightarrow$ dostáváme shluky
+\item přepočítáme těžiště
+\item opakujeme postup pokud těžiště mění své polohy 
 \end{enumerate}
 
+Často dává dobré výsledky, ovšem je zde silná závislost na počátečních podmínkách.
+\vecobr{0.6}{clustering}{Ukázka shlukování a závislost procesu na počátečních podmínkách.}
 
+\ods{Jiné přístupy}
 
 \begin{itemize}
+\item Data bereme jako jeden počáteční shluk a pro pevný bod zkoumáme, jak se změní kritérium kdybychom
+objekt přesunuli k tomuto shluku. Pokud se zmenší, přepočítáme těžiště a postup opakujeme.
+\item {\em Algoritmus ISODATA} Nejdříve máme tolik shluků jako je objektů a shluky spojujeme. Nebo máme počáteční shluk,
+který postupně rozdělujeme. Při tom se využívá konstrukce tzv. {\em dendrogramu}.
+\item Podmínky pro zastavení jsou např. počet shluků nebo rozptyl největšího shluku.
 \end{itemize}
 
+\ods{Kriteria pro spojení shluků}
 
 \begin{eqnarray}
 f&=&\min\limits_{a,b}\rho(a,b)\\
@@ -715,8 +1258,13 @@ f&=&\rho(\mu_i,\mu_j)\\
 f&=&\max(\max\limits_a\rho(a,B),\max\limits_b\rho(b,A))
 \end{eqnarray}
 
+Hausdorfova metrika je dosti náročná na výpočet. Je jasné, že shlukovací proces na zvolené metrice silně závisí.
 
+Pokud nemáme počet shluků, je úloha obtížná, potom rozdělujeme jeden shluk na malé shluky a počítáme hodnotu
+kritéria $J_i$. Pak vynášíme graf $J_i$ pro $i$ rovno $1,2,\dots,N$ shluků a optimální počet shluků je pak $N_0$
+takové, kde derivace křivky začne růst o poznání pomaleji \refobr{shluky}.
 
+\vecobr{0.6}{shluky}{Ukázka vynášení globálního kritéria pro spočítané shluky a předpokládané optimální shlukování.}
 
 {\def\mez{\hskip0em}
 \def\scal{0.35}
@@ -741,114 +1289,255 @@ f&=&\max(\max\limits_a\rho(a,B),\max\limits_b\rho(b,A))
   \begin{tabular}{c}\scalebox{\scal}{\includepng{vys010_.ppm}}\\$iter= 10$\end{tabular}\mez%
   \begin{tabular}{c}\scalebox{\scal}{\includepng{vys011_.ppm}}\\$iter= 11$\end{tabular}\mez%
    }%
+   \caption{Ukázka shlukovaní ve 2D metodou matematické morfologie.}
   \label{shlukpic}%
 \end{figure}%
 }
 
+\vecobr{0.6}{shlukygraf}{Graf závislosti počtu shluků na počtu iterací. Za optimální by se dala považovat druhá iterace
+s dvanácti shluky.}
 
 
+\subsection{Redukce dimenzionality (příznakového prostoru)}
+Z naměřených dat máme většinou obrovské množství příznaků, ty jsou však silně korelované, proto se prostor 
+snažíme redukovat.
 
 \begin{itemize}
+\item {\em One-class problem} -- cílem je vybrat optimální reprezentaci (tj. $x$ příznaků), které charakterizují 
+všechny objekty celé množiny
+\item {\em Two-class problem} -- cílem je najít $y<x$ příznaků, aby se jen velmi málo ztratila informace
 \end{itemize}
 
+\ods{Přístupy:}
 \begin{enumerate}
+\item Feature selection -- vybíráme nějaké příznaky (používá se pro Two-class)
+\item Feature extraction -- hledáme zobrazení do méně rozměrného prostoru (používá se pro One-class)
 \end{enumerate}
 
 \ods{One-class}
 
+Hlavní myšlenka vychází z toho, že korelované příznaky vytváří v příznakovém prostoru (PP) více či méně protáhlou
+elipsu v níž můžeme kratší poloosu považovat za šum a za příznaky brát souřadnice průmětů bodů z PP do hlavní poloosy
+této elipsy.
 \refobr{oneclass}.
+\vecobr{0.8}{oneclass}{Ukázka redukce dimenzionality korelovaných příznaků}
 
 \ods{Principle component transformation -- PCT (Karhunen, Loeve)}
+Tato transformace používá rotaci a hledá nejlepší úhel pro nekorelovanost. 
+Je založena  na transformaci SVD. Nekorelovaná matice (tedy ta, kterou hledáme) bude diagonální. Můžeme použít postup:
 
 \begin{enumerate}
+\item $K_x$ $\dots$ matice korelace, pokud je diagonální, končím.
+\item Provedeme SVD tj. $K_y=GK_xG^T$. Získáme $K_y$, která je diagonální. Příznaky jsou pak $y=Gx$.
 \end{enumerate}
 
+Protože $K_x$ je původně symetrická, lze diagonalizaci provést a matici transformace dokonce volit ortonormálně.
+Nalezená vlastní čísla pak jsou zároveň rozptyly; matici $G$ sestavíme z přidružených vlastních vektorů.
 
+Předchozí myšlenka, že malé rozptyly znamenají šum ale nefunguje pro {\em two-class}. Právě na základě jich
+jsme schopni třídy rozlišit \refobr{twoclass}.
+\vecobr{0.8}{twoclass}{Two-class problém a nemožnost zanedbat příznaky s malým rozptylem, neboť hrozí ztráta rozlišovací
 schopnosti}
 
 \ods{Two-class a feature selection}
 
+Dobře rozdělené třídy, uvažujeme-li jeden příznak, budou mít vysokou hodnotu funkce $\Phi$
 \begin{equation}
 \Phi=\frac{(\mu_1-\mu_2)^2}{(\sigma_1^2+\sigma_2^2)}
 \end{equation}
 
 \def\bmu{\mathbf{\mu}}
+Výraz $(\mu_1-\mu_2)^2$ se nazývá {\em interclass deviation}. Je vidět, že čím je větší, tím lépe jsou třídy odděleny.
+Ve vektorovém pojetí $(\sum((\bmu_1-\bmu_2)_i)^2)$ tato funkce funguje dobře  za předpokladu, že jsou příznaky nekorelované (to bohužel v praxi 
+není příliš často). 
 
+Předchozí operace byly provedeny na trénovacích množinách, tím vznikly parametry pro třídy $\m_1, \dots, \m_K,
+\Sigma_1,\dots,\Sigma_K$, kde $K$ je počet tříd. Mezi dvěma třídami tak můžeme definovat známou {\em Mahalanobisovu 
+vzdálenost} pro třídy v příznakovém prostoru:
 
 \begin{eqnarray}
 d_M=(\m_1-\m_2)(\Sigma_1+\Sigma_2)^{-1}(\m_1-\m_2)^T\\
+\noalign{\hbox{Reps. vylepšení od {\em Bhattacharge}}}\\
 d_B=\frac{1}{4}d_M+\frac{1}{2}\ln\frac{|\frac{1}{2}(\Sigma_1+\Sigma_2)|}{\sqrt{|\Sigma_1||\Sigma_2|}}
 \end{eqnarray}
  
+Pokud chceme pouze vybrat příznaky (tj. $D$ příznaků a chceme z nich vybrat $d$, tak aby $d<<D$), vyčíslujeme
+$d_M$ (resp. $d_B$) a hledáme $d$-tici, kdy $d_M$ (resp.$d_B$) bude maximální.
 
 \ods{Algoritmus Branch \& Bound}
+Myšlenkou algoritmu je efektivní procházení celého stromu příznaků (viz obr. \ref{branchandbound}). Strom má ve 
+svých uzlech $k$-tice příznaků. Strom se odvíjí od kořene, kde je celká $D$-tice příznaků, k listům, ve kterých už je jen
+ $d$-tice příznaků. V každém následujícím patře stromu ubyde jeden příznak. Strom procházíme od kořene k listům
+ a v každém uzlu spočteme kritérium ($K=d_M(\langle k$-tice$\rangle)$. Hodnota $K$ se zanořováním hlouběji do stromu bude zmenšovat, až
+ dojdeme k prvnímu listu. Zde si uložíme $V=K$ a jdeme k dalším uzlům. Nyní po výpočtu $K$ testujeme zda $K>V$. Pokud
+ to neplatí (tj. $K\leq V$), můžeme zahodit celý podstrom, protože hodnota $K$ se bude dál jen snižovat a my se 
+ přece snažíme najít $d$-tici pro které je $K$ maximální. Pokud se dostaneme opět do listu a je $K>V$, 
+ aktualizujeme hodnotu $V$ na $K$ a zapamatujeme si tento list. Tak postupujeme dále až projdeme celý strom.
  
  
+\vecobr{0.6}{branchandbound}{Algoritmus Branch \& Bound při výběru 2 ze šesti příznaků.}
 
 
+\subsection{Suboptimální metody}
+Protože {\em fullsearch} příznaků je značně pomalý, provádí se místo něj následující heuristické algoritmy.
 
 \ods{Algoritmus Sequentional forward selection (SFS)}
 \begin{enumerate}
+\item vyberu nejlepší příznak
+\item přidám příznak, který vyváří nejlepší dvojici s předchozím
 \item[$\vdots$]
+\item v $k$-tém kroku přidám příznak, který s předchozí $(k-1)$-ticí vytváří nejlepší $k$-tici vzhledem ke kritériu.
 \end{enumerate}
 
+V základním provedení má vady, protože nelze vyhodit příznak a přidáváme pouze po jednom. Takže vylepšení:
+přidávat $j$-tice (v rámci $j$-tice to je {\em fullsearch}). Algoritmus lze samozřejmě modifikovat 
+místo procesu {\em forward} na odebírání tj. {\em backward}.
 
 \ods{Algoritmus Plus $l$ minus $s$}
+Tento je opět rozšířením originálního SFS algoritmu. V daném kroku lze přidat $l$-tici a odebrat $s$-tici příznaků.
+V rozšířené verzi navíc $l$ a $s$ jsou dynamické. Algoritmus údajně velice dobře funguje. 
 
+\section{Rozpoznávání v obraze}
 \subsection{Segmentace}
+Patří sem:
 \begin{itemize}
+\item hledání objektů v obraze
+\item oddělení objektů od pozadí
+\item je třeba uchovat informace, kde se objekt nachází
 \end{itemize}
 
+Základní tři metody pro segmentaci obrazu:
 \begin{enumerate}
+\item Prahování
 \item Hrany
+\item Růst oblasti (Region growing)
 \end{enumerate}
 
+\ods{ad 1) Prahování}
+V podstatě se jedná o rozdělení na pozadí a objekt. Ideální je použití na (skoro) binárních obrázcích \refobr{hist}. 
+\vecobr{0.8}{hist}{Histogram obrázku a zvolený práh pro segmentaci typu popředí/pozadí}
 
 \ods{ad 2) Hrany}
 
+{\em Hrana} je informace v obrazové oblasti. {\em Hranice} pak je informace vyšší úrovně, měla by být souvislá, 
+jednobodová.
 
+Určení hranic se většinou provádí následujícím postupem.
 
 \begin{enumerate}
+\item hranový detektor
 \item binarizace
+\item zbavení se {\em izolovaných bodů}
+\item zmenšení tloušťky na jeden pixel
+\item napojování částí
 \end{enumerate}
 
+Při napojování částí se prohledává okolí $A$ koncového bodu jedné hranice a podle určitého kritéria se
+rozhoduje, zda sousední hranice v $A$ napojit nebo ne. Další možností je  použít
+hranové detektory založené na funkcionálech, ty často vytvářejí automaticky uzavřené křivky.
 
+\vecobr{0.8}{napojeni}{Prohledávání okolí a napojování hranice}
 
+\ods{ad 3) Růst oblastí}
+Je potřeba specifikovat tzv. semínka ({\em seed-points}), od nich se pak provádí buď numerická simulace roztahování
+křivky v závislosti na gradientu obrázku a křivosti nebo jisté prohledávání okolí a následný růst křivky do něj.
+Semínka buď určuje uživatel nebo se provede hrubá hranová detekce s velkým prahem a semínko se zvolí mimo hranu.
+\vecobr{0.8}{growing}{Region growing s počátečními body (semínky)}
 
+Někdy je výhodné objekt reprezentovat pomocí kvadraturového stromu, protože ten vytváří
+homogenní oblasti. Ty se pak můžeme snažit spojovat.
+\vecobr{0.6}{kvadtree}{Vytvoření kvadraturového stromu a spojení oblastí do hranice}
 
 \ods{Popis hranice}
+Uvažujeme-li nyní binární obrázek a v něm křivku, můžeme k její reprezentaci využít tzv. {\em chain codes} tedy
+řetězce čísel, kde následující číslo popisuje směr bodu oproti stávajícímu. Pokud definujeme 4 (absolutní) směry
+(0 -- nahoru, 1 -- doleva, 2 -- doprava, 3 -- dolů), lze křivku zapsat jako např. 020233231110. Při použití 
+relativního vyjádření stačí 3 hodnoty (0 -- rovně, 1 -- doleva, 2 -- doprava). Procházíme křivku a zapisujeme
+0 pokud neměníme směr, 1 resp. 2 když křivka zatáčí. Svislé a vodorovné části se pak vyobrazí jako sekvence nul.
 
+\ods{Problém hranice}
+V diskrétním rastru vzniká problém, zda za hraniční pixely považovat ty, které sdílí stěnu nebo zda stačí, sdílí-li 
+společný bod. Následkem toho můžeme definovat čtyřokolí a osmiokolí bodu a tím i čtyř-spojitost (resp. osmi-spojitost).
 
+\vecobr{0.6}{okoli}{Ukázka nejednoznačnosti hranice. Definice 4-okolí, 8-okolí}
+\vecobr{0.8}{diler}{Dilatace a eroze objektu s kruhovým objektem}
 
+\subsection{Matematická morfologie}
+Máme-li v obraze objekty s velmi členitou hranicí jde jistými operacemi tyto \uv{záhyby} zahladit.
 
+\ods{Morfologické operace}
+Předpokládejme v obraze dva objekty $A,B$ reprezentované nějakým způsobem v obraze. Definujeme operace:
 \begin{description}
 \item[Dilatace $\oplus$ (expanze):] $A\oplus B=\{x|B_x\cap A\neq \emptyset\}$
 \item[Eroze $\ominus$:] $A\ominus B=\{x|B_x\subset A\}$
 \end{description}
 
+Za objekt $B$ volíme vetšinou malý kruh, takže dilatace odpovídá objíždění $B$  po hranici $A$ a zahlazování zálivů.
+Objekt se mírně rozšiřuje. Eroze odpovídá objíždění hranice $A$ z vnitřní strany a zahlazování výběžků. Výsledný objekt
+se zmenšuje \refobr{diler}.
+Bude-li objekt $B$ symetrický, pak z množinových operací vyjde vztah
 
 \begin{equation}
+(A\ominus B)^C=A^C\oplus B\quad\hbox{kde operace $(\cdot)^C$ značí doplněk množiny}
 \end{equation}
 
+Tak můžeme definovat operace {\em otevření} a {\em uzavření} objektu:
 \begin{description}
+\item[Otevření:] $A\circ B=(A\ominus B)\oplus B$\quad$\rightarrow$ vyčistí výběžky
+\item[Uzavření:] $A\bullet B=(A\oplus B)\ominus B$\quad$\rightarrow$ vyčistí zálivy
 \end{description}
 
+\ods{Požadavky na příznaky:}
 \begin{description}
+\item[1. Invariance] -- Objekty uvnitř třídy musí mít podobné vlastnosti.
+\item[2. Diskriminabilita] -- Příznaky musí být s to rozlišit příslušnost k dané třídě.
+\item[3. Stabilita (robustnost)] -- Je potřeba, aby příznaky rozumně reagovaly na případný šum. Stejně tak malá odlišnost
+objektu by se měla odrazit v malé změně hodnoty příznaku.
+\item[4. Efektivita] -- Nenáročnost na výpočet příznaku, pokud možno menší počet příznaků.
 \end{description}
 
 \def\R{\mathbf{R}}
+Předpokládejme příznakový prostor $\mathcal{P}$ a metriku $\rho$, dále $G$ souvislou, omezenou oblast v $\R^2$
 
+Příznaky můžeme rozdělit na:
 \begin{description}
+\item[1. Intuitivní (visual features)] -- barva, plocha, obvod, \dots
+\item[2. Transformační] -- jako příznaky se berou koeficienty potřebné k dané transformaci
+\item[3. Momenty ] -- převod objektu do polynomiální báze $\mathcal{X}=\{x^py^q\}$
+\item[4. Diferenciální] -- například části hranice aproximované hladkou křivkou
 \end{description}
 
+\subsection{Intuitivní příznaky}
 \begin{itemize}
+\item obsah (P), obvod (o) -- Tyto příznaky nejsou invariantní na změnu měřítka,
+navíc spousta úplně odlišných objektů může mít stejný obsah resp. obvod.
+\item minimální opsaný obdélník (poměr jeho stran)
+\item Kompaktnost -- $C:=\frac{4\pi P}{o^2}$, pro jednotkový kruh vyjde 1
+\item Míra konvexnosti -- tj. poměr obsahu objektu $P$ a obsahu jeho konvexního obalu $P^\prime$. ($\frac{P}{P^\prime}$)
+\item Eulerovo číslo -- tj. počet kompoment $C$ minus počet děr $H$. ($C-H$)
 \end{itemize}
+Výše uvedené příznaky se používají k předtřídění při velkém množství tříd. Obecnou nevýhodou je slabá diskriminabilita,
+výhodou naopak rychlé napočítání
 
+\ods{Jak zajistit invarianty vzhledem k translaci?} -- stačí funkce přepočítávat s ohledem na těžiště.
 
+\subsection{Transformační příznaky}
+Chceme-li charakterizovat nějakým způsobem objekt, lze použít tzv. {\em shape-vector},  což je posloupnost vzdáleností
+od těžiště objektu k jeho okraji po jistých úhlových přírustcích. 
 
+Složky Shape-vectoru $(a_k)$ nejsou primárně invariantní na rotaci objektu ani na změnu měřítka. Pokud chceme 
+zajistit invarianci na změnu měřítka, vybereme maximální vzdálenost, od ní začneme a složky podělíme touto maximální
+vzdáleností. Problém vzniká, pokud je takových složek více, resp. když je spousta složek blízkých této vzdálenosti.
 
 \vecobr{0.8}{shapevec}{Konstrukce Shape-vectoru}
+Invarianci na rotaci přímo nezajistíme, museli bychom rotovat posloupnost. To ovšem můžeme nahradit operací
+korelace. Která nám nalezení shody zajistí.
 
+Druhý způsob je obejít všechny možné rotace trikem.
+Pokud provedeme $FFT$, dostaneme komplexní vektor  $(A_k)$. Z FFT shift-teorému plyne, že  můžeme porovnávat 
+absolutní hodnoty složek tohoto vektoru. Ty totiž budou invariantem, neboť počáteční posun (v tomto případě počáteční úhel,
+od kterého tvoříme shape-vector) se po $FFT$ převede na komplexní jednotku, která násobí původní funkci, takže v absolutní
+hodnotě se vektor nezmění. Dva Shape-vectory  budou po složkách splňovat vztah
 
 \begin{eqnarray}
 {A'}_k&=&e^{-i\pi\phi}A_k\\
@@ -856,38 +1545,77 @@ d_B=\frac{1}{4}d_M+\frac{1}{2}\ln\frac{|\frac{1}{2}(\Sigma_1+\Sigma_2)|}{\sqrt{|
 |{A'}_k|&=&|e^{-i\pi\phi}||A_k|=|A_k|=\sqrt{\Re^2A_k+\Im^2A_k}
 \end{eqnarray}
 
+Shape-vektory dobře fungují jen na tzv. {\em hvězdicovité objekty}. Objekty ale bývají složitější. Proto vezmeme
+kružnicovitou síť, začneme opět od maximálního bodu a pokud objekt překrývá více než polovinu segmentu, zapisujeme
+do tzv. {\em tvarové matice} 1 jinak 0 \refobr{krsit}. 
 \begin{itemize}
+\item[$+$] každý objekt má stejně velkou matici, stejným počtem mezikruží zajistíme i invarianci na změnu měřítka
+\item[$-$] velké paměťové nároky
+\item[$-$] stejná míra váhy pro velké i malé segmenty $\rightarrow$ poloměry se volí, aby segmenty měly stejnou plochu
 \end{itemize}
+Metoda údajně velmi dobře funguje.
+\vecobr{0.8}{krsit}{Příznaky tvořené mezikruhovými segmenty}
 
+\ods{Rozpoznávání polozakrytých objektů}
+Výše uvedené příklady nefungují, protože zakrytí změní celý vektor. Tvarová matice také nelze použít, protože se
+podstatně změnilo těžiště. U binárních objektů lze vzít lokální vlastnosti hranice -- diferenciální invariance.
 
+Definuje se metrika jakožto délka shody s hranicí v databázi. To je sice dobré, ale je potřeba hranici zapsat i s 
+derivacemi vyšších řádů, tím je to zase náchylné na šum, což opět vede na malou použitelnost v praxi.
 
+Dalším nápadem je třeba rozsekat objekt na menší objekty a počítat klasické příznaky a ty pak v rámci objektu globálně 
+sloučit. Tato metoda funguje dobře na polygonech, takže nejdříve je potřeba objekt {\em aproximovat polygonem}, což
+někdy bývá obtížné. Při porovnání dvou objektů musíme totiž udělat i stejné dělení.
 
+Pro hladkou křivku můžeme za příznaky brát {\em inflexní body (IB)} tj. řešení rovnice $\ddot{x}\dot{y}-\ddot{y}\dot{x}=0$.
+Tyto invarianty se chovají dobře při afinní transformaci. Pro představu stačí vzít počet inflexních bodů.
+Problém vzniká při napočítávání. Hodnoty bývají blízké nule, takže je třeba vhodně volit práh. Objekt rozdělíme podle 
+inflexních bodů, ty následně spojíme a bereme \uv{odřezky} pro opakování postupu. Hledání IB je nestabilní.
 
+Lepší a spolehlivější metody zatím nebyly objeveny.
 
+\ods{Jak použít morfologie k popisu objektu?} Definujeme tzv. {\em Morfologické spektrum (MS)}. S různými objekty (například
+kruhy proměnného poloměru) provádíme nad objektem operaci {\em otevření} a zaznamenáváme do grafu příslušnou plochu \refobr{morfs}.
+Tato charakteristika bývá celkem spolehlivá, i když lze najít objekty, které mají stejné MS a přitom vypadají různě. 
 
+\vecobr{0.7}{morfs}{Příklad morfologického spektra objektu}
 
+\subsection{Momentové invarianty}
+Předpokládejme, že máme obraz zadán jako funkci $f:\R^2\rightarrow \R $.
+Dále nechť $\mathcal{X}=\{x^py^q\}$ je báze polynomů na $\R^2$. Průměty funkce $f(x,y)$ do báze $\mathcal{X}$ nazýváme
 {\em Momenty}.
 
 \def\d{{\rm d}}
+{\em Základní (tzv. geometrické)} momenty definujeme vztahem
 \begin{equation}
 m_{pq}=\int x^py^qf(x,y)\d x\d y\qquad \hbox{pro $p,q=0,1,\dots$}
 \end{equation}
 
+Lze ukázat, že funkce, která je počástech spojitá a s omezeným supportem je jednoznačně svými momenty určena
 a naopak.
 
+Pro souřadnice těžiště objektu pak vyjdou vztahy:
 \begin{eqnarray}
 x_t&=&\frac{m_{10}}{m_{00}}\nonumber\\
 y_t&=&\frac{m_{01}}{m_{00}}
 \end{eqnarray}
 
+Pak definujeme takzvané {\em Centrální momenty}  jako:
 
 \begin{equation}
 \mu_{pq}=\int (x-x_t)^p(y-y_t)^qf(x,y)\d x\d y\qquad \hbox{pro $p,q=0,1,\dots$}
 \end{equation}
 
+Že lze centrální momenty vyjádřit jako funkci geometrických momentů je zřejmé, vzhledem k tomu, že se jedná o dvě 
+báze stejného prostoru.
 
+\ods{Invarianty vůči geometrickým transformacím.}
+Hledejme nyní funkce momentů tak, aby se při zadaných geometrických transformacích zachovávaly. 
 
+Aplikace je pak zřejmá například při rozpoznávání znaků (OCR), rozpoznávání fotografií, apod.
 
+\subsubsection{Změna měřítka}
+Transformace změny měřítka je definována jako
 \begin{eqnarray}
 x'&=&ax\nonumber\\
 y'&=&ay
@@ -897,36 +1625,49 @@ Je pak ale
 \begin{eqnarray}
 {m'}_{pq}&=&\int {x'}^p{y'}^q{f'}(x',y')\d x'\d y'=\int (ax)^p(ay)^qf(x,y)a^2\d x\d y=\nonumber\\
 &=&a^{p+q+2}\int x^py^qf(x,y)\d x\d y=a^{p+q+2} m_{pq}\\
+\noalign{\hbox{protože absolutní hodnota z Jakobiánu transformace je $|\mathcal{J}|=a^2$}}\nonumber
 \end{eqnarray}
 
+Chceme-li tedy zkonstruhovat invariant na změnu měřítka stačí ho předpokládat ve tvaru
 \begin{eqnarray}
 \nu_{pq}&=&\frac{\mu_{pq}}{\mu^\omega_{00}}\\
 \noalign{\hbox{Pak bude}\nonumber}\\
 {\nu'}_{pq}&=&\frac{{\mu'}_{pq}} {{\mu'}^\omega_{00}}=\frac{a^{p+q+2}\mu_{pq}}{a^{2\omega}\mu^\omega_{00}}=
 \frac{a^{p+q+2}}{a^{2\omega}}\nu_{pq}\nonumber\\
+\noalign{\hbox{protože má být ${\nu'}_{pq}=\nu_{pq}$}\nonumber}\\
+\noalign{\hbox{Je potřeba, aby $a^{p+q+2-2\omega}=1$, čehož docílíme volbou}\nonumber}\\
 \omega&=&\frac{p+q}{2}+1
 \end{eqnarray}
 
 
 \subsubsection{Rotace soustavy}
+Transformace rotace o úhel $\phi$ je předepsána rovnicemi
 \begin{eqnarray}
 x'&=&x\cos\phi-y\sin\phi\nonumber\\
 y'&=&x\sin\phi+y\cos\phi
 \end{eqnarray}
 
+Spočteme-li například momenty do řádu dva bude
 \begin{eqnarray}
 {m'}_{20}&=&\int(x\cos\phi-y\sin\phi)^2f(x,y)\d x\d y\\
+\noalign{\hbox{a po výpočtu}\nonumber}\\
 {m'}_{20}&=& m_{20}\cos^2\phi-2m_{11}\cos\phi\sin\phi +m_{02}\sin^2\phi \\
+\noalign{\hbox{podobně}\nonumber}\\
 {m'}_{02}&=& m_{20}\sin^2\phi+2m_{11}\cos\phi\sin\phi +m_{02}\cos^2\phi 
 \end{eqnarray}
 
+\noindent Sečtením obou rovnic dostaneme
 \begin{equation}
 {m'}_{20}+{m'}_{02}=m_{20}+m_{02}
 \end{equation}
+\noindent což je invariant na otáčení. Dalším takovým invariantem je výraz
 \begin{equation}
 (m_{20}-m_{02})^2+4m^2_{11}
 \end{equation}
+Lze ukázat, že další invarianty pro otáčení už nenajdu.
 
+Momenty do 2. řádu určují tzv. {\em objektovou elipsu}. Je-li $\mu_{11}=0$ bude objekt symetrický.
+Středově symetrické objekty mají dokonce všechny centrální momenty lichého řádu rovny nule.
 
 \ods{Classical moments invariants}
 \begin{eqnarray}
@@ -942,18 +1683,28 @@ y'&=&x\sin\phi+y\cos\phi
 &&-(\mu_{30}-3\mu_{12})(\mu_{21}+\mu_{03})(3(\mu_{30}+\mu_{12})^2-(\mu_{21}+\mu_{03})^2)
 \end{eqnarray}
 
+Hledání invariantů je velmi obtížné. Jde však použít trik, který toto hledání ulehčí.
+Definujeme-li si komplexní momenty podle vztahu
 \begin{eqnarray}
 C_{pq}&=&\int\limits_{-\infty}^\infty\int\limits_{-\infty}^\infty(x+iy)^p(x-iy)^q f(x,y)\d x\d y\\
+\noalign{\hbox{po převodu do polárních souřadnic bude}\nonumber}\\
 C_{pq}&=&\int\limits_0^\infty\int\limits_0^{2\phi}r^{p+q}e^{i(p-q)\theta}\tilde{f}(r,\theta)\d r\d \theta
 \end{eqnarray}
+\noindent Pokud nyní provedeme rotaci soustavy o úhel $\phi$ dostaneme vztah
 \begin{equation}
 {C'}_{pq}=C_{pq}\cdot e^{-i(p-q)\phi}
 \end{equation}
+\noindent Z čehož plyne, že $|C_{pq}|$ bude invariant protože $e^{-i(p-q)\phi}$ je komplexní jednotka.
+Invarianty jde ale hledat i ve tvaru $C_{pq}\cdot C_{kl}$ tak, aby se komplexní jednotka vykrátila.
+Například $C_{pq}C_{qp}$ bude invariant. Obecně
 
 \begin{eqnarray}
 I&=&\prod\limits_{j=1}^nC_{p_jq_j}^{k_j}\\
+\noalign{\hbox{za podmínky}\nonumber}\\
 \sum\limits_{j=1}^nk_j(p_j-q_j)&=&0
 \end{eqnarray}
+\noindent bude invariantem. Tímto způsobem lze najít všechny invarianty $\Phi_1,\dots,\Phi_7$.
+Žádný další s předchozími nezávislý už neexistuje. Je například
 \begin{eqnarray}
 C_{00}&=&m_{00}\\
 C_{10}&=&m_{10}+im_{01}\\
@@ -961,48 +1712,96 @@ C_{20}&=&m_{20}-m_{02}+2im_{11}\\
 C_{11}&=&m_{20}+m_{02}
 \end{eqnarray}
 
+Stabilita předchozích invariantů na šum se ukazuje jako dobrá. 
+\ods{Jak počítat momenty?}
+Klasická diskretizace typu 
 \begin{equation}
 m_{pq}=\sum\limits_{ij}i^pj^qf_{ij}
 \end{equation}
+\noindent se sice používá, nicméně je
+matematicky špatně nebo spíš málo přesná.
 
+Pro případ jednorozměrného momentu počástech konstantní funkce $f(x)$ bude
 \begin{eqnarray}
 m_p&=&\int x^p f(x)\d x=\sum\limits_{i}f_i\int\limits_{A_i}x^p\d x\quad\hbox{kde $A_i\equiv<i,i+1>$}\\
 &=&\sum\limits_{i}f_i\left[\frac{x^{p+1}}{p+1}\right]^{i+1}_i=\sum\limits_{i}f_i
 \left[\frac{(i+1)^{p+1}}{p+1}-\frac{i^{p+1}}{p+1}\right]
 \end{eqnarray}
 
+Bylo dokázáno, že při klasickém výpočtu momentu řádu $b$ je chyba úměrná momentům řádu $(b-2)$. 
 
+Výpočty momentů mohou být dosti náročné, pro binární obrázky, lze výpočty urychlovat a to buď
 \begin{itemize}
+\item dekomponovat na obdélníky, řádky, sloupce, \dots
+\item použít Greenovu formuli a integrovat přes hranici objektu
 \end{itemize}
 
+\subsection{Problém rekonstrukce}
 
+Uvažujme funkci
 \begin{eqnarray}
 F(u)&=&\int e^{-iux}f(x)\d x=\int\sum\frac{(-iux)^n}{n!}f(x)\d x=\nonumber\\
 &=&\sum\frac{(-i)^n}{n!}u^n\int x^nf(x)=\sum\frac{(-i)^n}{n!}u^n m_n\label{rada}
 \end{eqnarray}
+\noindent Takže pokud máme momenty, můžeme sestavit řadu (\ref{rada}), pak provést inverzní Fourierovu 
+transformaci a následnou rekonstrukci obrazu.
 
+Pro rekonstrukci jsou optimální ortogonální báze funkcí (nevznikají zbytečné redundance).
+Báze $\mathcal{X}=\{x^py^q\}$ však ortogonální není, proto se hledalo vyjádření momentů
+v bázích OG polynomů (Čebyšev, Lagrange). Tyto pochopitelně vedou na lepší výsledky při rekonstrukci.
+Z hlediska momentových invariantů ale nepřináší nic nového.
 
+\subsubsection{Invariant vůči konvoluci}
+Při aplikacích získáváme občas rozmazaná nebo jinak poničená data. Bylo by proto výhodné, kdyby
+existovaly invarianty na nějaký druh konvoluce $g=f\star h$. Ukazuje se, že ve speciálních případech
+existují. 
 
+Nechť $h$ je konvoluční jádro takové, že $\int h=1$ a $h$ je středově symetrická, pak po Fourierově 
+transformaci můžeme psát:
 
 \begin{eqnarray}
 G&=&F\cdot H\\
 |G|&=&|F||H|\\
 ph(G)&=&ph(F)+ph(H)\\
+\noalign{\hbox{A protože $H$ je nyní reálná funkce ($h$ symetrické), je}\nonumber}\\
 ph(H)&=&\left\{\begin{array}{ll}0\\\pi\end{array}\right.\\
+\noalign{\hbox{A tedy například}\nonumber}\\
 \tan ph(G)&=&\tan ph(F)
 \end{eqnarray}
+\noindent Takže tangenta fáze je invariantem vůči konvoluci. Je nutné ovšem poznamenat, že 
+nejsme schopni provést zpětnou rekonstrukci, protože fázová změna $+\pi$ je pro obraz podstatná.
 
+Má-li jádro $h$ například rotační symetrii bude invariantem i výraz $\mu_{20}-\mu_{02}$ 
 \begin{eqnarray}
 \mu_{20}^g&=&\mu_{20}^f\mu_{00}^h+\mu_{20}^h\mu_{00}^f\\
 \mu_{02}^g&=&\mu_{02}^f\mu_{00}^h+\mu_{02}^h\mu_{00}^f\\
+\noalign{\hbox{a po odečtení}\nonumber}\\
 \mu_{20}^g-\mu_{02}^g&=&(\mu_{20}^f-\mu_{02}^f)\mu_{00}^h+(\mu_{20}^h-\mu_{02}^h)\mu_{00}^f\\
+\noalign{\hbox{protože je ale $\mu_{00}^h=1$ a $\mu_{20}^h=\mu_{02}^h$ máme}\nonumber}\\
 \mu_{20}^g-\mu_{02}^g&=&\mu_{20}^f-\mu_{02}^f
 \end{eqnarray}
 
 \section*{Disclaimer}
 {
 \sc
+Vzhledem k~bezplatnému poskytnutí produktu se na produkt
+nevztahuje žádná záruka, a to v~míře povolené zákonem. Pokud není
+písemně stanoveno jinak, poskytují držitelé autorských práv popřípadě
+jiné strany produkt \uv{tak, jak je}, bez záruky jakéhokoliv druhu, ať
+výslovně nebo vyplývající, včetně, ale nikoli jen, záruk prodejnosti
+a vhodnosti pro určitý účel. Pokud jde o~kvalitu a výkonnost produktu,
+leží veškeré riziko na vás. Pokud by se u~produktu projevily závady,
+padají náklady za všechnu potřebnou údržbu, opravy či nápravu na váš
 vrub.
 
+V~žádném případě, s~výjimkou toho, když to vyžaduje platný zákon, anebo
+když to bylo písemně odsouhlaseno, vám nebude žádný z~držitelů
+autorských práv odpovědný za škody,
+včetně všech obecných, speciálních, nahodilých nebo následných škod
+vyplývajících z~užívání anebo neschopnosti užívat produktu (včetně ale
+nikoli jen, ztráty nebo zkreslení dat, nebo trvalých škod způsobených
+vám nebo třetím stranám, nebo selhání funkce produktu v~součinnosti
+s~jinými produkty), a to i v~případě, že takový držitel autorských práv
+nebo jiná strana byli upozorněni na možnost takových škod.
 }
 
