@@ -1,0 +1,200 @@
+\usepackage[space]{grffile} % deal with folders whose names have spaces
+
+% language & encoding & font
+\usepackage[utf8]{inputenc}
+\usepackage[czech]{babel}
+
+\usepackage{csquotes}% Recommended
+
+\makeatletter
+\adddialect\l@CZECH\l@czech
+\makeatother
+
+\usepackage{textcomp}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{cjhebrew} % hebrew symbols
+
+% http://tex.stackexchange.com/questions/111999/slovak-and-czech-babel-gives-problems-with-cmidrule-and-cline
+\begingroup
+\makeatletter
+\catcode`\-=\active
+\AtBeginDocument{
+	\def\@@@cmidrule[#1-#2]#3#4{\global\@cmidla#1\relax
+		\global\advance\@cmidla\m@ne
+		\ifnum\@cmidla>0\global\let\@gtempa\@cmidrulea\else
+		\global\let\@gtempa\@cmidruleb\fi
+		\global\@cmidlb#2\relax
+		\global\advance\@cmidlb-\@cmidla
+		\global\@thisrulewidth=#3
+		\@setrulekerning{#4}
+		\ifnum\@lastruleclass=\z@\vskip \aboverulesep\fi
+		\ifnum0=`{\fi}\@gtempa
+		\noalign{\ifnum0=`}\fi\futurenonspacelet\@tempa\@xcmidrule}
+}
+\endgroup
+
+% ---- COLOR ---------------------------------------------------------
+\usepackage[usenames,dvipsnames]{color}
+% --------------------------------------------------------------------
+% --- MATH -----------------------------------------------------------
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{commath}
+\usepackage{mathtools}
+\usepackage{bm} % \bm
+\usepackage{xfrac} % nice fractions
+\usepackage{esvect} % vectors
+% --------------------------------------------------------------------
+% --- OTHER ----------------------------------------------------------
+\usepackage{upgreek}
+
+\usepackage[inline]{enumitem}	% custom lists
+
+\usepackage{emptypage} % %suppresses page numbers and headings from appearing on empty pages
+
+\usepackage{lscape}
+
+\usepackage{makeidx}
+\makeindex
+
+\usepackage{setspace}
+
+%\usepackage{framed}
+
+\usepackage{url} % url format
+	\renewcommand{\UrlFont}{\ttfamily\footnotesize}
+
+\usepackage{xspace}
+
+\usepackage[l2tabu]{nag}
+
+% --------------------------------------------------------------------
+% --- FIGURES & TABLES -----------------------------------------------
+
+\usepackage{epstopdf}
+
+\usepackage{float}
+
+\usepackage{tabularx}
+
+\usepackage{array}
+
+\usepackage{sidecap}
+
+\usepackage{booktabs}
+	\renewcommand{\arraystretch}{1.2}
+
+\usepackage{graphicx}
+
+\usepackage{wrapfig}
+\usepackage{subfig}
+
+\usepackage[font=small,labelfont=bf,figureposition=bottom,tableposition=top]{caption}	
+
+\usepackage{multirow}
+\usepackage{multicol}
+
+\usepackage{chngcntr}	% counters
+
+\addto\captionsczech{\renewcommand{\figurename}{Obr.}}
+\addto\captionsczech{\renewcommand{\tablename}{Tab.}}
+
+\usepackage{pgfplots}
+
+% --------------------------------------------------------------------
+% --- REFERENCES -----------------------------------------------------
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=false,        % false: boxed links; true: colored links
+}
+
+%\usepackage{refcheck}
+\usepackage[style=alphabetic,natbib=true,backend=bibtex, sorting=nty]{biblatex}
+
+% --------------------------------------------------------------------
+% --- UTILITIES ------------------------------------------------------
+
+\usepackage{siunitx} %SI units
+	\sisetup{
+		group-digits=true,
+		group-separator={\,},
+	}
+% --------------------------------------------------------------------
+% --- PAGE LOOK ------------------------------------------------------
+\usepackage{fancyhdr}
+\usepackage[bottom]{footmisc}
+\usepackage[section]{placeins}
+
+\usepackage{setspace} % spacing between lines (\singlespacing, \onehalfspacing, \doublespacing)
+
+% Indent even the first paragraph in each section
+\usepackage{indentfirst}
+
+% completely avoid orphans (first lines of a new paragraph on the bottom of a page)
+\clubpenalty=9500
+\makeatletter
+\@clubpenalty = 9500 % LaTeX uses `\@clubpenalty to restore the value of `\clubpenalty`
+\makeatother
+
+% completely avoid widows (last lines of paragraph on a new page)
+\widowpenalty=9500
+\displaywidowpenalty = 10000
+
+% --------------------------------------------------------------------
+
+%%% http://tex.stackexchange.com/questions/108193/not-equal-sign-%E2%89%A0-with-a-vertical-bar
+\makeatletter 
+\DeclareRobustCommand*\textsubscript[1]{%
+	\@textsubscript{\selectfont#1}}
+\def\@textsubscript#1{%
+	{\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
+\makeatother
+
+% === MY MACROS ======================================================
+
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\arctg}{arctg}
+\DeclareMathOperator{\cotg}{cotg}
+\DeclareMathOperator{\arccotg}{arccotg}
+\DeclareMathOperator{\cosec}{cosec}
+\DeclareMathOperator{\E}{E}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\erfop}{erf}
+\DeclareMathOperator{\erfcop}{erfc}
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}
+
+\DeclareMathOperator{\sinc}{sinc}
+
+\DeclareMathOperator{\FT}{\mathcal{F}}
+\DeclareMathOperator{\IFT}{\mathcal{F}^{\, --1}}
+\DeclareMathOperator{\CFT}{\mathcal{F}}
+\DeclareMathOperator{\ICFT}{\mathcal{F}^{\, --1}}
+
+% --------------------------------------------------------------------
+% --- DEF EQ := and =: SYMBOLS  --------------------------------------
+\makeatletter
+\newcommand*{\defeqq}{\mathrel{\rlap{%
+			\raisebox{0.3ex}{$\m@th\cdot$}}%
+			\raisebox{-0.3ex}{$\m@th\cdot$}}%
+=}
+\newcommand*{\eqqdef}{=\mathrel{\rlap{%
+			\raisebox{0.3ex}{$\m@th\cdot$}}%
+			\raisebox{-0.3ex}{$\m@th\cdot$}}%
+}
+\makeatother
+% --------------------------------------------------------------------
+% --------------------------------------------------------------------
+\newcommand{\transpose}{\mathsf{T}}
+
+\newcommand{\eqdot}{\mathbin{\dot{=}}}
+
+\newcommand{\notimplies}{%
+	\mathrel{{\ooalign{\hidewidth$\not\phantom{=}$\hidewidth\cr$\implies$}}}}
+
+% --------------------------------------------------------------------
+% --------------------------------------------------------------------

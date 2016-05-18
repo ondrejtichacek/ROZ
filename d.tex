@@ -1,8 +1,9 @@
-\documentclass[10pt, a4paper]{article}
-\usepackage[czech]{babel}
-\usepackage{graphics}
-\usepackage{latexsym}
-\usepackage{amsmath}
+\documentclass[11pt,a4paper]{article}
+\usepackage[verbose,top=2cm,bottom=2.5cm,inner=2.5cm,outer=1.5cm,footskip=1.2cm]{geometry}
+
+\input{parts/header.tex}
+
+
 %-----------------------------------------
 \def\vecobr#1#2#3{%
   \begin{figure}[htbp]%
@@ -20,23 +21,27 @@
   \begin{figure}[htbp]%
   \centerline{%
   \scalebox{#1}{%
-   \includegraphics{picture/png/#2.png.eps}%
+   \includegraphics{picture/png/#2.png}%  	
+%   \includegraphics{picture/png/#2.png.eps}%
 %   \pdfimage{picture/png/#2.png}%
    }%
    }%
    \caption{#3}\label{#2}%
   \end{figure}%
 }
+%-----------------------------------------
 \def\includepng#1{%
-\includegraphics{picture/png/#1.png.eps}%
-%\pdfimage{picture/png/#1.png}%
+	\includegraphics{picture/png/#1.png}% 
+	%\includegraphics{picture/png/#1.png.eps}% 
+	%\pdfimage{picture/png/#1.png}%
 }
 %-----------------------------------------
 \def\jpgfig#1#2#3{%
   \begin{figure}[htbp]%
   \centerline{%
   \scalebox{#1}{%
-   \pdfimage{#2}%
+  	\includegraphics{#2}
+%   \pdfimage{#2}%
    }%
    }%
    \caption{#3}\label{#2}%
@@ -48,7 +53,8 @@
   \begin{figure}[htbp]%
   \centerline{%
   \scalebox{#1}{%
-   \pdfimage{#2}%
+  	\includegraphics{#2}
+%   \pdfimage{#2}%
    }%
    }%
    \caption{#3}\label{#2}%
@@ -62,15 +68,19 @@
   \end{figure}%
 }
 \def\refobr#1{(viz.~obr.~\ref{#1})}
-\def\Input#1{\input{#1}}
-\def\ods#1{\paragraph{#1}}
-\def\phi{\varphi}
 \def\d{\mathrm{d}}
+
 \begin{document}
-\Input{title.tex}
-\maketitle
+
+\begin{center}
+	\huge \textbf{Rozpoznávání a zpracování obrazu}
+\end{center}
+
 \tableofcontents
-\Input{roz.tex}
+
+\clearpage
+
+\input{roz.tex}
 \end{document}
 
 

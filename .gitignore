@@ -1,3 +1,17 @@
+# LaTeX
+
+*-eps-converted-to.pdf
+*-blx.bib
+*.aux
+*.idx
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+
+
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
