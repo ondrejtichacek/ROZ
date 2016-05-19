@@ -476,6 +476,11 @@ přičemž váhy se dávájí do míst předpokládaných hran.
 
 \vecobr{0.8}{aprox}{Odstraňování šumu z pohledu aproximace funkcí.}
 
+\paragraph{Otázky}
+\begin{itemize}
+	\item \emph{Proč se bílému šumu říká bílý?} (?)
+\end{itemize}
+
 \subsection{Detekce hran}
 Nejedná se již o předzpracování, spíše už se snažíme rozpoznat další neobrazové informace. \emph{Hranou} pro nás bude
 výrazná změna intenzity obrazu. Rozlišujeme tedy
@@ -703,7 +708,7 @@ Místo inverzního filtru se pro zašuměný obrázek používá filtr Wienerův
 \subsubsection{Wienerův filtr}
 Požadavkem na Wienerův filtr $W$ bylo 
 \begin{equation}
-\hat{F}=G\cdot W
+\hat{F}=G\cdot W \label{linfiltr}
 \end{equation}
 kde $\hat{F}$ se definuje
 \begin{equation}
@@ -714,7 +719,7 @@ a hledáme
 W=\arg \min \E (\|f-\hat{f}\|^2)\label{minimalizace}
 \end{equation}
 
-Ve vztahu (\ref{minimalizace}) minimalizujeme přes všechny realizace šumu. Matice $W$ není přesně daná, je to funkce obrazu!
+Ve vztahu (\ref{minimalizace}) minimalizujeme přes všechny \textbf{lineární filtry}, tedy přes všechny filtry, které se dají vyjádřit vztahem \eqref{linfiltr}. Střední hodnota je pak přes šum (?). Matice $W$ není přesně daná, je to funkce obrazu!
 Po netriviálním odvození dostaneme výsledek\footnote{$ W (u,v) $ i $ H (u,v) $ jsou stále funkcemi $ u$ a $v $}
 \begin{equation}
 W = \frac{1}{H}\cdot\frac{|H|^2}{|H|^2+\varphi(u,v)}
@@ -738,6 +743,13 @@ Budeme mít
 Postupujeme tedy tak, že s hodnotou $\varphi$ začínáme na nízko ($\sim 10^{-3}$) a postupně ji zvyšujeme (třeba do $ \sim 10^3 $) a sledujeme, co se děje s obrazem. 
 
 Když Wienerův filtr aplikujeme na nezašuměný obrázek (tedy $ |N|^2 = 0 $), pak filtr přechází v $ W = 1/H $, což je předpis pro inverzní filtr.
+
+\paragraph{Otázky}
+\begin{itemize}
+	\item \emph{Přes co probíhá minimalizace a přes co střední hodnota v odvození Wienerova filtru?} Minimalizace probíhá přes všechny lineární filtry. Střední hodnota přes (?).
+	\item \emph{Co znamená že je obraz $ f $ nekorelovaný?} Korelací se myslí korelace prostorová, tedy že hodnoty pixelů na různých pozicích jsou nekorelované
+	\item \emph{Co se stane, pokud hodnotu $ \varphi $, tedy SNR, ve Wienerově filtru podhodnotíme a co když nadhodnotíme?} Je nutné si rozmyslet limitní případy, tedy $ \varphi \to 0 $ a $ \varphi \to \infty $. Pokud SNR \textbf{podhodnotíme}, objeví se na obrázku artefakty vysokofrekvenčního šumu (vysoké frekvence šumu způsobují výraznější poškození v inverzním filtru a tedy i ve Wienerově filtru s podhodnoceným SNR). Pokud naopak SNR \textbf{nadhodnotíme}, obrázek ztrácí detaily a bude rozmazaný.
+\end{itemize}
 
 \subsection{Odstranění základních typů degradací}
 
@@ -1060,7 +1072,7 @@ Protože hledáme minumum funkce $d$, mluvíme o \emph{metodě nejmenších čtv
 \end{align}
 což je obecně nelineární systém rovnic, po jehož vyřešení a ověření, že se jedná o minimum, získáme námi hledané koeficienty. Vztah (\ref{minkvad}) lze obecně psát ve tvaru $\|U-f\|_\mathcal{N}$, kdy norma $\|\cdot\|_\mathcal{N}$ definuje nějakým způsobem vzdálenost bodů od hledané funkce (křivky).
 
-\vecobr{0.8}{minkv}{K metodě nejmenších čtverců}
+\vecobr{0.9}{minkv}{K metodě nejmenších čtverců}
 
 \subsection{Vlastní mapování (transformace)}
 Vlastní mapování zabírá nejvíce výpočetního času. Musí se převzorkovávat, protože nové pixely mají neceločíselné souřadnice. Používají se přímé a nepřímé transformace.
