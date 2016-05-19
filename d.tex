@@ -83,6 +83,8 @@
 
 
 % ====================================================================
+\ifthenelse{\equal{\gitAbbrevHash}{(None)}}{\def\gitAbbrevHash{NA}}{}
+\ifthenelse{\equal{\gitAuthorDate}{(None)}}{\def\gitAuthorDate{\today}}{}
 
 \author{\url{https://github.com/ondrejtichacek/ROZ}}
 \date{Git revision: \gitAbbrevHash{} \hfill Published on: \gitAuthorDate{}}
