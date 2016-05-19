@@ -119,7 +119,9 @@
 \usepackage{ifthen}
 
 \usepackage{gitinfo2}
-\usepackage{datetime2} % do not include before gitinfo2
+%\usepackage{datetime2} % do not include before gitinfo2
+\usepackage[yyyymmdd]{datetime} % use older version untill datetime2 commonly available
+\renewcommand{\dateseparator}{-}
 
 \usepackage{siunitx} %SI units
 	\sisetup{
