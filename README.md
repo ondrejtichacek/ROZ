@@ -6,7 +6,7 @@ Soubor je založen na dokumentu vytvořeném **Martinem Petřkem** v roce 2004.
 Online překlad zdrojových souborů zajištěn službou sharelatex.com.
 
 ### Ke stažení: 
- * **[poslední verze v pdf](http://latex.aslushnikov.com/compile?git=https://github.com/ondrejtichacek/ROZ&target=d.tex)**
+ * **[poslední verze v pdf](http://latex.aslushnikov.com/compile?git=https://github.com/ondrejtichacek/ROZ&target=d.tex)** (načtení trvá cca 1 min)
 
 ### Hlavní změny:
  * oprava věcných chyb
